@@ -14,4 +14,25 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 	border-radius: 2px;
 	color: #BBB;
 	font: bold 10px sans-serif;
+<<<<<<< HEAD
+=======
+}
+
+.align-left {
+	float: left;
+	margin-right: 20px;
+}
+
+.align-right {
+	float: right;
+	margin-left: 20px;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.align-center > figure {
+	display: inline-block;
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 }

@@ -4,6 +4,10 @@
 alt = Label for the Alternative Text field of the Image Properties dialog window.
 btnUpload = Label for the button that uploads the file to the server.
 captioned = Label for the Captioned checkbox in the Image2 dialog window.
+<<<<<<< HEAD
+=======
+captionPlaceholder = Default text for the image caption.
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 infoTab = Label for the Image Info tab of the Image Properties dialog window.
 lockRatio = Tooltip for the Lock Ratio icon of the Image Properties dialog window.
 menu = Label for the Image Properties context menu entry for an image.

@@ -20,7 +20,11 @@
 CKEDITOR.lang[ 'gl' ] = {
 	// ARIA description.
 	editor: 'Editor de texto mellorado',
+<<<<<<< HEAD
 	editorPanel: 'Rich Text Editor panel', // MISSING
+=======
+	editorPanel: 'Panel do editor de texto mellorado',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 	// Common messages and labels.
 	common: {
@@ -84,6 +88,7 @@ CKEDITOR.lang[ 'gl' ] = {
 		alignTop: 'Arriba',
 		alignMiddle: 'Centro',
 		alignBottom: 'Abaixo',
+		alignNone: 'None', // MISSING
 		invalidValue	: 'Valor incorrecto.',
 		invalidHeight: 'O alto debe ser un número.',
 		invalidWidth: 'O largo debe ser un número.',

@@ -82,6 +82,7 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'fr', {
 		]
 	}
 	],
+<<<<<<< HEAD
 	backspace: 'Backspace', // MISSING
 	tab: 'Tab', // MISSING
 	enter: 'Enter', // MISSING
@@ -144,4 +145,68 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'fr', {
 	backSlash: 'Backslash', // MISSING
 	closeBracket: 'Close Bracket', // MISSING
 	singleQuote: 'Single Quote' // MISSING
+=======
+	backspace: 'Retour arrière',
+	tab: 'Tabulation',
+	enter: 'Entrée',
+	shift: 'Majuscule',
+	ctrl: 'Ctrl',
+	alt: 'Alt',
+	pause: 'Pause',
+	capslock: 'Verr. Maj.',
+	escape: 'Echap',
+	pageUp: 'Page supérieure',
+	pageDown: 'Page inférieure',
+	end: 'Fin',
+	home: 'Retour',
+	leftArrow: 'Flèche gauche',
+	upArrow: 'Flèche haute',
+	rightArrow: 'Flèche droite',
+	downArrow: 'Flèche basse',
+	insert: 'Insertion',
+	'delete': 'Supprimer',
+	leftWindowKey: 'Touche Windows gauche',
+	rightWindowKey: 'Touche Windows droite',
+	selectKey: 'Touche menu',
+	numpad0: 'Pavé numérique 0',
+	numpad1: 'Pavé numérique 1',
+	numpad2: 'Pavé numérique 2',
+	numpad3: 'Pavé numérique 3',
+	numpad4: 'Pavé numérique 4',
+	numpad5: 'Pavé numérique 5',
+	numpad6: 'Pavé numérique 6',
+	numpad7: 'Pavé numérique 7',
+	numpad8: 'Pavé numérique 8',
+	numpad9: 'Pavé numérique 9',
+	multiply: 'Multiplier',
+	add: 'Addition',
+	subtract: 'Soustraire',
+	decimalPoint: 'Point décimal',
+	divide: 'Diviser',
+	f1: 'F1',
+	f2: 'F2',
+	f3: 'F3',
+	f4: 'F4',
+	f5: 'F5',
+	f6: 'F6',
+	f7: 'F7',
+	f8: 'F8',
+	f9: 'F9',
+	f10: 'F10',
+	f11: 'F11',
+	f12: 'F12',
+	numLock: 'Verrouillage numérique',
+	scrollLock: 'Arrêt défilement',
+	semiColon: 'Point virgule',
+	equalSign: 'Signe égal',
+	comma: 'Virgule',
+	dash: 'Tiret',
+	period: 'Point',
+	forwardSlash: 'Barre oblique',
+	graveAccent: 'Accent grave',
+	openBracket: 'Parenthèse ouvrante',
+	backSlash: 'Barre oblique inverse',
+	closeBracket: 'Parenthèse fermante',
+	singleQuote: 'Apostrophe'
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

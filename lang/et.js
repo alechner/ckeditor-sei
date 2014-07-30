@@ -84,6 +84,10 @@ CKEDITOR.lang[ 'et' ] = {
 		alignTop: 'Üles',
 		alignMiddle: 'Keskele',
 		alignBottom: 'Alla',
+<<<<<<< HEAD
+=======
+		alignNone: 'None', // MISSING
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		invalidValue	: 'Vigane väärtus.',
 		invalidHeight: 'Kõrgus peab olema number.',
 		invalidWidth: 'Laius peab olema number.',

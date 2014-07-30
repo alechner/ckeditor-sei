@@ -21,12 +21,12 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'km', {
 		},
 
 			{
-			name: 'Editor Context Menu', // MISSING
+			name: 'ម៉ីនុយបរិបទអ្នកកែសម្រួល',
 			legend: 'Press ${contextMenu} or APPLICATION KEY to open context-menu. Then move to next menu option with TAB or DOWN ARROW. Move to previous option with SHIFT+TAB or UP ARROW. Press SPACE or ENTER to select the menu option. Open sub-menu of current option with SPACE or ENTER or RIGHT ARROW. Go back to parent menu item with ESC or LEFT ARROW. Close context menu with ESC.' // MISSING
 		},
 
 			{
-			name: 'Editor List Box', // MISSING
+			name: 'ប្រអប់បញ្ជីអ្នកកែសម្រួល',
 			legend: 'Inside a list-box, move to next list item with TAB OR DOWN ARROW. Move to previous list item with SHIFT + TAB or UP ARROW. Press SPACE or ENTER to select the list option. Press ESC to close the list-box.' // MISSING
 		},
 
@@ -82,12 +82,17 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'km', {
 		]
 	}
 	],
+<<<<<<< HEAD
 	backspace: 'Backspace', // MISSING
+=======
+	backspace: 'លុបថយក្រោយ',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	tab: 'Tab', // MISSING
 	enter: 'Enter', // MISSING
 	shift: 'Shift', // MISSING
 	ctrl: 'Ctrl', // MISSING
 	alt: 'Alt', // MISSING
+<<<<<<< HEAD
 	pause: 'Pause', // MISSING
 	capslock: 'Caps Lock', // MISSING
 	escape: 'Escape', // MISSING
@@ -144,4 +149,62 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'km', {
 	backSlash: 'Backslash', // MISSING
 	closeBracket: 'Close Bracket', // MISSING
 	singleQuote: 'Single Quote' // MISSING
+=======
+	pause: 'ផ្អាក',
+	capslock: 'Caps Lock', // MISSING
+	escape: 'ចាកចេញ',
+	pageUp: 'ទំព័រ​លើ',
+	pageDown: 'ទំព័រ​ក្រោម',
+	end: 'ចុង',
+	home: 'ផ្ទះ',
+	leftArrow: 'ព្រួញ​ឆ្វេង',
+	upArrow: 'ព្រួញ​លើ',
+	rightArrow: 'ព្រួញ​ស្ដាំ',
+	downArrow: 'ព្រួញ​ក្រោម',
+	insert: 'បញ្ចូល',
+	'delete': 'លុប',
+	leftWindowKey: 'Left Windows key', // MISSING
+	rightWindowKey: 'Right Windows key', // MISSING
+	selectKey: 'ជ្រើស​គ្រាប់​ចុច',
+	numpad0: 'Numpad 0',
+	numpad1: 'Numpad 1',
+	numpad2: 'Numpad 2',
+	numpad3: 'Numpad 3',
+	numpad4: 'Numpad 4',
+	numpad5: 'Numpad 5',
+	numpad6: 'Numpad 6',
+	numpad7: 'Numpad 7',
+	numpad8: 'Numpad 8',
+	numpad9: 'Numpad 9',
+	multiply: 'គុណ',
+	add: 'បន្ថែម',
+	subtract: 'ដក',
+	decimalPoint: 'ចំណុចទសភាគ',
+	divide: 'ចែក',
+	f1: 'F1',
+	f2: 'F2',
+	f3: 'F3',
+	f4: 'F4',
+	f5: 'F5',
+	f6: 'F6',
+	f7: 'F7',
+	f8: 'F8',
+	f9: 'F9',
+	f10: 'F10',
+	f11: 'F11',
+	f12: 'F12',
+	numLock: 'Num Lock', // MISSING
+	scrollLock: 'បិទ​រំកិល',
+	semiColon: 'ចុច​ក្បៀស',
+	equalSign: 'សញ្ញា​អឺរ៉ូ',
+	comma: 'ក្បៀស',
+	dash: 'Dash', // MISSING
+	period: 'ចុច',
+	forwardSlash: 'Forward Slash', // MISSING
+	graveAccent: 'Grave Accent', // MISSING
+	openBracket: 'តង្កៀប​បើក',
+	backSlash: 'Backslash', // MISSING
+	closeBracket: 'តង្កៀប​បិទ',
+	singleQuote: 'បន្តក់​មួយ'
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

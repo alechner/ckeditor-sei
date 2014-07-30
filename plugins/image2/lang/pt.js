@@ -6,6 +6,10 @@ CKEDITOR.plugins.setLang( 'image2', 'pt', {
 	alt: 'Texto Alternativo',
 	btnUpload: 'Enviar para o Servidor',
 	captioned: 'Imagem Legendada',
+<<<<<<< HEAD
+=======
+	captionPlaceholder: 'Caption', // MISSING
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Informação da Imagem',
 	lockRatio: 'Proporcional',
 	menu: 'Propriedades da Imagem',

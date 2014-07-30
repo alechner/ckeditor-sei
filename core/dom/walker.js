@@ -556,8 +556,15 @@
 
 		if ( node.type == CKEDITOR.NODE_ELEMENT ) {
 			// All inline and non-editable elements are valid editable places.
+<<<<<<< HEAD
 			// Note: non-editable block has to be treated differently (should be selected entirely).
 			if ( node.is( CKEDITOR.dtd.$inline ) || node.getAttribute( 'contenteditable' ) == 'false' )
+=======
+			// Note: the <hr> is currently the only element in CKEDITOR.dtd.$empty and CKEDITOR.dtd.$block,
+			// but generally speaking we need an intersection of these two sets.
+			// Note: non-editable block has to be treated differently (should be selected entirely).
+			if ( node.is( CKEDITOR.dtd.$inline ) || node.is( 'hr' ) || node.getAttribute( 'contenteditable' ) == 'false' )
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				return true;
 
 			// Empty blocks are editable on IE.
@@ -577,6 +584,11 @@
 	 *
 	 * * text nodes (but not whitespaces),
 	 * * inline elements,
+<<<<<<< HEAD
+=======
+	 * * intersection of {@link CKEDITOR.dtd#$empty} and {@link CKEDITOR.dtd#$block} (currenly
+	 * it's only `<hr>`),
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	 * * non-editable blocks (special case - such blocks cannot be containers nor
 	 * siblings, they need to be selected entirely),
 	 * * empty blocks which can contain text (IE only).

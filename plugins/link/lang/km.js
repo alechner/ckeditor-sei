@@ -17,7 +17,11 @@ CKEDITOR.plugins.setLang( 'link', 'km', {
 	},
 	anchorId: 'តាម ID ធាតុ',
 	anchorName: 'តាម​ឈ្មោះ​យុថ្កា',
+<<<<<<< HEAD
 	charset: 'Linked Resource Charset', // MISSING
+=======
+	charset: 'លេខកូតអក្សររបស់ឈ្នាប់',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	cssClasses: 'Stylesheet Classes',
 	emailAddress: 'អាសយដ្ឋាន​អ៊ីមែល',
 	emailBody: 'តួ​អត្ថបទ',
@@ -35,7 +39,11 @@ CKEDITOR.plugins.setLang( 'link', 'km', {
 	noUrl: 'សូម​បញ្ចូល​តំណ URL',
 	other: '<ផ្សេង​ទៀត>',
 	popupDependent: 'Dependent (Netscape)',
+<<<<<<< HEAD
 	popupFeatures: 'Popup Window Features', // MISSING
+=======
+	popupFeatures: 'មុខ​ងារ​ផុស​ផ្ទាំង​វីនដូ​ឡើង',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	popupFullScreen: 'ពេញ​អេក្រង់ (IE)',
 	popupLeft: 'ទីតាំងខាងឆ្វេង',
 	popupLocationBar: 'របារ​ទីតាំង',
@@ -48,7 +56,11 @@ CKEDITOR.plugins.setLang( 'link', 'km', {
 	rel: 'សម្ពន្ធ​ភាព',
 	selectAnchor: 'រើស​យក​យុថ្កា​មួយ',
 	styles: 'ស្ទីល',
+<<<<<<< HEAD
 	tabIndex: 'Tab Index', // MISSING
+=======
+	tabIndex: 'លេខ Tab',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	target: 'គោលដៅ',
 	targetFrame: '<ស៊ុម>',
 	targetFrameName: 'ឈ្មោះ​ស៊ុម​ជា​គោល​ដៅ',

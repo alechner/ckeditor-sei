@@ -115,10 +115,17 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'ar', {
 	numpad8: 'Numpad 8', // MISSING
 	numpad9: 'Numpad 9', // MISSING
 	multiply: 'Multiply', // MISSING
+<<<<<<< HEAD
 	add: 'Add', // MISSING
 	subtract: 'Subtract', // MISSING
 	decimalPoint: 'Decimal Point', // MISSING
 	divide: 'Divide', // MISSING
+=======
+	add: 'إضافة',
+	subtract: 'Subtract', // MISSING
+	decimalPoint: 'Decimal Point', // MISSING
+	divide: 'تقسيم',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	f1: 'F1', // MISSING
 	f2: 'F2', // MISSING
 	f3: 'F3', // MISSING
@@ -135,9 +142,15 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'ar', {
 	scrollLock: 'Scroll Lock', // MISSING
 	semiColon: 'Semicolon', // MISSING
 	equalSign: 'Equal Sign', // MISSING
+<<<<<<< HEAD
 	comma: 'Comma', // MISSING
 	dash: 'Dash', // MISSING
 	period: 'Period', // MISSING
+=======
+	comma: 'فاصلة',
+	dash: 'Dash', // MISSING
+	period: 'نقطة',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	forwardSlash: 'Forward Slash', // MISSING
 	graveAccent: 'Grave Accent', // MISSING
 	openBracket: 'Open Bracket', // MISSING

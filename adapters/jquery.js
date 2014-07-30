@@ -73,8 +73,13 @@
 		/**
 		 * A jQuery function which triggers the creation of CKEditor with `<textarea>` and
 		 * {@link CKEDITOR.dtd#$editable editable} elements.
+<<<<<<< HEAD
 		 * Every `<textarea>` element will be converted to a framed editor, while any other
 		 * supported element will be converted to an inline editor.
+=======
+		 * Every `<textarea>` element will be converted to a classic (`iframe`-based) editor,
+		 * while any other supported element will be converted to an inline editor.
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		 * This method binds the callback to the `instanceReady` event of all instances.
 		 * If the editor has already been created, the callback is fired straightaway.
 		 * You can also create multiple editors at once by using `$( '.className' ).ckeditor();`.

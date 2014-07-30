@@ -6,6 +6,10 @@ CKEDITOR.plugins.setLang( 'image2', 'uk', {
 	alt: 'Альтернативний текст',
 	btnUpload: 'Надіслати на сервер',
 	captioned: 'Підписане зображення',
+<<<<<<< HEAD
+=======
+	captionPlaceholder: 'Caption', // MISSING
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Інформація про зображення',
 	lockRatio: 'Зберегти пропорції',
 	menu: 'Властивості зображення',

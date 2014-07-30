@@ -81,6 +81,10 @@
 			// eat it up. (#5789)
 			data = protectPreFormatted( data );
 
+			// There are attributes which may execute JavaScript code inside fixBin.
+			// Encode them greedily. They will be unprotected right after getting HTML from fixBin. (#10)
+			data = protectInsecureAttributes( data );
+
 			var fixBin = evtData.context || editor.editable().getName(),
 				isPre;
 
@@ -99,7 +103,7 @@
 			data = el.getHtml().substr( 1 );
 
 			// Restore shortly protected attribute names.
-			data = data.replace( new RegExp( ' data-cke-' + CKEDITOR.rnd + '-', 'ig' ), ' ' );
+			data = data.replace( new RegExp( 'data-cke-' + CKEDITOR.rnd + '-', 'ig' ), '' );
 
 			isPre && ( data = data.replace( /^<pre>|<\/pre>$/gi, '' ) );
 
@@ -303,18 +307,15 @@
 		function blockFilter( isOutput, fillEmptyBlock ) {
 
 			return function( block ) {
-
-				// DO NOT apply the filer if it's a fragment node.
+				// DO NOT apply the filler if it's a fragment node.
 				if ( block.type == CKEDITOR.NODE_DOCUMENT_FRAGMENT )
 					return;
 
 				cleanBogus( block );
 
-				// [Opera] it's mandatory for the filler to present inside of empty block when in WYSIWYG.
-				if ( ( ( CKEDITOR.env.opera && !isOutput ) ||
-						( typeof fillEmptyBlock == 'function' ? fillEmptyBlock( block ) !== false : fillEmptyBlock ) ) &&
-						 isEmptyBlockNeedFiller( block ) )
-				{
+				var shouldFillBlock = typeof fillEmptyBlock == 'function' ? fillEmptyBlock( block ) : fillEmptyBlock;
+
+				if ( shouldFillBlock !== false && isEmptyBlockNeedFiller( block ) ) {
 					block.add( createFiller( isOutput ) );
 				}
 			};
@@ -444,21 +445,21 @@
 			return !last || block.name == 'form' && last.name == 'input' ;
 		}
 
-		var rules = { elements: {} };
-		var isOutput = type == 'html';
+		var rules = { elements: {} },
+			isOutput = type == 'html',
+			textBlockTags = CKEDITOR.tools.extend( {}, blockLikeTags );
 
 		// Build the list of text blocks.
-		var textBlockTags = CKEDITOR.tools.extend( {}, blockLikeTags );
 		for ( var i in textBlockTags ) {
 			if ( !( '#' in dtd[ i ] ) )
 				delete textBlockTags[ i ];
 		}
 
 		for ( i in textBlockTags )
-			rules.elements[ i ] = blockFilter( isOutput, editor.config.fillEmptyBlocks !== false );
+			rules.elements[ i ] = blockFilter( isOutput, editor.config.fillEmptyBlocks );
 
-		// Editable element is to be checked separately.
-		rules.root = blockFilter( isOutput );
+		// Editable element has to be checked separately.
+		rules.root = blockFilter( isOutput, false );
 		rules.elements.br = brFilter( isOutput );
 		return rules;
 	}
@@ -741,7 +742,23 @@
 	//
 
 	var protectElementRegex = /<(a|area|img|input|source)\b([^>]*)>/gi,
-		protectAttributeRegex = /\s(on\w+|href|src|name)\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|(?:[^ "'>]+))/gi;
+		// Be greedy while looking for protected attributes. This will let us avoid an unfortunate
+		// situation when "nested attributes", which may appear valid, are also protected.
+		// I.e. if we consider the following HTML:
+		//
+		// 	<img data-x="&lt;a href=&quot;X&quot;" />
+		//
+		// then the "non-greedy match" returns:
+		//
+		// 	'href' => '&quot;X&quot;' // It's wrong! Href is not an attribute of <img>.
+		//
+		// while greedy match returns:
+		//
+		// 	'data-x' => '&lt;a href=&quot;X&quot;'
+		//
+		// which, can be easily filtered out (#11508).
+		protectAttributeRegex = /([\w-]+)\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|(?:[^ "'>]+))/gi,
+		protectAttributeNameRegex = /^(href|src|name)$/i;
 
 		// Note: we use lazy star '*?' to prevent eating everything up to the last occurrence of </style> or </textarea>.
 	var protectElementsRegex = /(?:<style(?=[ >])[^>]*>[\s\S]*?<\/style>)|(?:<(:?link|meta|base)[^>]*>)/gi,
@@ -758,10 +775,8 @@
 			return '<' + tag + attributes.replace( protectAttributeRegex, function( fullAttr, attrName ) {
 				// Avoid corrupting the inline event attributes (#7243).
 				// We should not rewrite the existed protected attributes, e.g. clipboard content from editor. (#5218)
-				if ( !( /^on/ ).test( attrName ) && attributes.indexOf( 'data-cke-saved-' + attrName ) == -1 ) {
-					fullAttr = fullAttr.slice( 1 ); // Strip the space.
+				if ( protectAttributeNameRegex.test( attrName ) && attributes.indexOf( 'data-cke-saved-' + attrName ) == -1 )
 					return ' data-cke-saved-' + fullAttr + ' data-cke-' + CKEDITOR.rnd + '-' + fullAttr;
-				}
 
 				return fullAttr;
 			} ) + '>';
@@ -798,7 +813,7 @@
 	}
 
 	function protectPreFormatted( html ) {
-		return CKEDITOR.env.opera ? html : html.replace( /(<pre\b[^>]*>)(\r\n|\n)/g, '$1$2$2' );
+		return html.replace( /(<pre\b[^>]*>)(\r\n|\n)/g, '$1$2$2' );
 	}
 
 	function protectRealComments( html ) {
@@ -808,6 +823,17 @@
 				encodeURIComponent( match ).replace( /--/g, '%2D%2D' ) +
 				'-->';
 		} );
+<<<<<<< HEAD
+=======
+	}
+
+	// Replace all "on\w{3,}" strings which are not:
+	// * opening tags - e.g. `<onfoo`,
+	// * closing tags - e.g. </onfoo> (tested in "false positive 1"),
+	// * part of other attribute - e.g. `data-onfoo` or `fonfoo`.
+	function protectInsecureAttributes( html ) {
+		return html.replace( /([^a-z0-9<\-])(on\w{3,})(?!>)/gi, '$1data-cke-' + CKEDITOR.rnd + '-$2' );
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	}
 
 	function unprotectRealComments( html ) {
@@ -838,7 +864,10 @@
 			( /<script[\s\S]*?<\/script>/gi ),
 
 			// <noscript> tags (get lost in IE and messed up in FF).
-			/<noscript[\s\S]*?<\/noscript>/gi
+			/<noscript[\s\S]*?<\/noscript>/gi,
+
+			// Avoid meta tags being stripped (#8117).
+			/<meta[\s\S]*?\/?>/gi
 		].concat( protectRegexes );
 
 		// First of any other protection, we must protect all comments
@@ -869,12 +898,25 @@
 
 		// Different protection pattern is used for those that
 		// live in attributes to avoid from being HTML encoded.
-		return data.replace( /(['"]).*?\1/g, function( match ) {
-			return match.replace( /<!--\{cke_protected\}([\s\S]+?)-->/g, function( match, data ) {
+		// Why so serious? See #9205, #8216, #7805, #11754, #11846.
+		data = data.replace( /<\w+(?:\s+(?:(?:[^\s=>]+\s*=\s*(?:[^'"\s>]+|'[^']*'|"[^"]*"))|[^\s=>]+))+\s*>/g, function( match ) {
+			return match.replace( /<!--\{cke_protected\}([^>]*)-->/g, function( match, data ) {
 				store[ store.id ] = decodeURIComponent( data );
 				return '{cke_protected_' + ( store.id++ ) + '}';
 			} );
 		} );
+<<<<<<< HEAD
+=======
+
+		// This RegExp searches for innerText in all the title/iframe/textarea elements.
+		// This is because browser doesn't allow HTML in these elements, that's why we can't
+		// nest comments in there. (#11223)
+		data = data.replace( /<(title|iframe|textarea)([^>]*)>([\s\S]*?)<\/\1>/g, function( match, tagName, tagAttributes, innerText ) {
+			return '<' + tagName + tagAttributes + '>' + unprotectSource( unprotectRealComments( innerText ), editor ) + '</' + tagName + '>';
+		} );
+
+		return data;
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	}
 } )();
 
@@ -894,7 +936,7 @@
  *		};
  *
  * @since 3.5
- * @cfg {Boolean} [fillEmptyBlocks=true]
+ * @cfg {Boolean/Function} [fillEmptyBlocks=true]
  * @member CKEDITOR.config
  */
 
@@ -972,4 +1014,3 @@
  * @param {Boolean} data.filter See {@link CKEDITOR.htmlDataProcessor#toDataFormat} The `filter` argument.
  * @param {Boolean} data.enterMode See {@link CKEDITOR.htmlDataProcessor#toDataFormat} The `enterMode` argument.
  */
-

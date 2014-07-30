@@ -82,6 +82,7 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'nb', {
 		]
 	}
 	],
+<<<<<<< HEAD
 	backspace: 'Backspace', // MISSING
 	tab: 'Tab', // MISSING
 	enter: 'Enter', // MISSING
@@ -114,11 +115,46 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'nb', {
 	numpad7: 'Numpad 7', // MISSING
 	numpad8: 'Numpad 8', // MISSING
 	numpad9: 'Numpad 9', // MISSING
+=======
+	backspace: 'Backspace',
+	tab: 'Tabulator',
+	enter: 'Enter',
+	shift: 'Shift',
+	ctrl: 'Ctrl',
+	alt: 'Alt',
+	pause: 'Pause',
+	capslock: 'Caps Lock',
+	escape: 'Escape',
+	pageUp: 'Page Up',
+	pageDown: 'Page Down',
+	end: 'End',
+	home: 'Home',
+	leftArrow: 'Venstre piltast',
+	upArrow: 'Opp-piltast',
+	rightArrow: 'Høyre piltast',
+	downArrow: 'Ned-piltast',
+	insert: 'Insert',
+	'delete': 'Delete',
+	leftWindowKey: 'Venstre Windows-tast',
+	rightWindowKey: 'Høyre Windows-tast',
+	selectKey: 'Select key', // MISSING
+	numpad0: 'Numerisk tastatur 0',
+	numpad1: 'Numerisk tastatur 1',
+	numpad2: 'Numerisk tastatur 2',
+	numpad3: 'Numerisk tastatur 3',
+	numpad4: 'Numerisk tastatur 4',
+	numpad5: 'Numerisk tastatur 5',
+	numpad6: 'Numerisk tastatur 6',
+	numpad7: 'Numerisk tastatur 7',
+	numpad8: 'Numerisk tastatur 8',
+	numpad9: 'Numerisk tastatur 9',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	multiply: 'Multiply', // MISSING
 	add: 'Add', // MISSING
 	subtract: 'Subtract', // MISSING
 	decimalPoint: 'Decimal Point', // MISSING
 	divide: 'Divide', // MISSING
+<<<<<<< HEAD
 	f1: 'F1', // MISSING
 	f2: 'F2', // MISSING
 	f3: 'F3', // MISSING
@@ -142,6 +178,31 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'nb', {
 	graveAccent: 'Grave Accent', // MISSING
 	openBracket: 'Open Bracket', // MISSING
 	backSlash: 'Backslash', // MISSING
+=======
+	f1: 'F1',
+	f2: 'F2',
+	f3: 'F3',
+	f4: 'F4',
+	f5: 'F5',
+	f6: 'F6',
+	f7: 'F7',
+	f8: 'F8',
+	f9: 'F9',
+	f10: 'F10',
+	f11: 'F11',
+	f12: 'F12',
+	numLock: 'Num Lock',
+	scrollLock: 'Scroll Lock',
+	semiColon: 'Semikolon',
+	equalSign: 'Likhetstegn',
+	comma: 'Komma',
+	dash: 'Bindestrek',
+	period: 'Punktum',
+	forwardSlash: 'Forover skråstrek',
+	graveAccent: 'Grave Accent', // MISSING
+	openBracket: 'Open Bracket', // MISSING
+	backSlash: 'Bakover skråstrek',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	closeBracket: 'Close Bracket', // MISSING
 	singleQuote: 'Single Quote' // MISSING
 } );

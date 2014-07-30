@@ -10,13 +10,17 @@ CKEDITOR.plugins.setLang( 'toolbar', 'fa', {
 		clipboard: 'حافظه موقت/برگشت',
 		editing: 'در حال ویرایش',
 		forms: 'فرم​ها',
-		basicstyles: 'شیوه​های پایه',
+		basicstyles: 'سبک‌های پایه',
 		paragraph: 'بند',
 		links: 'پیوندها',
 		insert: 'ورود',
-		styles: 'شیوه​ها',
+		styles: 'سبک‌ها',
 		colors: 'رنگ​ها',
 		tools: 'ابزارها'
 	},
+<<<<<<< HEAD
 	toolbars: 'نوار ابزار'
+=======
+	toolbars: 'نوار ابزارهای ویرایش‌گر'
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

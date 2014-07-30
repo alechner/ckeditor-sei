@@ -84,6 +84,10 @@ CKEDITOR.lang[ 'ru' ] = {
 		alignTop: 'Поверху',
 		alignMiddle: 'Посередине',
 		alignBottom: 'Понизу',
+<<<<<<< HEAD
+=======
+		alignNone: 'Нет',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		invalidValue	: 'Недопустимое значение.',
 		invalidHeight: 'Высота задается числом.',
 		invalidWidth: 'Ширина задается числом.',

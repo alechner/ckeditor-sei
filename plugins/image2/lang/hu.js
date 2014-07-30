@@ -6,6 +6,10 @@ CKEDITOR.plugins.setLang( 'image2', 'hu', {
 	alt: 'Buborék szöveg',
 	btnUpload: 'Küldés a szerverre',
 	captioned: 'Feliratozott kép',
+<<<<<<< HEAD
+=======
+	captionPlaceholder: 'Képfelirat',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Alaptulajdonságok',
 	lockRatio: 'Arány megtartása',
 	menu: 'Kép tulajdonságai',

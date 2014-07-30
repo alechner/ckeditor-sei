@@ -16,7 +16,11 @@
 
 	CKEDITOR.plugins.add( 'language', {
 		requires: 'menubutton',
+<<<<<<< HEAD
 		lang: 'ca,cs,cy,el,en,en-gb,es,fi,hu,ja,km,nb,nl,no,pt,ru,sv,uk,zh,zh-cn', // %REMOVE_LINE_CORE%
+=======
+		lang: 'ar,ca,cs,cy,de,el,en,en-gb,eo,es,fa,fi,fr,gl,he,hr,hu,it,ja,km,nb,nl,no,pl,pt,pt-br,ru,sl,sv,tt,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		icons: 'language', // %REMOVE_LINE_CORE%
 		hidpi: true, // %REMOVE_LINE_CORE%
 
@@ -39,7 +43,11 @@
 					var item = items[ 'language_' + languageId ];
 
 					if ( item )
+<<<<<<< HEAD
 						editor[ item.style.checkActive( editor.elementPath() ) ? 'removeStyle' : 'applyStyle' ]( item.style );
+=======
+						editor[ item.style.checkActive( editor.elementPath(), editor ) ? 'removeStyle' : 'applyStyle' ]( item.style );
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				},
 				refresh: function( editor, path ) {
 					this.setState( plugin.getCurrentLangElement( editor ) ?

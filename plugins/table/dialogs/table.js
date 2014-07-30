@@ -1,9 +1,13 @@
 ﻿/**
+<<<<<<< HEAD
  * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+=======
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
-(function() {
+( function() {
 	var defaultToPixel = CKEDITOR.tools.cssLength;
 
 	var commitValue = function( data ) {
@@ -77,7 +81,7 @@
 							txtHeight = dialog.getContentElement( 'info', 'txtHeight' );
 
 						txtHeight && txtHeight.setValue( height, true );
-					});
+					} );
 				}
 			},
 
@@ -562,8 +566,8 @@
 
 	CKEDITOR.dialog.add( 'table', function( editor ) {
 		return tableDialog( editor, 'table' );
-	});
+	} );
 	CKEDITOR.dialog.add( 'tableProperties', function( editor ) {
 		return tableDialog( editor, 'tableProperties' );
-	});
-})();
+	} );
+} )();
