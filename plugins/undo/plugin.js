@@ -10,7 +10,11 @@
 
 ( function() {
 	CKEDITOR.plugins.add( 'undo', {
+<<<<<<< HEAD
 		lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+=======
+		lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		icons: 'redo,redo-rtl,undo,undo-rtl', // %REMOVE_LINE_CORE%
 		hidpi: true, // %REMOVE_LINE_CORE%
 		init: function( editor ) {
@@ -37,12 +41,32 @@
 				startDisabled: true,
 				canUndo: false
 			} );
+<<<<<<< HEAD
 
 			editor.setKeystroke( [
 				[ CKEDITOR.CTRL + 90 /*Z*/, 'undo' ],
 				[ CKEDITOR.CTRL + 89 /*Y*/, 'redo' ],
 				[ CKEDITOR.CTRL + CKEDITOR.SHIFT + 90 /*Z*/, 'redo' ]
 			] );
+=======
+
+			var keystrokes = [ CKEDITOR.CTRL + 90 /*Z*/, CKEDITOR.CTRL + 89 /*Y*/, CKEDITOR.CTRL + CKEDITOR.SHIFT + 90 /*Z*/ ];
+
+			editor.setKeystroke( [
+				[ keystrokes[ 0 ], 'undo' ],
+				[ keystrokes[ 1 ], 'redo' ],
+				[ keystrokes[ 2 ], 'redo' ]
+			] );
+
+			// Block undo/redo keystrokes when at the bottom/top of the undo stack (#11126 and #11677).
+			editor.on( 'contentDom', function() {
+				var editable = editor.editable();
+				editable.attachListener( editable, 'keydown', function( evt ) {
+					if ( CKEDITOR.tools.indexOf( keystrokes, evt.data.getKeystroke() ) > -1 )
+						evt.data.preventDefault();
+				} );
+			} );
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 			undoManager.onChange = function() {
 				undoCommand.setState( undoManager.undoable() ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
@@ -158,11 +182,22 @@
 			 * @member CKEDITOR.editor
  			 * @param {CKEDITOR.editor} editor This editor instance.
 			 * @param data
+<<<<<<< HEAD
 			 * @param {Boolean} [data.dontUpdate] When set to `true` the last snapshot will not be updated
 			 * with the current contents and selection. Read more in the {@link CKEDITOR.plugins.undo.UndoManager#lock} method.
 			 */
 			editor.on( 'lockSnapshot', function( evt ) {
 				undoManager.lock( evt.data && evt.data.dontUpdate );
+=======
+			 * @param {Boolean} [data.dontUpdate] When set to `true`, the last snapshot will not be updated
+			 * with the current content and selection. Read more in the {@link CKEDITOR.plugins.undo.UndoManager#lock} method.
+			 * @param {Boolean} [data.forceUpdate] When set to `true`, the last snapshot will always be updated
+			 * with the current content and selection. Read more in the {@link CKEDITOR.plugins.undo.UndoManager#lock} method.
+			 */
+			editor.on( 'lockSnapshot', function( evt ) {
+				var data = evt.data;
+				undoManager.lock( data && data.dontUpdate, data && data.forceUpdate );
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			} );
 
 			/**
@@ -217,8 +252,8 @@
 			var thisContents = this.contents,
 				otherContents = otherImage.contents;
 
-			// For IE6/7 : Comparing only the protected attribute values but not the original ones.(#4522)
-			if ( CKEDITOR.env.ie && ( CKEDITOR.env.ie7Compat || CKEDITOR.env.ie6Compat ) ) {
+			// For IE7 and IE QM: Comparing only the protected attribute values but not the original ones.(#4522)
+			if ( CKEDITOR.env.ie && ( CKEDITOR.env.ie7Compat || CKEDITOR.env.quirks ) ) {
 				thisContents = thisContents.replace( protectedAttrs, '' );
 				otherContents = otherContents.replace( protectedAttrs, '' );
 			}
@@ -414,15 +449,21 @@
 		 * Saves a snapshot of the document image for later retrieval.
 		 */
 		save: function( onContentOnly, image, autoFireChange ) {
-			// Do not change snapshots stack when locked.
-			if ( this.locked )
+			var editor = this.editor;
+			// Do not change snapshots stack when locked, editor is not ready,
+			// editable is not ready or when editor is in mode difference than 'wysiwyg'.
+			if ( this.locked || editor.status != 'ready' || editor.mode != 'wysiwyg' )
+				return false;
+
+			var editable = editor.editable();
+			if ( !editable || editable.status != 'ready' )
 				return false;
 
 			var snapshots = this.snapshots;
 
 			// Get a content image.
 			if ( !image )
-				image = new Image( this.editor );
+				image = new Image( editor );
 
 			// Do nothing if it was not possible to retrieve an image.
 			if ( image.contents === false )
@@ -437,8 +478,12 @@
 					if ( image.equalsSelection( this.currentImage ) )
 						return false;
 				} else
+<<<<<<< HEAD
 					this.editor.fire( 'change' );
 
+=======
+					editor.fire( 'change' );
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			}
 
 			// Drop future snapshots.
@@ -587,7 +632,11 @@
 		 * Updates the last snapshot of the undo stack with the current editor content.
 		 *
 		 * @param {CKEDITOR.plugins.undo.Image} [newImage] The image which will replace the current one.
+<<<<<<< HEAD
 		 * If not set defaults to image taken from editor.
+=======
+		 * If it is not set, it defaults to the image taken from editor.
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		 */
 		update: function( newImage ) {
 			// Do not change snapshots stack is locked.
@@ -621,6 +670,7 @@
 		 * **Note:** For every `lock` call you must call {@link #unlock} once to unlock the undo manager.
 		 *
 		 * @since 4.0
+<<<<<<< HEAD
 		 * @param {Boolean} [dontUpdate] When set to `true` the last snapashot will not be updated
 		 * with the current contents and selection. By default, if undo manager was up to date when lock started,
 		 * the last snapshot will be updated to the current state when unlocking. This means that all changes
@@ -629,10 +679,26 @@
 		 * separate snapshot.
 		 */
 		lock: function( dontUpdate ) {
+=======
+		 * @param {Boolean} [dontUpdate] When set to `true`, the last snapshot will not be updated
+		 * with current contents and selection. By default, if undo manager was up to date when the lock started,
+		 * the last snapshot will be updated to the current state when unlocking. This means that all changes
+		 * done during the lock will be merged into the previous snapshot or the next one. Use this option to gain
+		 * more control over this behavior. For example, it is possible to group changes done during the lock into
+		 * a separate snapshot.
+		 * @param {Boolean} [forceUpdate] When set to `true`, the last snapshot will always be updated with the
+		 * current content and selection regardless of the current state of the undo manager.
+		 * When not set, the last snapshot will be updated only if the undo manager was up to date when locking.
+		 * Additionally, this option makes it possible to lock the snapshot when the editor is not in the `wysiwyg` mode,
+		 * because when it is passed, the snapshots will not need to be compared.
+		 */
+		lock: function( dontUpdate, forceUpdate ) {
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			if ( !this.locked ) {
 				if ( dontUpdate )
 					this.locked = { level: 1 };
 				else {
+<<<<<<< HEAD
 					// Make a contents image. Don't include bookmarks, because:
 					// * we don't compare them,
 					// * there's a chance that DOM has been changed since
@@ -646,6 +712,28 @@
 					var matchedTip = this.currentImage && this.currentImage.equalsContent( imageBefore );
 
 					this.locked = { update: matchedTip ? imageBefore : null, level: 1 };
+=======
+					var update = null;
+
+					if ( forceUpdate )
+						update = true;
+					else {
+						// Make a contents image. Don't include bookmarks, because:
+						// * we don't compare them,
+						// * there's a chance that DOM has been changed since
+						// locked (e.g. fake) selection was made, so createBookmark2 could fail.
+						// http://dev.ckeditor.com/ticket/11027#comment:3
+						var imageBefore = new Image( this.editor, true );
+
+						// If current editor content matches the tip of snapshot stack,
+						// the stack tip must be updated by unlock, to include any changes made
+						// during this period.
+						if ( this.currentImage && this.currentImage.equalsContent( imageBefore ) )
+							update = imageBefore;
+					}
+
+					this.locked = { update: update, level: 1 };
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				}
 			}
 			// Increase the level of lock.
@@ -664,13 +752,29 @@
 			if ( this.locked ) {
 				// Decrease level of lock and check if equals 0, what means that undoM is completely unlocked.
 				if ( !--this.locked.level ) {
+<<<<<<< HEAD
 					var updateImage = this.locked.update,
 						newImage = updateImage && new Image( this.editor, true );
 
 					this.locked = null;
 
 					if ( updateImage && !updateImage.equalsContent( newImage ) )
+=======
+					var update = this.locked.update;
+
+					this.locked = null;
+
+					// forceUpdate was passed to lock().
+					if ( update === true )
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 						this.update();
+					// update is instance of Image.
+					else if ( update ) {
+						var newImage = new Image( this.editor, true );
+
+						if ( !update.equalsContent( newImage ) )
+							this.update();
+					}
 				}
 			}
 		}
@@ -697,7 +801,11 @@
  */
 
 /**
+<<<<<<< HEAD
  * Fired before an undo image is to be taken. An undo image represents the
+=======
+ * Fired before an undo image is to be created. An *undo image* represents the
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  * editor state at some point. It is saved into the undo store, so the editor is
  * able to recover the editor state on undo and redo operations.
  *
@@ -709,7 +817,11 @@
  */
 
 /**
+<<<<<<< HEAD
  * Fired after an undo image is taken. An undo image represents the
+=======
+ * Fired after an undo image is created. An *undo image* represents the
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  * editor state at some point. It is saved into the undo store, so the editor is
  * able to recover the editor state on undo and redo operations.
  *
@@ -728,8 +840,28 @@
  * changes. This event may thus in some cases be fired when no changes happen
  * or may even get fired twice.
  *
+<<<<<<< HEAD
  * If it is important not to get the change event too often, you should compare the
  * previous and the current editor content inside the event listener.
+=======
+ * If it is important not to get the `change` event fired too often, you should compare the
+ * previous and the current editor content inside the event listener. It is
+ * not recommended to do that on every `change` event.
+ *
+ * Please note that the `change` event is only fired in the {@link #property-mode wysiwyg mode}.
+ * In order to implement similar functionality in the source mode, you can listen for example to the {@link #key}
+ * event or the native [`input`](https://developer.mozilla.org/en-US/docs/Web/Reference/Events/input)
+ * event (not supported by Internet Explorer 8).
+ *
+ *		editor.on( 'mode', function() {
+ *			if ( this.mode == 'source' ) {
+ *				var editable = editor.editable();
+ *				editable.attachListener( editable, 'input', function() {
+ *					// Handle changes made in the source mode.
+ *				} );
+ *			}
+ *		} );
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  *
  * @since 4.2
  * @event change

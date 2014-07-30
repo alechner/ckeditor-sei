@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 /.settings
 /.project
 /.externalToolBuilders
 /rsyncExclude.txt
 dev/iconmaker/node_modules
 
+=======
+node_modules
+.bender/*
+bender-*.log
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b

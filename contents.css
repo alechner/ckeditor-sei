@@ -93,8 +93,34 @@ pre
 {
 	white-space: pre-wrap; /* CSS 2.1 */
 	word-wrap: break-word; /* IE7 */
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	-webkit-tab-size: 4;
+	tab-size: 4;
 }
 
+.marker
+{
+	background-color: Yellow;
+}
+
+span[lang]
+{
+	font-style: italic;
+}
+
+figure
+{
+	text-align: center;
+	border: solid 1px #ccc;
+	border-radius: 2px;
+	background: rgba(0,0,0,0.05);
+	padding: 10px;
+	margin: 10px 20px;
+	display: inline-block;
+}
+
+<<<<<<< HEAD
 .marker
 {
 	background-color: Yellow;
@@ -120,4 +146,17 @@ figure figcaption
 {
 	text-align: center;
 	display: block; /* For IE8 */
+=======
+figure > figcaption
+{
+	text-align: center;
+	display: block; /* For IE8 */
+}
+
+a > img {
+	padding: 1px;
+	margin: 1px;
+	border: none;
+	outline: 1px solid #0782C1;
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 }

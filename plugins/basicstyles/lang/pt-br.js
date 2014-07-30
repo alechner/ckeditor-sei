@@ -8,5 +8,9 @@ CKEDITOR.plugins.setLang( 'basicstyles', 'pt-br', {
 	strike: 'Tachado',
 	subscript: 'Subscrito',
 	superscript: 'Sobrescrito',
+<<<<<<< HEAD
 	underline: 'Sublinhado (Ctrl+S)'
+=======
+	underline: 'Sublinhado'
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

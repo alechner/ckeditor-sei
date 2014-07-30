@@ -13,6 +13,10 @@ var path = require( 'path' ),
 	png = require( 'png-js' ),
 	tmp = require( 'tmp' ),
 	q = require( 'q' ),
+<<<<<<< HEAD
+=======
+	mkdir = require( 'mkdirp' ).sync,
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	convertTpl = 'convert %s -crop %sx%s+%s+%s +repage -sharpen 0x1.0 png32:%s',
 
 	DEFAULT_SIZE = 16;
@@ -109,7 +113,11 @@ function updateIcon( iconPath, tmpIconPath, dirName, cold ) {
 		console.log( '       %s Creating directory %s', cold, dirName );
 
 		// Create directory if doesn't exist.
+<<<<<<< HEAD
 		!cold && fs.mkdirSync( dirName );
+=======
+		!cold && mkdir( dirName );
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	}
 
 	console.log( '       %s Moving new icon to %s', cold, iconPath );

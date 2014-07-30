@@ -9,7 +9,11 @@
 
 CKEDITOR.plugins.add( 'forms', {
 	requires: 'dialog,fakeobjects',
+<<<<<<< HEAD
 	lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+=======
+	lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	icons: 'button,checkbox,form,hiddenfield,imagebutton,radio,select,select-rtl,textarea,textarea-rtl,textfield', // %REMOVE_LINE_CORE%
 	hidpi: true, // %REMOVE_LINE_CORE%
 	onLoad: function() {
@@ -275,6 +279,7 @@ CKEDITOR.plugins.add( 'forms', {
 		}
 	}
 } );
+<<<<<<< HEAD
 
 if ( CKEDITOR.env.ie ) {
 	CKEDITOR.dom.element.prototype.hasAttribute = CKEDITOR.tools.override( CKEDITOR.dom.element.prototype.hasAttribute, function( original ) {
@@ -297,3 +302,5 @@ if ( CKEDITOR.env.ie ) {
 		};
 	} );
 }
+=======
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b

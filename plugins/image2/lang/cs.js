@@ -6,6 +6,10 @@ CKEDITOR.plugins.setLang( 'image2', 'cs', {
 	alt: 'Alternativní text',
 	btnUpload: 'Odeslat na server',
 	captioned: 'Obrázek s popisem',
+<<<<<<< HEAD
+=======
+	captionPlaceholder: 'Popis',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Informace o obrázku',
 	lockRatio: 'Zámek',
 	menu: 'Vlastnosti obrázku',

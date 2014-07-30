@@ -6,6 +6,10 @@ CKEDITOR.plugins.setLang( 'image2', 'cy', {
 	alt: 'Testun Amgen',
 	btnUpload: 'Anfon i\'r Gweinydd',
 	captioned: 'Delwedd â phennawd',
+<<<<<<< HEAD
+=======
+	captionPlaceholder: 'Caption', // MISSING
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Gwyb Delwedd',
 	lockRatio: 'Cloi Cymhareb',
 	menu: 'Priodweddau Delwedd',

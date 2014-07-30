@@ -76,7 +76,11 @@
 				sClassName = oElement[ 1 ];
 
 			styles.push( {
+<<<<<<< HEAD
 				name: sClassName,
+=======
+				name: element + '.' + sClassName,
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				element: element,
 				attributes: { 'class': sClassName }
 			} );

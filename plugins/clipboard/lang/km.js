@@ -8,8 +8,14 @@ CKEDITOR.plugins.setLang( 'clipboard', 'km', {
 	cut: 'កាត់យក',
 	cutError: 'ការកំណត់សុវត្ថភាពរបស់កម្មវិធីរុករករបស់លោកអ្នក នេះ​មិនអាចធ្វើកម្មវិធីតាក់តែងអត្ថបទ កាត់អត្ថបទយកដោយស្វ័យប្រវត្តបានឡើយ ។ សូមប្រើប្រាស់បន្សំ ឃីដូចនេះ  (Ctrl/Cmd+X) ។',
 	paste: 'បិទ​ភ្ជាប់',
+<<<<<<< HEAD
 	pasteArea: 'Paste Area', // MISSING
 	pasteMsg: 'សូមចំលងអត្ថបទទៅដាក់ក្នុងប្រអប់ដូចខាងក្រោមដោយប្រើប្រាស់ ឃី ​(<STRONG>Ctrl/Cmd+V</STRONG>) ហើយចុច <STRONG>OK</STRONG> ។',
 	securityMsg: 'Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.', // MISSING
+=======
+	pasteArea: 'តំបន់​បិទ​ភ្ជាប់',
+	pasteMsg: 'សូមចំលងអត្ថបទទៅដាក់ក្នុងប្រអប់ដូចខាងក្រោមដោយប្រើប្រាស់ ឃី ​(<STRONG>Ctrl/Cmd+V</STRONG>) ហើយចុច <STRONG>OK</STRONG> ។',
+	securityMsg: 'ព្រោះតែ​ការកំណត់​សុវត្ថិភាព ប្រអប់សរសេរ​មិន​អាចចាប់​យកទិន្នន័យពីក្តារតម្បៀតខ្ទាស់​អ្នក​​ដោយផ្ទាល់​បានទេ។ អ្នក​ត្រូវចំលង​ដាក់វាម្តង​ទៀត ក្នុងផ្ទាំងនេះ។',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	title: 'បិទ​ភ្ជាប់'
 } );

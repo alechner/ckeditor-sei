@@ -4,7 +4,7 @@
  */
 
 /**
- * @fileOverview The "wysiwygarea" plugin. It registers the "wysiwyg" editing
+ * @fileOverview The WYSIWYG Area plugin. It registers the "wysiwyg" editing
  *		mode, which handles the main editing area space.
  */
 
@@ -46,6 +46,7 @@
 					iframe.on( 'load', onLoad );
 
 				var frameLabel = editor.title,
+<<<<<<< HEAD
 					frameDesc = editor.lang.common.editorHelp;
 
 				if ( frameLabel ) {
@@ -54,20 +55,41 @@
 
 					iframe.setAttribute( 'title', frameLabel );
 				}
+=======
+					helpLabel = editor.fire( 'ariaEditorHelpLabel', {} ).label;
 
-				var labelId = CKEDITOR.tools.getNextId(),
-					desc = CKEDITOR.dom.element.createFromHtml( '<span id="' + labelId + '" class="cke_voice_label">' + frameDesc + '</span>' );
+				if ( frameLabel ) {
+					if ( CKEDITOR.env.ie && helpLabel )
+						frameLabel += ', ' + helpLabel;
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
-				contentSpace.append( desc, 1 );
+					iframe.setAttribute( 'title', frameLabel );
+				}
+
+				if ( helpLabel ) {
+					var labelId = CKEDITOR.tools.getNextId(),
+						desc = CKEDITOR.dom.element.createFromHtml( '<span id="' + labelId + '" class="cke_voice_label">' + helpLabel + '</span>' );
+
+					contentSpace.append( desc, 1 );
+					iframe.setAttribute( 'aria-describedby', labelId );
+				}
 
 				// Remove the ARIA description.
 				editor.on( 'beforeModeUnload', function( evt ) {
 					evt.removeListener();
+<<<<<<< HEAD
 					desc.remove();
 				} );
 
 				iframe.setAttributes( {
 					'aria-describedby': labelId,
+=======
+					if ( desc )
+						desc.remove();
+				} );
+
+				iframe.setAttributes( {
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 					tabIndex: editor.tabIndex,
 					allowTransparency: 'true'
 				} );
@@ -102,6 +124,32 @@
 			} );
 		}
 	} );
+<<<<<<< HEAD
+=======
+
+	/**
+	 * Adds the path to a stylesheet file to the exisiting {@link CKEDITOR.config#contentsCss} value.
+	 *
+	 * **Note:** This method is available only with the `wysiwygarea` plugin and only affects
+	 * classic editors based on it (so it does not affect inline editors).
+	 *
+	 *		editor.addContentsCss( 'assets/contents.css' );
+	 *
+	 * @since 4.4
+	 * @param {String} cssPath The path to the stylesheet file which should be added.
+	 * @member CKEDITOR.editor
+	 */
+	CKEDITOR.editor.prototype.addContentsCss = function( cssPath ) {
+		var cfg = this.config,
+			curContentsCss = cfg.contentsCss;
+
+		// Convert current value into array.
+		if ( !CKEDITOR.tools.isArray( curContentsCss ) )
+			cfg.contentsCss = curContentsCss ? [ curContentsCss ] : [];
+
+		cfg.contentsCss.push( cssPath );
+	};
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 	function onDomReady( win ) {
 		var editor = this.editor,
@@ -112,6 +160,8 @@
 		var script = doc.getElementById( 'cke_actscrpt' );
 		script && script.parentNode.removeChild( script );
 		script = doc.getElementById( 'cke_shimscrpt' );
+		script && script.parentNode.removeChild( script );
+		script = doc.getElementById( 'cke_basetagscrpt' );
 		script && script.parentNode.removeChild( script );
 
 		if ( CKEDITOR.env.gecko ) {
@@ -195,13 +245,15 @@
 			} );
 		}
 
-		// ## START : disableNativeTableHandles and disableObjectResizing settings.
+		// Config props: disableObjectResizing and disableNativeTableHandles handler.
+		objectResizeDisabler( editor );
 
 		// Enable dragging of position:absolute elements in IE.
 		try {
 			editor.document.$.execCommand( '2D-position', false, true );
 		} catch ( e ) {}
 
+<<<<<<< HEAD
 		// IE, Opera and Safari may not support it and throw errors.
 		try {
 			editor.document.$.execCommand( 'enableInlineTableEditing', false, !editor.config.disableNativeTableHandles );
@@ -218,6 +270,8 @@
 			}
 		}
 
+=======
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		if ( CKEDITOR.env.gecko || CKEDITOR.env.ie && editor.document.$.compatMode == 'CSS1Compat' ) {
 			this.attachListener( this, 'keydown', function( evt ) {
 				var keyCode = evt.data.getKeystroke();
@@ -264,8 +318,13 @@
 			} );
 		}
 
-		// ## END
-
+		if ( CKEDITOR.env.iOS ) {
+			// [iOS] If touch is bound to any parent of the iframe blur happens on any touch
+			// event and body becomes the focused element (#10714).
+			this.attachListener( doc, 'touchend', function() {
+				win.focus();
+			} );
+		}
 
 		var title = editor.document.getElementsByTag( 'title' ).getItem( 0 );
 		title.data( 'cke-title', editor.document.$.title );
@@ -277,6 +336,10 @@
 			editor.document.$.title = this._.docTitle;
 
 		CKEDITOR.tools.setTimeout( function() {
+			// Editable is ready after first setData.
+			if ( this.status == 'unloaded' )
+				this.status = 'ready';
+
 			editor.fire( 'contentDom' );
 
 			if ( this._.isPendingFocus ) {
@@ -437,6 +500,19 @@
 						bootstrapCode +=
 							'<script id="cke_shimscrpt">' +
 								'window.parent.CKEDITOR.tools.enableHtml5Elements(document)' +
+<<<<<<< HEAD
+=======
+							'</script>';
+					}
+
+					// IE<10 needs this hack to properly enable <base href="...">.
+					// See: http://stackoverflow.com/a/13373180/1485219 (#11910).
+					if ( baseTag && CKEDITOR.env.ie && CKEDITOR.env.version < 10 ) {
+						bootstrapCode +=
+							'<script id="cke_basetagscrpt">' +
+								'var baseTag = document.querySelector( "base" );' +
+								'baseTag.href = baseTag.href;' +
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 							'</script>';
 					}
 
@@ -518,6 +594,51 @@
 			}
 		}
 	} );
+<<<<<<< HEAD
+=======
+
+	function objectResizeDisabler( editor ) {
+		if ( CKEDITOR.env.gecko ) {
+			// FF allows to change resizing preferences by calling execCommand.
+			try {
+				var doc = editor.document.$;
+				doc.execCommand( 'enableObjectResizing', false, !editor.config.disableObjectResizing );
+				doc.execCommand( 'enableInlineTableEditing', false, !editor.config.disableNativeTableHandles );
+			} catch( e ) {}
+		} else if ( CKEDITOR.env.ie && CKEDITOR.env.version < 11 && editor.config.disableObjectResizing ) {
+			// It's possible to prevent resizing up to IE10.
+			blockResizeStart( editor );
+		}
+
+		// Disables resizing by preventing default action on resizestart event.
+		function blockResizeStart() {
+			var lastListeningElement;
+
+			// We'll attach only one listener at a time, instead of adding it to every img, input, hr etc.
+			// Listener will be attached upon selectionChange, we'll also check if there was any element that
+			// got listener before (lastListeningElement) - if so we need to remove previous listener.
+			editor.editable().attachListener( editor, 'selectionChange', function() {
+				var selectedElement = editor.getSelection().getSelectedElement();
+
+				if ( selectedElement ) {
+					if ( lastListeningElement ) {
+						lastListeningElement.detachEvent( 'onresizestart', resizeStartListener );
+						lastListeningElement = null;
+					}
+
+					// IE requires using attachEvent, because it does not work using W3C compilant addEventListener,
+					// tested with IE10.
+					selectedElement.$.attachEvent( 'onresizestart', resizeStartListener );
+					lastListeningElement = selectedElement.$;
+				}
+			} );
+		}
+
+		function resizeStartListener( evt ) {
+			evt.returnValue = false;
+		}
+	}
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 	// DOM modification here should not bother dirty flag.(#4385)
 	function restoreDirty( editor ) {
@@ -560,9 +681,15 @@
 } )();
 
 /**
- * Disables the ability of resize objects (image and tables) in the editing area.
+ * Disables the ability to resize objects (images and tables) in the editing area.
  *
  *		config.disableObjectResizing = true;
+ *
+ * **Note:** Because of incomplete implementation of editing features in browsers
+ * this option does not work for inline editors (see ticket [#10197](http://dev.ckeditor.com/ticket/10197)),
+ * does not work in Internet Explorer 11+ (see [#9317](http://dev.ckeditor.com/ticket/9317#comment:16) and
+ * [IE11+ issue](https://connect.microsoft.com/IE/feedback/details/742593/please-respect-execcommand-enableobjectresizing-in-contenteditable-elements)).
+ * In Internet Explorer 8-10 this option only blocks resizing, but it is unable to hide the resize handles.
  *
  * @cfg
  * @member CKEDITOR.config
@@ -571,7 +698,7 @@ CKEDITOR.config.disableObjectResizing = false;
 
 /**
  * Disables the "table tools" offered natively by the browser (currently
- * Firefox only) to make quick table editing operations, like adding or
+ * Firefox only) to perform quick table editing operations, like adding or
  * deleting rows and columns.
  *
  *		config.disableNativeTableHandles = false;
@@ -582,13 +709,14 @@ CKEDITOR.config.disableObjectResizing = false;
 CKEDITOR.config.disableNativeTableHandles = true;
 
 /**
- * Disables the built-in words spell checker if browser provides one.
+ * Disables the built-in spell checker if the browser provides one.
  *
- * **Note:** Although word suggestions provided by browsers (natively) will
+ * **Note:** Although word suggestions provided natively by the browsers will
  * not appear in CKEditor's default context menu,
  * users can always reach the native context menu by holding the
  * *Ctrl* key when right-clicking if {@link #browserContextMenuOnCtrl}
- * is enabled or you're simply not using the context menu plugin.
+ * is enabled or you are simply not using the
+ * [context menu](http://ckeditor.com/addon/contextmenu) plugin.
  *
  *		config.disableNativeSpellChecker = false;
  *
@@ -598,9 +726,13 @@ CKEDITOR.config.disableNativeTableHandles = true;
 CKEDITOR.config.disableNativeSpellChecker = true;
 
 /**
- * The CSS file(s) to be used to apply style to the contents. It should
- * reflect the CSS used in the final pages where the contents are to be
- * used.
+ * The CSS file(s) to be used to apply style to editor content. It should
+ * reflect the CSS used in the target pages where the content is to be
+ * displayed.
+ *
+ * **Note:** This configuration value is ignored by [inline editor](#!/guide/dev_inline)
+ * as it uses the styles that come directly from the page that CKEditor is
+ * rendered on.
  *
  *		config.contentsCss = '/css/mysitestyles.css';
  *		config.contentsCss = ['/css/mysitestyles.css', '/css/anotherfile.css'];
@@ -611,8 +743,8 @@ CKEDITOR.config.disableNativeSpellChecker = true;
 CKEDITOR.config.contentsCss = CKEDITOR.getUrl( 'contents.css' );
 
 /**
- * Language code of  the writting language which is used to author the editor
- * contents.
+ * Language code of  the writing language which is used to author the editor
+ * content.
  *
  *		config.contentsLanguage = 'fr';
  *
@@ -631,8 +763,8 @@ CKEDITOR.config.contentsCss = CKEDITOR.getUrl( 'contents.css' );
  */
 
 /**
- * Whether automatically create wrapping blocks around inline contents inside document body,
- * this helps to ensure the integrality of the block enter mode.
+ * Whether to automatically create wrapping blocks around inline content inside the document body.
+ * This helps to ensure the integrity of the block *Enter* mode.
  *
  * **Note:** Changing the default value might introduce unpredictable usability issues.
  *

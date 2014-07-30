@@ -20,7 +20,11 @@
 CKEDITOR.lang[ 'sl' ] = {
 	// ARIA description.
 	editor: 'Bogat Urejevalnik Besedila',
+<<<<<<< HEAD
 	editorPanel: 'Rich Text Editor panel', // MISSING
+=======
+	editorPanel: 'Rich Text Editor plošča',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 	// Common messages and labels.
 	common: {
@@ -84,6 +88,10 @@ CKEDITOR.lang[ 'sl' ] = {
 		alignTop: 'Na vrh',
 		alignMiddle: 'V sredino',
 		alignBottom: 'Na dno',
+<<<<<<< HEAD
+=======
+		alignNone: 'None', // MISSING
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		invalidValue	: 'Neveljavna vrednost.',
 		invalidHeight: 'Višina mora biti število.',
 		invalidWidth: 'Širina mora biti število.',

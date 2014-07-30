@@ -99,6 +99,7 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'el', {
 	upArrow: 'Πάνω Βέλος',
 	rightArrow: 'Δεξί Βέλος',
 	downArrow: 'Κάτω Βέλος',
+<<<<<<< HEAD
 	insert: 'Insert', // MISSING
 	'delete': 'Delete', // MISSING
 	leftWindowKey: 'Αριστερό Πλήκτρο Windows',
@@ -119,6 +120,28 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'el', {
 	subtract: 'Αφαιρέστε',
 	decimalPoint: 'Υποδιαστολή',
 	divide: 'Διαιρέστε',
+=======
+	insert: 'Insert ',
+	'delete': 'Delete',
+	leftWindowKey: 'Αριστερό Πλήκτρο Windows',
+	rightWindowKey: 'Δεξί Πλήκτρο Windows',
+	selectKey: 'Πλήκτρο Select',
+	numpad0: 'Αριθμητικό πληκτρολόγιο 0',
+	numpad1: 'Αριθμητικό Πληκτρολόγιο 1',
+	numpad2: 'Αριθμητικό πληκτρολόγιο 2',
+	numpad3: 'Αριθμητικό πληκτρολόγιο 3',
+	numpad4: 'Αριθμητικό πληκτρολόγιο 4',
+	numpad5: 'Αριθμητικό πληκτρολόγιο 5',
+	numpad6: 'Αριθμητικό πληκτρολόγιο 6',
+	numpad7: 'Αριθμητικό πληκτρολόγιο 7',
+	numpad8: 'Αριθμητικό πληκτρολόγιο 8',
+	numpad9: 'Αριθμητικό πληκτρολόγιο 9',
+	multiply: 'Πολλαπλασιασμός',
+	add: 'Πρόσθεση',
+	subtract: 'Αφαίρεση',
+	decimalPoint: 'Υποδιαστολή',
+	divide: 'Διαίρεση',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	f1: 'F1',
 	f2: 'F2',
 	f3: 'F3',

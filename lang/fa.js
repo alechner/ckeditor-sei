@@ -19,7 +19,11 @@
  */
 CKEDITOR.lang[ 'fa' ] = {
 	// ARIA description.
+<<<<<<< HEAD
 	editor: 'ویرایشگر متن کامل',
+=======
+	editor: 'ویرایش‌گر متن غنی',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	editorPanel: 'پنل ویرایشگر متن غنی',
 
 	// Common messages and labels.
@@ -30,8 +34,13 @@ CKEDITOR.lang[ 'fa' ] = {
 
 		browseServer: 'فهرست​نمایی سرور',
 		url: 'URL',
+<<<<<<< HEAD
 		protocol: 'پروتکل',
 		upload: 'آپلود',
+=======
+		protocol: 'قرارداد',
+		upload: 'بالاگذاری',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		uploadSubmit: 'به سرور بفرست',
 		image: 'تصویر',
 		flash: 'فلش',
@@ -44,29 +53,44 @@ CKEDITOR.lang[ 'fa' ] = {
 		button: 'دکمه',
 		select: 'فیلد انتخاب چند گزینه​ای',
 		imageButton: 'دکمه‌ی تصویری',
+<<<<<<< HEAD
 		notSet: '<تعین نشده>',
 		id: 'شناسه',
 		name: 'نام',
 		langDir: 'جهت​نمای زبان',
+=======
+		notSet: '<تعیین‌نشده>',
+		id: 'شناسه',
+		name: 'نام',
+		langDir: 'جهت زبان',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		langDirLtr: 'چپ به راست',
 		langDirRtl: 'راست به چپ',
 		langCode: 'کد زبان',
 		longDescr: 'URL توصیف طولانی',
 		cssClass: 'کلاس​های شیوه​نامه (Stylesheet)',
 		advisoryTitle: 'عنوان کمکی',
+<<<<<<< HEAD
 		cssStyle: 'شیوه (style)',
+=======
+		cssStyle: 'سبک',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		ok: 'پذیرش',
 		cancel: 'انصراف',
 		close: 'بستن',
 		preview: 'پیش‌نمایش',
 		resize: 'تغییر اندازه',
 		generalTab: 'عمومی',
-		advancedTab: 'پیشرفته',
+		advancedTab: 'پیش‌رفته',
 		validateNumberFailed: 'این مقدار یک عدد نیست.',
 		confirmNewPage: 'هر تغییر ایجاد شده​ی ذخیره نشده از بین خواهد رفت. آیا اطمینان دارید که قصد بارگیری صفحه جدیدی را دارید؟',
 		confirmCancel: 'برخی از گزینه‌ها تغییر کرده‌اند. آیا واقعا قصد بستن این پنجره را دارید؟',
 		options: 'گزینه​ها',
+<<<<<<< HEAD
 		target: 'نحوه باز کردن',
+=======
+		target: 'مقصد',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		targetNew: 'پنجره جدید',
 		targetTop: 'بالاترین پنجره',
 		targetSelf: 'همان پنجره',
@@ -74,7 +98,11 @@ CKEDITOR.lang[ 'fa' ] = {
 		langDirLTR: 'چپ به راست',
 		langDirRTL: 'راست به چپ',
 		styles: 'سبک',
+<<<<<<< HEAD
 		cssClasses: 'کلاس‌های شیوه‌نامه',
+=======
+		cssClasses: 'کلاس‌های سبک‌نامه',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		width: 'عرض',
 		height: 'طول',
 		align: 'چینش',
@@ -82,8 +110,12 @@ CKEDITOR.lang[ 'fa' ] = {
 		alignRight: 'راست',
 		alignCenter: 'مرکز',
 		alignTop: 'بالا',
-		alignMiddle: 'وسط',
+		alignMiddle: 'میانه',
 		alignBottom: 'پائین',
+<<<<<<< HEAD
+=======
+		alignNone: 'هیچ',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		invalidValue	: 'مقدار نامعتبر.',
 		invalidHeight: 'ارتفاع باید یک عدد باشد.',
 		invalidWidth: 'عرض باید یک عدد باشد.',

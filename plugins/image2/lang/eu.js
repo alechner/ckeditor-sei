@@ -6,6 +6,10 @@ CKEDITOR.plugins.setLang( 'image2', 'eu', {
 	alt: 'Ordezko Testua',
 	btnUpload: 'Zerbitzarira bidalia',
 	captioned: 'Captioned image', // MISSING
+<<<<<<< HEAD
+=======
+	captionPlaceholder: 'Caption', // MISSING
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Irudi informazioa',
 	lockRatio: 'Erlazioa Blokeatu',
 	menu: 'Irudi Ezaugarriak',

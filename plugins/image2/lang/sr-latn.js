@@ -6,6 +6,10 @@ CKEDITOR.plugins.setLang( 'image2', 'sr-latn', {
 	alt: 'Alternativni tekst',
 	btnUpload: 'Pošalji na server',
 	captioned: 'Captioned image', // MISSING
+<<<<<<< HEAD
+=======
+	captionPlaceholder: 'Caption', // MISSING
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Info slike',
 	lockRatio: 'Zaključaj odnos',
 	menu: 'Osobine slika',

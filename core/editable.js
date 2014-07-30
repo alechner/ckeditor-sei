@@ -14,13 +14,14 @@
 	CKEDITOR.editable = CKEDITOR.tools.createClass( {
 		base: CKEDITOR.dom.element,
 		/**
-		 * The constructor hold only generic editable creation logic that are commonly shared among all different editable elements.
+		 * The constructor only stores generic editable creation logic that is commonly shared among
+		 * all different editable elements.
 		 *
 		 * @constructor Creates an editable class instance.
 		 * @param {CKEDITOR.editor} editor The editor instance on which the editable operates.
-		 * @param {HTMLElement/CKEDITOR.dom.element} element Any DOM element that been used as the editor's
+		 * @param {HTMLElement/CKEDITOR.dom.element} element Any DOM element that was as the editor's
 		 * editing container, e.g. it could be either an HTML element with the `contenteditable` attribute
-		 * set to the true that handles wysiwyg editing or a `<textarea>` element that handles source editing.
+		 * set to the `true` that handles WYSIWYG editing or a `<textarea>` element that handles source editing.
 		 */
 		$: function( editor, element ) {
 			// Transform the element into a CKEDITOR.dom.element instance.
@@ -29,7 +30,22 @@
 			this.editor = editor;
 
 			/**
-			 * Indicate whether the editable element has gained focus.
+			 * Indicates the initialization status of the editable element. The following statuses are available:
+			 *
+			 *	* **unloaded** &ndash; the initial state. The editable's instance was created but
+			 *	is not fully loaded (in particular it has no data).
+			 *	* **ready** &ndash; the editable is fully initialized. The `ready` status is set after
+			 *	the first {@link CKEDITOR.editor#method-setData} is called.
+			 *	* **detached** &ndash; the editable was detached.
+			 *
+			 * @since 4.3.3
+			 * @readonly
+			 * @property {String}
+			 */
+			this.status = 'unloaded';
+
+			/**
+			 * Indicates whether the editable element gained focus.
 			 *
 			 * @property {Boolean} hasFocus
 			 */
@@ -97,9 +113,52 @@
 			},
 
 			/**
-			 * Registers an event listener that needs to be removed on detaching.
+			 * Registers an event listener that needs to be removed when detaching this editable.
+			 * This means that it will be automatically removed when {@link #detach} is executed,
+			 * for example on {@link CKEDITOR.editor#setMode changing editor mode} or destroying editor.
 			 *
-			 * @see CKEDITOR.event#on
+			 * Except for `obj` all other arguments have the same meaning as in {@link CKEDITOR.event#on}.
+			 *
+			 * This method is strongly related to the {@link CKEDITOR.editor#contentDom} and
+			 * {@link CKEDITOR.editor#contentDomUnload} events, because they are fired
+			 * when an editable is being attached and detached. Therefore, this method is usually used
+			 * in the following way:
+			 *
+			 *		editor.on( 'contentDom', function() {
+			 *			var editable = editor.editable();
+			 *			editable.attachListener( editable, 'mousedown', function() {
+			 *				// ...
+			 *			} );
+			 *		} );
+			 *
+			 * This code will attach the `mousedown` listener every time a new editable is attached
+			 * to the editor, which in classic (`iframe`-based) editor happens every time the
+			 * data or the mode is set. This listener will also be removed when that editable is detached.
+			 *
+			 * It is also possible to attach a listener to another object (e.g. to a document).
+			 *
+			 *		editor.on( 'contentDom', function() {
+			 *			editor.editable().attachListener( editor.document, 'mousedown', function() {
+			 *				// ...
+			 *			} );
+			 *		} );
+			 *
+			 * @param {CKEDITOR.event} obj The element/object to which the listener will be attached. Every object
+			 * which inherits from {@link CKEDITOR.event} may be used including {@link CKEDITOR.dom.element},
+			 * {@link CKEDITOR.dom.document}, and {@link CKEDITOR.editable}.
+			 * @param {String} eventName The name of the event that will be listened to.
+			 * @param {Function} listenerFunction The function listening to the
+			 * event. A single {@link CKEDITOR.eventInfo} object instance
+			 * containing all the event data is passed to this function.
+			 * @param {Object} [scopeObj] The object used to scope the listener
+			 * call (the `this` object). If omitted, the current object is used.
+			 * @param {Object} [listenerData] Data to be sent as the
+			 * {@link CKEDITOR.eventInfo#listenerData} when calling the listener.
+			 * @param {Number} [priority=10] The listener priority. Lower priority
+			 * listeners are called first. Listeners with the same priority
+			 * value are called in the registration order.
+			 * @returns {Object} An object containing the `removeListener`
+			 * function that can be used to remove the listener at any time.
 			 */
 			attachListener: function( obj, event, fn, scope, listenerData, priority ) {
 				!this._.listeners && ( this._.listeners = [] );
@@ -303,6 +362,12 @@
 			 * @param {CKEDITOR.dom.element} element The element to be inserted.
 			 */
 			insertElementIntoSelection: function( element ) {
+<<<<<<< HEAD
+=======
+				// Prepare for the insertion. For example - focus editor (#11848).
+				beforeInsert( this );
+
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				var editor = this.editor,
 					enterMode = editor.activeEnterMode,
 					selection = editor.getSelection(),
@@ -310,9 +375,12 @@
 					elementName = element.getName(),
 					isBlock = CKEDITOR.dtd.$block[ elementName ];
 
+<<<<<<< HEAD
 				// Prepare for the insertion.
 				beforeInsert( this );
 
+=======
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				// Insert element into first range only and ignore the rest (#11183).
 				if ( this.insertElementIntoRange( element, range ) ) {
 					range.moveToPosition( element, CKEDITOR.POSITION_AFTER_END );
@@ -344,8 +412,7 @@
 				// Set up the correct selection.
 				selection.selectRanges( [ range ] );
 
-				// Do not scroll after inserting, because Opera may fail on certain element (e.g. iframe/iframe.html).
-				afterInsert( this, CKEDITOR.env.opera );
+				afterInsert( this );
 			},
 
 			/**
@@ -356,6 +423,11 @@
 					data = this.editor.dataProcessor.toHtml( data );
 
 				this.setHtml( data );
+
+				// Editable is ready after first setData.
+				if ( this.status == 'unloaded' )
+					this.status = 'ready';
+
 				this.editor.fire( 'dataReady' );
 			},
 
@@ -386,6 +458,8 @@
 			detach: function() {
 				// Cleanup the element.
 				this.removeClass( 'cke_editable' );
+
+				this.status = 'detached';
 
 				// Save the editor reference which will be lost after
 				// calling detach from super class.
@@ -491,16 +565,6 @@
 
 				// Update focus states.
 				this.on( 'blur', function( evt ) {
-					// Opera might raise undesired blur event on editable, check if it's
-					// really blurred, otherwise cancel the event. (#9459)
-					if ( CKEDITOR.env.opera ) {
-						var active = CKEDITOR.document.getActive();
-						if ( active.equals( this.isInline() ? this : this.getWindow().getFrame() ) ) {
-							evt.cancel();
-							return;
-						}
-					}
-
 					this.hasFocus = false;
 				}, null, null, -1 );
 
@@ -582,7 +646,10 @@
 					if ( editor.readOnly )
 						return true;
 
-					var keyCode = evt.data.keyCode, isHandled;
+					// Use getKey directly in order to ignore modifiers.
+					// Justification: http://dev.ckeditor.com/ticket/11861#comment:13
+					var keyCode = evt.data.domEvent.getKey(),
+						isHandled;
 
 					// Backspace OR Delete.
 					if ( keyCode in backspaceOrDelete ) {
@@ -696,10 +763,13 @@
 				CKEDITOR.env.ie && this.attachListener( this, 'click', blockInputClick );
 
 				// Gecko/Webkit need some help when selecting control type elements. (#3448)
-				if ( !( CKEDITOR.env.ie || CKEDITOR.env.opera ) ) {
+				if ( !CKEDITOR.env.ie ) {
 					this.attachListener( this, 'mousedown', function( ev ) {
 						var control = ev.data.getTarget();
-						if ( control.is( 'img', 'hr', 'input', 'textarea', 'select' ) ) {
+						// #11727. Note: htmlDP assures that input/textarea/select have contenteditable=false
+						// attributes. However, they also have data-cke-editable attribute, so isReadOnly() returns false,
+						// and therefore those elements are correctly selected by this code.
+						if ( control.is( 'img', 'hr', 'input', 'textarea', 'select' ) && !control.isReadOnly() ) {
 							editor.getSelection().selectElement( control );
 
 							// Prevent focus from stealing from the editable. (#9515)
@@ -738,6 +808,40 @@
 						if ( ev.data.getTarget().is( 'input', 'textarea' ) )
 							ev.data.preventDefault();
 					} );
+<<<<<<< HEAD
+=======
+				}
+
+				// Prevent Webkit/Blink from going rogue when joining
+				// blocks on BACKSPACE/DEL (#11861,#9998).
+				if ( CKEDITOR.env.webkit ) {
+					this.attachListener( editor, 'key', function( evt ) {
+						// Use getKey directly in order to ignore modifiers.
+						// Justification: http://dev.ckeditor.com/ticket/11861#comment:13
+						var key = evt.data.domEvent.getKey();
+
+						if ( !( key in backspaceOrDelete ) )
+							return;
+
+						var backspace = key == 8,
+							range = editor.getSelection().getRanges()[ 0 ],
+							startPath = range.startPath();
+
+						if ( range.collapsed ) {
+							if ( !mergeBlocksCollapsedSelection( editor, range, backspace, startPath ) )
+								return;
+						} else {
+							if ( !mergeBlocksNonCollapsedSelection( editor, range, startPath ) )
+								return;
+						}
+
+						// Scroll to the new position of the caret (#11960).
+						editor.getSelection().scrollIntoView();
+						editor.fire( 'saveSnapshot' );
+
+						return false;
+					}, this, null, 100 ); // Later is better – do not override existing listeners.
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				}
 			}
 		},
@@ -758,16 +862,18 @@
 				}
 
 				// Remove contents stylesheet from document if it's the last usage.
-				var doc = this.getDocument(),
-					head = doc.getHead();
-				if ( head.getCustomData( 'stylesheet' ) ) {
-					var refs = doc.getCustomData( 'stylesheet_ref' );
-					if ( !( --refs ) ) {
-						doc.removeCustomData( 'stylesheet_ref' );
-						var sheet = head.removeCustomData( 'stylesheet' );
-						sheet.remove();
-					} else
-						doc.setCustomData( 'stylesheet_ref', refs );
+				if ( !this.is( 'textarea' ) ) {
+					var doc = this.getDocument(),
+						head = doc.getHead();
+					if ( head.getCustomData( 'stylesheet' ) ) {
+						var refs = doc.getCustomData( 'stylesheet_ref' );
+						if ( !( --refs ) ) {
+							doc.removeCustomData( 'stylesheet_ref' );
+							var sheet = head.removeCustomData( 'stylesheet' );
+							sheet.remove();
+						} else
+							doc.setCustomData( 'stylesheet_ref', refs );
+					}
 				}
 
 				this.editor.fire( 'contentDomUnload' );
@@ -1059,8 +1165,8 @@
 
 			var editable = editor.editable();
 
-			// Setup proper ARIA roles and properties for inline editable, framed
-			// editable is instead handled by plugin.
+			// Setup proper ARIA roles and properties for inline editable, classic
+			// (iframe-based) editable is instead handled by plugin.
 			if ( editable && editable.isInline() ) {
 
 				var ariaLabel = editor.title;
@@ -1071,6 +1177,7 @@
 				if ( ariaLabel )
 					editable.changeAttr( 'title', ariaLabel );
 
+<<<<<<< HEAD
 				// Put the voice label in different spaces, depending on element mode, so
 				// the DOM element get auto detached on mode reload or editor destroy.
 				var ct = this.ui.space( this.elementMode == CKEDITOR.ELEMENT_MODE_INLINE ? 'top' : 'contents' );
@@ -1079,6 +1186,19 @@
 						desc = CKEDITOR.dom.element.createFromHtml( '<span id="' + ariaDescId + '" class="cke_voice_label">' + this.lang.common.editorHelp + '</span>' );
 					ct.append( desc );
 					editable.changeAttr( 'aria-describedby', ariaDescId );
+=======
+				var helpLabel = editor.fire( 'ariaEditorHelpLabel', {} ).label;
+				if ( helpLabel ) {
+					// Put the voice label in different spaces, depending on element mode, so
+					// the DOM element get auto detached on mode reload or editor destroy.
+					var ct = this.ui.space( this.elementMode == CKEDITOR.ELEMENT_MODE_INLINE ? 'top' : 'contents' );
+					if ( ct ) {
+						var ariaDescId = CKEDITOR.tools.getNextId(),
+							desc = CKEDITOR.dom.element.createFromHtml( '<span id="' + ariaDescId + '" class="cke_voice_label">' + helpLabel + '</span>' );
+						ct.append( desc );
+						editable.changeAttr( 'aria-describedby', ariaDescId );
+					}
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				}
 			}
 		} );
@@ -1784,11 +1904,11 @@
 		editable.editor.fire( 'saveSnapshot' );
 	}
 
-	function afterInsert( editable, noScroll ) {
+	function afterInsert( editable ) {
 		var editor = editable.editor;
 
 		// Scroll using selection, not ranges, to affect native pastes.
-		!noScroll && editor.getSelection().scrollIntoView();
+		editor.getSelection().scrollIntoView();
 
 		// Save snaps after the whole execution completed.
 		// This's a workaround for make DOM modification's happened after
@@ -1902,11 +2022,144 @@
 		};
 	} )();
 
+<<<<<<< HEAD
+=======
+	function mergeBlocksCollapsedSelection( editor, range, backspace, startPath ) {
+		var startBlock = startPath.block;
+
+		// Selection must be collapsed and to be anchored in a block.
+		if ( !startBlock )
+			return false;
+
+		// Exclude cases where, i.e. if pressed arrow key, selection
+		// would move within the same block (merge inside a block).
+		if ( !range[ backspace ? 'checkStartOfBlock' : 'checkEndOfBlock' ]() )
+			return false;
+
+		// Make sure, there's an editable position to put selection,
+		// which i.e. would be used if pressed arrow key, but abort
+		// if such position exists but means a selected non-editable element.
+		if ( !range.moveToClosestEditablePosition( startBlock, !backspace ) || !range.collapsed )
+			return false;
+
+		// Handle special case, when block's sibling is a <hr>. Delete it and keep selection
+		// in the same place (http://dev.ckeditor.com/ticket/11861#comment:9).
+		if ( range.startContainer.type == CKEDITOR.NODE_ELEMENT ) {
+			var touched = range.startContainer.getChild( range.startOffset - ( backspace ? 1 : 0 ) );
+			if ( touched && touched.type  == CKEDITOR.NODE_ELEMENT && touched.is( 'hr' ) ) {
+				editor.fire( 'saveSnapshot' );
+				touched.remove();
+				return true;
+			}
+		}
+
+		var siblingBlock = range.startPath().block;
+
+		// Abort if an editable position exists, but either it's not
+		// in a block or that block is the parent of the start block
+		// (merging child into parent).
+		if ( !siblingBlock || ( siblingBlock && siblingBlock.contains( startBlock ) ) )
+			return;
+
+		editor.fire( 'saveSnapshot' );
+
+		// Remove bogus to avoid duplicated boguses.
+		var bogus;
+		if ( ( bogus = ( backspace ? siblingBlock : startBlock ).getBogus() ) )
+			bogus.remove();
+
+		// Save selection. It will be restored.
+		var selection = editor.getSelection(),
+			bookmarks = selection.createBookmarks();
+
+		// Merge blocks.
+		( backspace ? startBlock : siblingBlock ).moveChildren( backspace ? siblingBlock : startBlock, false );
+
+		// Also merge children along with parents.
+		startPath.lastElement.mergeSiblings();
+
+		// Cut off removable branch of the DOM tree.
+		pruneEmptyDisjointAncestors( startBlock, siblingBlock, !backspace );
+
+		// Restore selection.
+		selection.selectBookmarks( bookmarks );
+
+		return true;
+	}
+
+	function mergeBlocksNonCollapsedSelection( editor, range, startPath ) {
+		var startBlock = startPath.block,
+			endPath = range.endPath(),
+			endBlock = endPath.block;
+
+		// Selection must be anchored in two different blocks.
+		if ( !startBlock || !endBlock || startBlock.equals( endBlock ) )
+			return false;
+
+		editor.fire( 'saveSnapshot' );
+
+		// Remove bogus to avoid duplicated boguses.
+		var bogus;
+		if ( ( bogus = startBlock.getBogus() ) )
+			bogus.remove();
+
+		// Delete range contents. Do NOT merge. Merging is weird.
+		range.deleteContents();
+
+		// If something has left of the block to be merged, clean it up.
+		// It may happen when merging with list items.
+		if ( endBlock.getParent() ) {
+			// Move children to the first block.
+			endBlock.moveChildren( startBlock, false );
+
+			// ...and merge them if that's possible.
+			startPath.lastElement.mergeSiblings();
+
+			// If expanded selection, things are always merged like with BACKSPACE.
+			pruneEmptyDisjointAncestors( startBlock, endBlock, true );
+		}
+
+		// Make sure the result selection is collapsed.
+		range = editor.getSelection().getRanges()[ 0 ];
+		range.collapse( 1 );
+		range.select();
+
+		return true;
+	}
+
+	// Finds the innermost child of common parent, which,
+	// if removed, removes nothing but the contents of the element.
+	//
+	//	before: <div><p><strong>first</strong></p><p>second</p></div>
+	//	after:  <div><p>second</p></div>
+	//
+	//	before: <div><p>x<strong>first</strong></p><p>second</p></div>
+	//	after:  <div><p>x</p><p>second</p></div>
+	//
+	//	isPruneToEnd=true
+	//	before: <div><p><strong>first</strong></p><p>second</p></div>
+	//	after:  <div><p><strong>first</strong></p></div>
+	//
+	// @param {CKEDITOR.dom.element} first
+	// @param {CKEDITOR.dom.element} second
+	// @param {Boolean} isPruneToEnd
+	function pruneEmptyDisjointAncestors( first, second, isPruneToEnd ) {
+		var commonParent = first.getCommonAncestor( second ),
+			node = isPruneToEnd ? second : first,
+			removableParent = node;
+
+		while ( ( node = node.getParent() ) && !commonParent.equals( node ) && node.getChildCount() == 1 )
+			removableParent = node;
+
+		removableParent.remove();
+	}
+
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } )();
 
 /**
- * Whether the editor must output an empty value (`''`) if it's contents is made
- * by an empty paragraph only.
+ * Whether the editor must output an empty value (`''`) if its content only consists
+ * of an empty paragraph.
  *
  *		config.ignoreEmptyParagraph = false;
  *
@@ -1915,11 +2168,23 @@
  */
 
 /**
- * @event focus
- * @todo
- */
-
- /**
- * @event blur
- * @todo
+ * Event fired by the editor in order to get accessibility help label.
+ * The event is responded to by a component which provides accessibility
+ * help (i.e. the `a11yhelp` plugin) hence the editor is notified whether
+ * accessibility help is available.
+ *
+ * Providing info:
+ *
+ *		editor.on( 'ariaEditorHelpLabel', function( evt ) {
+ *				evt.data.label = editor.lang.common.editorHelp;
+ *		} );
+ *
+ * Getting label:
+ *
+ *		var helpLabel = editor.fire( 'ariaEditorHelpLabel', {} ).label;
+ *
+ * @since 4.4.3
+ * @event ariaEditorHelpLabel
+ * @param {String} label The label to be used.
+ * @member CKEDITOR.editor
  */

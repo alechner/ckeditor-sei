@@ -4,7 +4,7 @@
  */
 
 /**
- * @fileOverview AutoGrow plugin.
+ * @fileOverview The Auto Grow plugin.
  */
 
 'use strict';
@@ -20,7 +20,7 @@
 				// Simply set auto height with div wysiwyg.
 				if ( editor.editable().isInline() )
 					editor.ui.space( 'contents' ).setStyle( 'height', 'auto' );
-				// For framed wysiwyg we need to resize the editor.
+				// For classic (`iframe`-based) wysiwyg we need to resize the editor.
 				else
 					initIframeAutogrow( editor );
 			} );
@@ -46,7 +46,11 @@
 			editorFocus: false
 		} );
 
+<<<<<<< HEAD
 		var eventsList = { contentDom: 1,afterZoom: 1, selectionChange: 1, insertElement: 1, mode: 1 };//trocado key por afterZoom
+=======
+		var eventsList = { contentDom: 1, key: 1, selectionChange: 1, insertElement: 1, mode: 1 };
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		for ( var eventName in eventsList ) {
 			editor.on( eventName, function( evt ) {
 				// Some time is required for insertHtml, and it gives other events better performance as well.
@@ -67,6 +71,7 @@
 					}, 100 );
 				}
 			} );
+<<<<<<< HEAD
 		}
 
 		// Coordinate with the "maximize" plugin. (#9311)
@@ -98,6 +103,39 @@
 				doc );
 		}
 
+=======
+		}
+
+		// Coordinate with the "maximize" plugin. (#9311)
+		editor.on( 'afterCommandExec', function( evt ) {
+			if ( evt.data.name == 'maximize' && evt.editor.mode == 'wysiwyg' ) {
+				if ( evt.data.command.state == CKEDITOR.TRISTATE_ON )
+					scrollable.removeStyle( 'overflow-y' );
+				else
+					resizeEditor();
+			}
+		} );
+
+		editor.on( 'contentDom', refreshCache );
+
+		refreshCache();
+		editor.config.autoGrow_onStartup && editor.execCommand( 'autogrow' );
+
+		function refreshCache() {
+			doc = editor.document;
+			markerContainer = doc[ CKEDITOR.env.ie ? 'getBody' : 'getDocumentElement' ]();
+
+			// Quirks mode overflows body, standards overflows document element.
+			scrollable = CKEDITOR.env.quirks ? doc.getBody() : doc.getDocumentElement();
+
+			marker = CKEDITOR.dom.element.createFromHtml(
+				'<span style="margin:0;padding:0;border:0;clear:both;width:1px;height:1px;display:block;">' +
+					( CKEDITOR.env.webkit ? '&nbsp;' : '' ) +
+				'</span>',
+				doc );
+		}
+
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		function isNotResizable() {
 			var maximizeCommand = editor.getCommand( 'maximize' );
 
@@ -127,6 +165,7 @@
 			var currentHeight = editor.window.getViewPaneSize().height,
 				newHeight = contentHeight();
 
+<<<<<<< HEAD
 		  //----------------------- codigo adicional para zoom
 			var body=editor.document.getBody();
 			if (CKEDITOR.env.gecko && (scale=body.$.style.MozTransform)){
@@ -138,6 +177,8 @@
 			}
 			//-----------------------
 
+=======
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			// Additional space specified by user.
 			newHeight += configBottomSpace;
 			newHeight = Math.max( newHeight, configMinHeight );
@@ -162,7 +203,8 @@
 } )();
 
 /**
- * The minimum height that the editor can reach using the AutoGrow feature.
+ * The minimum height that the editor can assume when adjusting to content by using the Auto Grow
+ * feature. This option accepts a value in pixels, without the unit (for example: `300`).
  *
  *		config.autoGrow_minHeight = 300;
  *
@@ -172,7 +214,9 @@
  */
 
 /**
- * The maximum height that the editor can reach using the AutoGrow feature. Zero means unlimited.
+ * The maximum height that the editor can assume when adjusting to content by using the Auto Grow
+ * feature. This option accepts a value in pixels, without the unit (for example: `600`).
+ * Zero (`0`) means that the maximum height is not limited and the editor will expand infinitely.
  *
  *		config.autoGrow_maxHeight = 400;
  *
@@ -182,7 +226,8 @@
  */
 
 /**
- * Whether to have the auto grow happen on editor creation.
+ * Whether automatic editor height adjustment brought by the Auto Grow feature should happen on
+ * editor creation.
  *
  *		config.autoGrow_onStartup = true;
  *
@@ -192,7 +237,11 @@
  */
 
 /**
- * Extra height in pixel to leave between the bottom boundary of content with document size when auto resizing.
+ * Extra vertical space to be added between the content and the editor bottom bar when adjusting
+ * editor height to content by using the Auto Grow feature. This option accepts a value in pixels,
+ * without the unit (for example: `50`).
+ *
+ *		config.autoGrow_bottomSpace = 50;
  *
  * @since 3.6.2
  * @cfg {Number} [autoGrow_bottomSpace=0]
@@ -200,13 +249,13 @@
  */
 
 /**
- * Fired when the AutoGrow plugin is about to change the size of the editor.
+ * Fired when the Auto Grow plugin is about to change the size of the editor.
  *
  * @event autogrow
  * @member CKEDITOR.editor
  * @param {CKEDITOR.editor} editor This editor instance.
  * @param data
- * @param {Number} data.currentHeight The current height of the editor (before resizing).
- * @param {Number} data.newHeight The new height of the editor (after resizing). It can be changed
- * to determine a different height value to be used instead.
+ * @param {Number} data.currentHeight The current editor height (before resizing).
+ * @param {Number} data.newHeight The new editor height (after resizing). It can be changed
+ * to achieve a different height value to be used instead.
  */

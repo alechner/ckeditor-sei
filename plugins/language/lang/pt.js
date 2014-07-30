@@ -4,6 +4,11 @@
  */
 
 CKEDITOR.plugins.setLang( 'language', 'pt', {
+<<<<<<< HEAD
 	button: 'botão',
 	remove: 'remover'
+=======
+	button: 'Definir Idioma',
+	remove: 'Remover Idioma'
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

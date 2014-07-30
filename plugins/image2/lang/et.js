@@ -6,6 +6,10 @@ CKEDITOR.plugins.setLang( 'image2', 'et', {
 	alt: 'Alternatiivne tekst',
 	btnUpload: 'Saada serverisse',
 	captioned: 'Captioned image', // MISSING
+<<<<<<< HEAD
+=======
+	captionPlaceholder: 'Caption', // MISSING
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Pildi info',
 	lockRatio: 'Lukusta kuvasuhe',
 	menu: 'Pildi omadused',

@@ -43,6 +43,21 @@ CKEDITOR.htmlParser.fragment = function() {
 
 	// Dtd of the fragment element, basically it accept anything except for intermediate structure, e.g. orphan <li>.
 	var rootDtd = CKEDITOR.tools.extend( {}, { html: 1 }, CKEDITOR.dtd.html, CKEDITOR.dtd.body, CKEDITOR.dtd.head, { style: 1, script: 1 } );
+<<<<<<< HEAD
+=======
+
+	// Which element to create when encountered not allowed content.
+	var structureFixes = {
+		ul: 'li',
+		ol: 'li',
+		dl: 'dd',
+		table: 'tbody',
+		tbody: 'tr',
+		thead: 'tr',
+		tfoot: 'tr',
+		tr: 'td'
+	};
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 	function isRemoveEmpty( node ) {
 		// Keep marked element event if it is empty.
@@ -396,7 +411,7 @@ CKEDITOR.htmlParser.fragment = function() {
 
 			// Fix orphan text in list/table. (#8540) (#8870)
 			if ( !inTextarea && !currentDtd[ '#' ] && currentName in nonBreakingBlocks ) {
-				parser.onTagOpen( currentName in listBlocks ? 'li' : currentName == 'dl' ? 'dd' : currentName == 'table' ? 'tr' : currentName == 'tr' ? 'td' : '' );
+				parser.onTagOpen( structureFixes[ currentName ] || '' );
 				parser.onText( text );
 				return;
 			}

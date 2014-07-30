@@ -176,8 +176,13 @@
 				return this.attributeNameRules.execOnName( context, name );
 			},
 
+<<<<<<< HEAD
 			onText: function( context, text ) {
 				return this.textRules.exec( context, text );
+=======
+			onText: function( context, text, node ) {
+				return this.textRules.exec( context, text, node );
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			},
 
 			onComment: function( context, commentText, comment ) {

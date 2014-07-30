@@ -58,6 +58,13 @@
 			if ( atBlockStart && atBlockEnd ) {
 				// Exit the list when we're inside an empty list item block. (#5376)
 				if ( block && ( block.is( 'li' ) || block.getParent().is( 'li' ) ) ) {
+<<<<<<< HEAD
+=======
+					// Make sure to point to the li when dealing with empty list item.
+					if ( !block.is( 'li' ) )
+						block = block.getParent();
+
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 					var blockParent = block.getParent(),
 						blockGrandParent = blockParent.getParent(),
 
@@ -175,6 +182,7 @@
 
 						block.remove();
 					} else {
+<<<<<<< HEAD
 						// Use <div> block for ENTER_BR and ENTER_DIV.
 						newBlock = doc.createElement( mode == CKEDITOR.ENTER_P ? 'p' : 'div' );
 
@@ -186,6 +194,25 @@
 
 						// Move all the child nodes to the new block.
 						block.moveChildren( newBlock );
+=======
+						// Original path block is the list item, create new block for the list item content.
+						if ( path.block.is( 'li' ) ) {
+							// Use <div> block for ENTER_BR and ENTER_DIV.
+							newBlock = doc.createElement( mode == CKEDITOR.ENTER_P ? 'p' : 'div' );
+
+							if ( dirLoose )
+								newBlock.setAttribute('dir', orgDir);
+
+							style && newBlock.setAttribute( 'style', style );
+							className && newBlock.setAttribute( 'class', className );
+
+							// Move all the child nodes to the new block.
+							block.moveChildren( newBlock );
+						}
+						// The original path block is not a list item, just copy the block to out side of the list.
+						else
+							newBlock = path.block;
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 						// If block is the first or last child of the parent
 						// list, move it out of the list:
@@ -453,8 +480,11 @@
 					doc.createText( '\ufeff' ).insertAfter( lineBreak );
 
 					// If we are at the end of a block, we must be sure the bogus node is available in that block.
-					if ( isEndOfBlock )
-						lineBreak.getParent().appendBogus();
+					if ( isEndOfBlock ) {
+						// In most situations we've got an elementPath.block (e.g. <p>), but in a
+						// blockless editor or when autoP is false that needs to be a block limit.
+						( startBlock || elementPath.blockLimit ).appendBogus();
+					}
 
 					// Now we can remove the text node contents, so the caret doesn't
 					// stop on it.

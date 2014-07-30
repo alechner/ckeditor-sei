@@ -4,14 +4,19 @@
  */
 
 /**
- * @fileOverview Allows accessing difficult focus spaces.
+ * @fileOverview The Magic Line plugin that makes it easier to access some document areas that
+ * are difficult to focus.
  */
 
 'use strict';
 
 ( function() {
 	CKEDITOR.plugins.add( 'magicline', {
+<<<<<<< HEAD
 		lang: 'ar,bg,ca,cs,cy,de,el,en,en-gb,eo,es,et,eu,fa,fi,fr,fr-ca,gl,he,hr,hu,id,it,ja,km,ko,ku,lv,nb,nl,no,pl,pt,pt-br,ru,si,sk,sl,sq,sv,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+=======
+		lang: 'ar,bg,ca,cs,cy,de,el,en,en-gb,eo,es,et,eu,fa,fi,fr,fr-ca,gl,he,hr,hu,id,it,ja,km,ko,ku,lv,nb,nl,no,pl,pt,pt-br,ru,si,sk,sl,sq,sv,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		init: initPlugin
 	} );
 
@@ -84,7 +89,7 @@
 			}, true );
 
 			// This is the boundary of the editor. For inline the boundary is editable itself.
-			// For framed editor, the HTML element is a real boundary.
+			// For classic (`iframe`-based) editor, the HTML element is a real boundary.
 			that.boundary = that.inInlineMode ? that.editable : that.doc.getDocumentElement();
 
 			// Enabling the box inside of inline editable is pointless.
@@ -195,7 +200,7 @@
 
 			// This method ensures that checkMouse aren't executed
 			// in parallel and no more frequently than specified in timeout function.
-			// In framed editor, document is used as a trigger, to provide magicline
+			// In classic (`iframe`-based) editor, document is used as a trigger, to provide magicline
 			// functionality when mouse is below the body (short content, short body).
 			editable.attachListener( that.inInlineMode ? editable : doc, 'mousemove', function( event ) {
 				checkMouseTimeoutPending = true;
@@ -454,7 +459,7 @@
 				return null;
 
 			// Also return nothing if:
-			//	\-> We're IE<9 and element is out of the top-level element (editable for inline and HTML for framed).
+			//	\-> We're IE<9 and element is out of the top-level element (editable for inline and HTML for classic (`iframe`-based)).
 			//		This is due to the bug which allows IE<9 firing mouse events on element
 			//		with contenteditable=true while doing selection out (far, away) of the element.
 			//		Thus we must always be sure that we stay in editable or HTML.
@@ -478,7 +483,12 @@
 			// If trigger is an element, neither editable nor editable's ascendant.
 			if ( trigger && that.editable.contains( trigger ) ) {
 				// Check for closest editable limit.
+<<<<<<< HEAD
 				var limit = getClosestEditableLimit( trigger, true );
+=======
+				// Don't consider trigger as a limit as it may be nested editable (includeSelf=false) (#12009).
+				var limit = getClosestEditableLimit( trigger );
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 				// Trigger in nested editable area.
 				if ( limit.getAttribute( 'contenteditable' ) == 'true' )
@@ -1757,8 +1767,9 @@
 } )();
 
 /**
- * Sets the default vertical distance between element edge and mouse pointer that
- * causes the box to appear. The distance is expressed in pixels (px).
+ * Sets the default vertical distance between the edge of the element and the mouse pointer that
+ * causes the magic line to appear. This option accepts a value in pixels, without the unit (for example:
+ * `15` for 15 pixels).
  *
  *		// Changes the offset to 15px.
  *		CKEDITOR.config.magicline_triggerOffset = 15;
@@ -1769,9 +1780,9 @@
  */
 
 /**
- * Defines the distance between mouse pointer and the box, within
- * which the box stays revealed and no other focus space is offered to be accessed.
- * The value is relative to {@link #magicline_triggerOffset}.
+ * Defines the distance between the mouse pointer and the box, within
+ * which the magic line stays revealed and no other focus space is offered to be accessed.
+ * This value is relative to {@link #magicline_triggerOffset}.
  *
  *		// Increases the distance to 80% of CKEDITOR.config.magicline_triggerOffset.
  *		CKEDITOR.config.magicline_holdDistance = .8;
@@ -1782,10 +1793,10 @@
  */
 
 /**
- * Defines default keystroke that access the closest unreachable focus space **before**
+ * Defines the default keystroke that access the closest unreachable focus space **before**
  * the caret (start of the selection). If there's no any focus space, selection remains.
  *
- *		// Changes keystroke to CTRL + ,
+ *		// Changes the default keystroke to "Ctrl + ,".
  *		CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + 188;
  *
  * @cfg {Number} [magicline_keystrokePrevious=CKEDITOR.CTRL + CKEDITOR.SHIFT + 51 (CTRL + SHIFT + 3)]
@@ -1794,10 +1805,10 @@
 CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + CKEDITOR.SHIFT + 51; // CTRL + SHIFT + 3
 
 /**
- * Defines default keystroke that access the closest unreachable focus space **after**
+ * Defines the default keystroke that access the closest unreachable focus space **after**
  * the caret (start of the selection). If there's no any focus space, selection remains.
  *
- *		// Changes keystroke to CTRL + .
+ *		// Changes keystroke to "Ctrl + .".
  *		CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + 190;
  *
  * @cfg {Number} [magicline_keystrokeNext=CKEDITOR.CTRL + CKEDITOR.SHIFT + 52 (CTRL + SHIFT + 4)]
@@ -1806,10 +1817,17 @@ CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + CKEDITOR.SHIFT + 5
 CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + CKEDITOR.SHIFT + 52; // CTRL + SHIFT + 4
 
 /**
+<<<<<<< HEAD
  * Defines a list of attributes that, if assigned to some elements, prevent magicline from being
  * used within these elements.
  *
  *		// Adds "data-tabu" attribute to magicline tabu list.
+=======
+ * Defines a list of attributes that, if assigned to some elements, prevent the magic line from being
+ * used within these elements.
+ *
+ *		// Adds the "data-tabu" attribute to the magic line tabu list.
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  *		CKEDITOR.config.magicline_tabuList = [ 'data-tabu' ];
  *
  * @cfg {Number} [magicline_tabuList=[ 'data-widget-wrapper' ]]
@@ -1817,9 +1835,9 @@ CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + CKEDITOR.SHIFT + 52; /
  */
 
 /**
- * Defines box color. The color may be adjusted to enhance readability.
+ * Defines the color of the magic line. The color may be adjusted to enhance readability.
  *
- *		// Changes color to blue.
+ *		// Changes magic line color to blue.
  *		CKEDITOR.config.magicline_color = '#0000FF';
  *
  * @cfg {String} [magicline_color='#FF0000']
@@ -1827,10 +1845,10 @@ CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + CKEDITOR.SHIFT + 52; /
  */
 
 /**
- * Activates plugin mode that considers all focus spaces between
- * {@link CKEDITOR.dtd#$block} elements as accessible by the box.
+ * Activates the special all-encompassing mode that considers all focus spaces between
+ * {@link CKEDITOR.dtd#$block} elements as accessible by the magic line.
  *
- *		// Enables "put everywhere" mode.
+ *		// Enables the greedy "put everywhere" mode.
  *		CKEDITOR.config.magicline_putEverywhere = true;
  *
  * @cfg {Boolean} [magicline_putEverywhere=false]

@@ -82,6 +82,7 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'sl', {
 		]
 	}
 	],
+<<<<<<< HEAD
 	backspace: 'Backspace', // MISSING
 	tab: 'Tab', // MISSING
 	enter: 'Enter', // MISSING
@@ -144,4 +145,68 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'sl', {
 	backSlash: 'Backslash', // MISSING
 	closeBracket: 'Close Bracket', // MISSING
 	singleQuote: 'Single Quote' // MISSING
+=======
+	backspace: 'Backspace',
+	tab: 'Tab',
+	enter: 'Enter',
+	shift: 'Shift',
+	ctrl: 'Ctrl',
+	alt: 'Alt',
+	pause: 'Pause',
+	capslock: 'Caps Lock',
+	escape: 'Escape',
+	pageUp: 'Page Up',
+	pageDown: 'Page Down',
+	end: 'End',
+	home: 'Home',
+	leftArrow: 'Levo puščica',
+	upArrow: 'Gor puščica',
+	rightArrow: 'Desno puščica',
+	downArrow: 'Dol puščica',
+	insert: 'Insert',
+	'delete': 'Delete',
+	leftWindowKey: 'Leva Windows tipka',
+	rightWindowKey: 'Desna Windows tipka',
+	selectKey: 'Select tipka',
+	numpad0: 'Numpad 0',
+	numpad1: 'Numpad 1',
+	numpad2: 'Numpad 2',
+	numpad3: 'Numpad 3',
+	numpad4: 'Numpad 4',
+	numpad5: 'Numpad 5',
+	numpad6: 'Numpad 6',
+	numpad7: 'Numpad 7',
+	numpad8: 'Numpad 8',
+	numpad9: 'Numpad 9',
+	multiply: 'Zmnoži',
+	add: 'Dodaj',
+	subtract: 'Odštej',
+	decimalPoint: 'Decimalna vejica',
+	divide: 'Deli',
+	f1: 'F1',
+	f2: 'F2',
+	f3: 'F3',
+	f4: 'F4',
+	f5: 'F5',
+	f6: 'F6',
+	f7: 'F7',
+	f8: 'F8',
+	f9: 'F9',
+	f10: 'F10',
+	f11: 'F11',
+	f12: 'F12',
+	numLock: 'Num Lock',
+	scrollLock: 'Scroll Lock',
+	semiColon: 'Podpičje',
+	equalSign: 'enačaj',
+	comma: 'Vejica',
+	dash: 'Vezaj',
+	period: 'Pika',
+	forwardSlash: 'Desna poševnica',
+	graveAccent: 'Krativec',
+	openBracket: 'Oklepaj',
+	backSlash: 'Leva poševnica',
+	closeBracket: 'Oklepaj',
+	singleQuote: 'Opuščaj'
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

@@ -19,8 +19,13 @@
  */
 CKEDITOR.lang[ 'hr' ] = {
 	// ARIA description.
+<<<<<<< HEAD
 	editor: 'Bogati uređivač teksta',
 	editorPanel: 'Rich Text Editor panel', // MISSING
+=======
+	editor: 'Bogati uređivač teksta, %1',
+	editorPanel: 'Ploča Bogatog Uređivača Teksta',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 	// Common messages and labels.
 	common: {
@@ -84,6 +89,7 @@ CKEDITOR.lang[ 'hr' ] = {
 		alignTop: 'Vrh',
 		alignMiddle: 'Sredina',
 		alignBottom: 'Dolje',
+		alignNone: 'None', // MISSING
 		invalidValue	: 'Neispravna vrijednost.',
 		invalidHeight: 'Visina mora biti broj.',
 		invalidWidth: 'Širina mora biti broj.',

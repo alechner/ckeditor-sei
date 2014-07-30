@@ -20,7 +20,11 @@
 CKEDITOR.lang[ 'fr' ] = {
 	// ARIA description.
 	editor: 'Éditeur de Texte Enrichi',
+<<<<<<< HEAD
 	editorPanel: 'Rich Text Editor panel', // MISSING
+=======
+	editorPanel: 'Tableau de bord de l\'éditeur de texte enrichi',
+>>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 	// Common messages and labels.
 	common: {
@@ -84,6 +88,7 @@ CKEDITOR.lang[ 'fr' ] = {
 		alignTop: 'Haut',
 		alignMiddle: 'Milieu',
 		alignBottom: 'Bas',
+		alignNone: 'Aucun',
 		invalidValue	: 'Valeur incorrecte.',
 		invalidHeight: 'La hauteur doit être un nombre.',
 		invalidWidth: 'La largeur doit être un nombre.',
