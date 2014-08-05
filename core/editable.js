@@ -362,12 +362,10 @@
 			 * @param {CKEDITOR.dom.element} element The element to be inserted.
 			 */
 			insertElementIntoSelection: function( element ) {
-<<<<<<< HEAD
-=======
+
 				// Prepare for the insertion. For example - focus editor (#11848).
 				beforeInsert( this );
 
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				var editor = this.editor,
 					enterMode = editor.activeEnterMode,
 					selection = editor.getSelection(),
@@ -375,12 +373,6 @@
 					elementName = element.getName(),
 					isBlock = CKEDITOR.dtd.$block[ elementName ];
 
-<<<<<<< HEAD
-				// Prepare for the insertion.
-				beforeInsert( this );
-
-=======
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				// Insert element into first range only and ignore the rest (#11183).
 				if ( this.insertElementIntoRange( element, range ) ) {
 					range.moveToPosition( element, CKEDITOR.POSITION_AFTER_END );
@@ -808,8 +800,6 @@
 						if ( ev.data.getTarget().is( 'input', 'textarea' ) )
 							ev.data.preventDefault();
 					} );
-<<<<<<< HEAD
-=======
 				}
 
 				// Prevent Webkit/Blink from going rogue when joining
@@ -841,7 +831,6 @@
 
 						return false;
 					}, this, null, 100 ); // Later is better – do not override existing listeners.
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				}
 			}
 		},
@@ -1177,16 +1166,6 @@
 				if ( ariaLabel )
 					editable.changeAttr( 'title', ariaLabel );
 
-<<<<<<< HEAD
-				// Put the voice label in different spaces, depending on element mode, so
-				// the DOM element get auto detached on mode reload or editor destroy.
-				var ct = this.ui.space( this.elementMode == CKEDITOR.ELEMENT_MODE_INLINE ? 'top' : 'contents' );
-				if ( ct ) {
-					var ariaDescId = CKEDITOR.tools.getNextId(),
-						desc = CKEDITOR.dom.element.createFromHtml( '<span id="' + ariaDescId + '" class="cke_voice_label">' + this.lang.common.editorHelp + '</span>' );
-					ct.append( desc );
-					editable.changeAttr( 'aria-describedby', ariaDescId );
-=======
 				var helpLabel = editor.fire( 'ariaEditorHelpLabel', {} ).label;
 				if ( helpLabel ) {
 					// Put the voice label in different spaces, depending on element mode, so
@@ -1198,7 +1177,6 @@
 						ct.append( desc );
 						editable.changeAttr( 'aria-describedby', ariaDescId );
 					}
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				}
 			}
 		} );
@@ -2022,8 +2000,6 @@
 		};
 	} )();
 
-<<<<<<< HEAD
-=======
 	function mergeBlocksCollapsedSelection( editor, range, backspace, startPath ) {
 		var startBlock = startPath.block;
 
@@ -2153,8 +2129,6 @@
 
 		removableParent.remove();
 	}
-
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } )();
 
 /**

@@ -84,10 +84,7 @@ CKEDITOR.lang[ 'zh' ] = {
 		alignTop: '頂端',
 		alignMiddle: '中間對齊',
 		alignBottom: '底端',
-<<<<<<< HEAD
-=======
 		alignNone: 'None', // MISSING
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		invalidValue	: '無效值。',
 		invalidHeight: '高度必須為數字。',
 		invalidWidth: '寬度必須為數字。',

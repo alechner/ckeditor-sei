@@ -15,16 +15,6 @@ CKEDITOR.plugins.setLang( 'image', 'km', {
 	lockRatio: 'ចាក់​សោ​ផល​ធៀប',
 	menu: 'លក្ខណៈ​រូបភាព',
 	resetSize: 'កំណត់ទំហំឡើងវិញ',
-<<<<<<< HEAD
-	title: 'ការកំណត់រូបភាព',
-	titleButton: 'ការកំណត់ប៉ូតុនរូបភាព',
-	upload: 'ទាញយក',
-	urlMissing: 'ខ្វះ URL ប្រភព​រូប​ភាព។',
-	vSpace: 'VSpace',
-	validateBorder: 'Border must be a whole number.', // MISSING
-	validateHSpace: 'HSpace must be a whole number.', // MISSING
-	validateVSpace: 'VSpace must be a whole number.' // MISSING
-=======
 	title: 'លក្ខណៈ​រូបភាព',
 	titleButton: 'លក្ខណៈ​ប៊ូតុង​រូបភាព',
 	upload: 'ផ្ទុកឡើង',
@@ -33,5 +23,4 @@ CKEDITOR.plugins.setLang( 'image', 'km', {
 	validateBorder: 'ស៊ុម​ត្រូវ​តែ​ជា​លេខ។',
 	validateHSpace: 'គម្លាត​ផ្ដេក​ត្រូវ​តែ​ជា​លេខ។',
 	validateVSpace: 'គម្លាត​បញ្ឈរ​ត្រូវ​តែ​ជា​លេខ។'
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

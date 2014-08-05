@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'si', {
 	alt: 'විකල්ප ',
 	btnUpload: 'සේවාදායකය වෙත යොමුකිරිම',
 	captioned: 'Captioned image', // MISSING
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Caption', // MISSING
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'රුපයේ තොරතුරු',
 	lockRatio: 'නවතන අනුපාතය ',
 	menu: 'රුපයේ ගුණ',

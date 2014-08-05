@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'zh-cn', {
 	alt: '替换文本',
 	btnUpload: '上传到服务器',
 	captioned: '带标题图像',
-<<<<<<< HEAD
-=======
 	captionPlaceholder: '标题',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: '图像信息',
 	lockRatio: '锁定比例',
 	menu: '图像属性',

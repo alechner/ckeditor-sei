@@ -38,11 +38,6 @@ CKEDITOR.plugins.setLang( 'flash', 'km', {
 	validateVSpace: 'VSpace must be a number.', // MISSING
 	windowMode: 'Window mode', // MISSING
 	windowModeOpaque: 'Opaque', // MISSING
-<<<<<<< HEAD
-	windowModeTransparent: 'Transparent', // MISSING
-	windowModeWindow: 'Window' // MISSING
-=======
 	windowModeTransparent: 'ភាព​ថ្លា',
 	windowModeWindow: 'វីនដូ'
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

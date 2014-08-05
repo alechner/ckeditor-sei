@@ -107,13 +107,6 @@
 
 			// "Static" types.
 			if ( obj === null || ( typeof( obj ) != 'object' ) || ( obj instanceof String ) || ( obj instanceof Number ) || ( obj instanceof Boolean ) || ( obj instanceof Date ) || ( obj instanceof RegExp ) )
-<<<<<<< HEAD
-=======
-				return obj;
-
-			// DOM objects and window.
-			if ( obj.nodeType || obj.window === obj )
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				return obj;
 
 			// Objects.
@@ -341,16 +334,10 @@
 		},
 
 		/**
-<<<<<<< HEAD
-		 * Replaces special HTML characters in HTMLElement attribute with their relative HTML entity values.
-=======
 		 * Decodes HTML entities.
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		 *
 		 *		alert( CKEDITOR.tools.htmlDecode( '&lt;a &amp; b &gt;' ) ); // '<a & b >'
 		 *
-<<<<<<< HEAD
-=======
 		 * @param {String} The string to be decoded.
 		 * @returns {String} The decoded string.
 		 */
@@ -363,7 +350,6 @@
 		 *
 		 *		alert( CKEDITOR.tools.htmlEncodeAttr( '<a " b >' ) ); // '&lt;a &quot; b &gt;'
 		 *
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		 * @param {String} The attribute value to be encoded.
 		 * @returns {String} The encoded value.
 		 */
@@ -1143,24 +1129,15 @@
 		},
 
 		/**
-<<<<<<< HEAD
+
 		 * Enable HTML5 elements for older browsers (IE8) in passed document.
 		 *
 		 * In IE8 this method can be also executed on document fragment.
-=======
-		 * Enables HTML5 elements for older browsers (IE8) in the passed document.
-		 *
-		 * In IE8 this method can also be executed on a document fragment.
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		 *
 		 * **Note:** This method has to be used in the `<head>` section of the document.
 		 *
 		 * @since 4.3
-<<<<<<< HEAD
 		 * @param {Object} doc Native `Document` or `DocumentFragment` in which elements will be enabled.
-=======
-		 * @param {Object} doc Native `Document` or `DocumentFragment` in which the elements will be enabled.
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		 * @param {Boolean} [withAppend] Whether to append created elements to the `doc`.
 		 */
 		enableHtml5Elements: function( doc, withAppend ) {
@@ -1173,9 +1150,6 @@
 				if ( withAppend )
 					doc.appendChild( el );
 			}
-<<<<<<< HEAD
-		}
-=======
 		},
 
 		/**
@@ -1217,7 +1191,6 @@
 		 * @readonly
 		 */
 		transparentImageData: 'data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=='
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	};
 } )();
 

@@ -8,9 +8,5 @@ CKEDITOR.plugins.setLang( 'basicstyles', 'fa', {
 	strike: 'خط‌خورده',
 	subscript: 'زیرنویس',
 	superscript: 'بالانویس',
-<<<<<<< HEAD
-	underline: 'زیرخطدار'
-=======
 	underline: 'زیرخط‌دار'
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

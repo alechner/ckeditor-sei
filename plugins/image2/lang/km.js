@@ -6,14 +6,9 @@ CKEDITOR.plugins.setLang( 'image2', 'km', {
 	alt: 'អត្ថបទជំនួស',
 	btnUpload: 'បញ្ជូនទៅកាន់ម៉ាស៊ីនផ្តល់សេវា',
 	captioned: 'រូប​ដែល​មាន​ចំណង​ជើង',
-<<<<<<< HEAD
-	infoTab: 'ពត៌មានអំពីរូបភាព',
-	lockRatio: 'Lock Ratio', // MISSING
-=======
 	captionPlaceholder: 'Caption', // MISSING
 	infoTab: 'ពត៌មានអំពីរូបភាព',
 	lockRatio: 'ចាក់​សោ​ផល​ធៀប',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	menu: 'លក្ខណៈ​សម្បត្តិ​រូប​ភាព',
 	pathName: 'រូបភាព',
 	pathNameCaption: 'ចំណងជើង',

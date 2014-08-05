@@ -196,8 +196,6 @@ CKEDITOR.replaceClass = 'ckeditor';
 
 			if ( isDirty !== undefined )
 				!isDirty && editor.resetDirty();
-<<<<<<< HEAD
-=======
 
 			if ( unlockSnapshot )
 				editor.fire( 'unlockSnapshot' );
@@ -206,7 +204,6 @@ CKEDITOR.replaceClass = 'ckeditor';
 			// to make special snapshot for changes done in source mode here.
 			else if ( newMode == 'wysiwyg' )
 				editor.fire( 'saveSnapshot' );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 			// Delay to avoid race conditions (setMode inside setMode).
 			setTimeout( function() {

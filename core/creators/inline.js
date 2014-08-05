@@ -113,11 +113,7 @@
 
 	/**
 	 * Calls {@link CKEDITOR#inline} for all page elements with
-<<<<<<< HEAD
-	 * `contenteditable` attribute set to `true`.
-=======
 	 * the `contenteditable` attribute set to `true`.
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	 *
 	 */
 	CKEDITOR.inlineAll = function() {
@@ -152,11 +148,7 @@
 
 /**
  * Disables creating the inline editor automatically for elements with
-<<<<<<< HEAD
- * `contenteditable` attribute set to the `true`.
-=======
  * the `contenteditable` attribute set to `true`.
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  *
  *		CKEDITOR.disableAutoInline = true;
  *

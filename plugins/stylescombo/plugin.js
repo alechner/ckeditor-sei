@@ -8,11 +8,7 @@
 
 	CKEDITOR.plugins.add( 'stylescombo', {
 		requires: 'richcombo',
-<<<<<<< HEAD
-		lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
-=======
 		lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 		init: function( editor ) {
 			var config = editor.config,
@@ -97,23 +93,19 @@
 					editor.fire( 'saveSnapshot' );
 
 					var style = styles[ value ],
-<<<<<<< HEAD
-						elementPath = editor.elementPath(),
-//inicio alteração - sempre aplica estilo selecionado
-  					tagsRegex = editor._.removeFormatRegex;  
-
-					editor._.removeFormatRegex=new RegExp( '^(?:font|span)$', 'i' );
-					editor.execCommand('removeFormat');
-					editor._.removeFormatRegex=tagsRegex;
-					style[ 'apply' ]( editor.document );					
-					//editor[ style.checkActive( elementPath ) ? 'removeStyle' : 'applyStyle' ]( style );
-//fim alteração	
-=======
 						elementPath = editor.elementPath();
+                    //inicio alteração - sempre aplica estilo selecionado
+                    if(elementPath.lastElement.$.nodeName.toUpperCase()!='IMG') {
+                        var tagsRegex = editor._.removeFormatRegex;
+                        editor._.removeFormatRegex=new RegExp( '^(?:font|span)$', 'i' );
+                        editor.execCommand('removeFormat');
+                        editor._.removeFormatRegex=tagsRegex;
+                    }
+                    style[ 'apply' ]( editor.document );
+					//editor[ style.checkActive( elementPath, editor ) ? 'removeStyle' : 'applyStyle' ]( style );
+                    //fim alteração
 
-					editor[ style.checkActive( elementPath, editor ) ? 'removeStyle' : 'applyStyle' ]( style );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
-					editor.fire( 'saveSnapshot' );
+                    editor.fire( 'saveSnapshot' );
 				},
 
 				onRender: function() {
@@ -154,11 +146,7 @@
 						var style = styles[ name ],
 							type = style._.type;
 
-<<<<<<< HEAD
-						if ( style.checkApplicable( elementPath, editor.activeFilter ) )
-=======
 						if ( style.checkApplicable( elementPath, editor, editor.activeFilter ) )
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 							counter[ type ]++;
 						else
 							this.hideItem( name );
@@ -186,11 +174,7 @@
 					for ( var name in styles ) {
 						var style = styles[ name ];
 
-<<<<<<< HEAD
-						if ( style.checkApplicable( elementPath, editor.activeFilter ) )
-=======
 						if ( style.checkApplicable( elementPath, editor, editor.activeFilter ) )
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 							return;
 					}
 					this.setState( CKEDITOR.TRISTATE_DISABLED );

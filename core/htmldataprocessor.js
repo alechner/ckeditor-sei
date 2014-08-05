@@ -823,8 +823,6 @@
 				encodeURIComponent( match ).replace( /--/g, '%2D%2D' ) +
 				'-->';
 		} );
-<<<<<<< HEAD
-=======
 	}
 
 	// Replace all "on\w{3,}" strings which are not:
@@ -833,7 +831,6 @@
 	// * part of other attribute - e.g. `data-onfoo` or `fonfoo`.
 	function protectInsecureAttributes( html ) {
 		return html.replace( /([^a-z0-9<\-])(on\w{3,})(?!>)/gi, '$1data-cke-' + CKEDITOR.rnd + '-$2' );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	}
 
 	function unprotectRealComments( html ) {
@@ -905,8 +902,6 @@
 				return '{cke_protected_' + ( store.id++ ) + '}';
 			} );
 		} );
-<<<<<<< HEAD
-=======
 
 		// This RegExp searches for innerText in all the title/iframe/textarea elements.
 		// This is because browser doesn't allow HTML in these elements, that's why we can't
@@ -916,7 +911,6 @@
 		} );
 
 		return data;
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	}
 } )();
 

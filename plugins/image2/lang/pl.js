@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'pl', {
 	alt: 'Tekst zastępczy',
 	btnUpload: 'Wyślij',
 	captioned: 'Obrazek z podpisem',
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Podpis',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Informacje o obrazku',
 	lockRatio: 'Zablokuj proporcje',
 	menu: 'Właściwości obrazka',

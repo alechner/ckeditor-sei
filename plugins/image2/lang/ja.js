@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'ja', {
 	alt: '代替テキスト',
 	btnUpload: 'サーバーに送信',
 	captioned: 'キャプションを付ける',
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'キャプション',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: '画像情報',
 	lockRatio: '比率を固定',
 	menu: '画像のプロパティ',

@@ -38,8 +38,6 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 
 		helpers = CKEDITOR.plugins.image2,
 
-<<<<<<< HEAD
-=======
 		// Editor instance configuration.
 		config = editor.config,
 
@@ -47,7 +45,6 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 		// impact on dialog structure and presence of fields.
 		features = editor.widgets.registered.image.features,
 
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		// Functions inherited from image2 plugin.
 		checkHasNaturalRatio = helpers.checkHasNaturalRatio,
 		getNatural = helpers.getNatural,
@@ -124,12 +121,8 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 				callback( null );
 			} );
 
-<<<<<<< HEAD
-			image.setAttribute( 'src', src + '?' + Math.random().toString( 16 ).substring( 2 ) );
-=======
 			image.setAttribute( 'src',
 				( config.baseHref || '' ) + src + '?' + Math.random().toString( 16 ).substring( 2 ) );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		};
 	}
 
@@ -349,11 +342,7 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 		heightField[ method ]();
 	}
 
-<<<<<<< HEAD
-	var hasFileBrowser = !!( editor.config.filebrowserImageBrowseUrl || editor.config.filebrowserBrowseUrl ),
-=======
 	var hasFileBrowser = !!( config.filebrowserImageBrowseUrl || config.filebrowserBrowseUrl ),
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		srcBoxChildren = [
 			{
 				id: 'src',
@@ -379,11 +368,7 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 			id: 'browse',
 			// v-align with the 'txtUrl' field.
 			// TODO: We need something better than a fixed size here.
-<<<<<<< HEAD
-			style: 'display:inline-block;margin-top:16px;',
-=======
 			style: 'display:inline-block;margin-top:14px;',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			align: 'center',
 			label: editor.lang.common.browseServer,
 			hidden: true,
@@ -451,11 +436,7 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 					{
 						type: 'hbox',
 						widths: [ '25%', '25%', '50%' ],
-<<<<<<< HEAD
-						requiredContent: 'img[width,height]',
-=======
 						requiredContent: features.dimension.requiredContent,
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 						children: [
 							{
 								type: 'text',
@@ -509,26 +490,16 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 					{
 						type: 'hbox',
 						id: 'alignment',
-<<<<<<< HEAD
-=======
 						requiredContent: features.align.requiredContent,
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 						children: [
 							{
 								id: 'align',
 								type: 'radio',
 								items: [
-<<<<<<< HEAD
-									[ 'None', 'none' ],
-									[ 'Left', 'left' ],
-									[ 'Center', 'center' ],
-									[ 'Right', 'right' ] ],
-=======
 									[ commonLang.alignNone, 'none' ],
 									[ commonLang.alignLeft, 'left' ],
 									[ commonLang.alignCenter, 'center' ],
 									[ commonLang.alignRight, 'right' ] ],
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 								label: commonLang.align,
 								setup: function( widget ) {
 									this.setValue( widget.data.align );
@@ -543,10 +514,7 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 						id: 'hasCaption',
 						type: 'checkbox',
 						label: lang.captioned,
-<<<<<<< HEAD
-=======
 						requiredContent: features.caption.requiredContent,
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 						setup: function( widget ) {
 							this.setValue( widget.data.hasCaption );
 						},
@@ -566,12 +534,7 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 						type: 'file',
 						id: 'upload',
 						label: lang.btnUpload,
-<<<<<<< HEAD
-						style: 'height:40px',
-						size: 38
-=======
 						style: 'height:40px'
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 					},
 					{
 						type: 'fileButton',

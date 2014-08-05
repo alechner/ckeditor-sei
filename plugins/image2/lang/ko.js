@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'ko', {
 	alt: '이미지 설명',
 	btnUpload: '서버로 전송',
 	captioned: '이미지 설명 넣기',
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Caption', // MISSING
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: '이미지 정보',
 	lockRatio: '비율 유지',
 	menu: '이미지 설정',

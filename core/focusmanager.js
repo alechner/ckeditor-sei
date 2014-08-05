@@ -88,10 +88,7 @@
 		 *		editor.focusManage.focus( editor.editable() );
 		 *
 		 * @param {CKEDITOR.dom.element} [currentActive] The new value of {@link #currentActive} property.
-<<<<<<< HEAD
-=======
 		 * @member CKEDITOR.focusManager
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		 */
 		focus: function( currentActive ) {
 			if ( this._.timer )

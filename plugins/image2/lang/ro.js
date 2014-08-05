@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'ro', {
 	alt: 'Text alternativ',
 	btnUpload: 'Trimite la server',
 	captioned: 'Captioned image', // MISSING
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Caption', // MISSING
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Informaţii despre imagine',
 	lockRatio: 'Păstrează proporţiile',
 	menu: 'Proprietăţile imaginii',

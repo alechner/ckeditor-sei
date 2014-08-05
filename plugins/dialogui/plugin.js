@@ -142,11 +142,7 @@ CKEDITOR.plugins.add( 'dialogui', {
 								'</label>',
 								'<div class="cke_dialog_ui_labeled_content"',
 									( elementDefinition.controlStyle ? ' style="' + elementDefinition.controlStyle + '"' : '' ),
-<<<<<<< HEAD
-									' role="radiogroup" aria-labelledby="' + _.labelId + '">',
-=======
 									' role="presentation">',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 									contentHtml.call( this, dialog, elementDefinition ),
 								'</div>' );
 						} else {
@@ -463,13 +459,10 @@ CKEDITOR.plugins.add( 'dialogui', {
 
 					return html.join( '' );
 				};
-<<<<<<< HEAD
-=======
 
 				// Adding a role="radiogroup" to definition used for wrapper.
 				elementDefinition.role = 'radiogroup';
 				elementDefinition.includeLabel = true;
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 				CKEDITOR.ui.dialog.labeledElement.call( this, dialog, elementDefinition, htmlList, innerHTML );
 				this._.children = children;

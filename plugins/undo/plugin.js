@@ -10,11 +10,7 @@
 
 ( function() {
 	CKEDITOR.plugins.add( 'undo', {
-<<<<<<< HEAD
-		lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
-=======
 		lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		icons: 'redo,redo-rtl,undo,undo-rtl', // %REMOVE_LINE_CORE%
 		hidpi: true, // %REMOVE_LINE_CORE%
 		init: function( editor ) {
@@ -41,14 +37,6 @@
 				startDisabled: true,
 				canUndo: false
 			} );
-<<<<<<< HEAD
-
-			editor.setKeystroke( [
-				[ CKEDITOR.CTRL + 90 /*Z*/, 'undo' ],
-				[ CKEDITOR.CTRL + 89 /*Y*/, 'redo' ],
-				[ CKEDITOR.CTRL + CKEDITOR.SHIFT + 90 /*Z*/, 'redo' ]
-			] );
-=======
 
 			var keystrokes = [ CKEDITOR.CTRL + 90 /*Z*/, CKEDITOR.CTRL + 89 /*Y*/, CKEDITOR.CTRL + CKEDITOR.SHIFT + 90 /*Z*/ ];
 
@@ -66,7 +54,6 @@
 						evt.data.preventDefault();
 				} );
 			} );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 			undoManager.onChange = function() {
 				undoCommand.setState( undoManager.undoable() ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
@@ -182,13 +169,6 @@
 			 * @member CKEDITOR.editor
  			 * @param {CKEDITOR.editor} editor This editor instance.
 			 * @param data
-<<<<<<< HEAD
-			 * @param {Boolean} [data.dontUpdate] When set to `true` the last snapshot will not be updated
-			 * with the current contents and selection. Read more in the {@link CKEDITOR.plugins.undo.UndoManager#lock} method.
-			 */
-			editor.on( 'lockSnapshot', function( evt ) {
-				undoManager.lock( evt.data && evt.data.dontUpdate );
-=======
 			 * @param {Boolean} [data.dontUpdate] When set to `true`, the last snapshot will not be updated
 			 * with the current content and selection. Read more in the {@link CKEDITOR.plugins.undo.UndoManager#lock} method.
 			 * @param {Boolean} [data.forceUpdate] When set to `true`, the last snapshot will always be updated
@@ -197,7 +177,6 @@
 			editor.on( 'lockSnapshot', function( evt ) {
 				var data = evt.data;
 				undoManager.lock( data && data.dontUpdate, data && data.forceUpdate );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			} );
 
 			/**
@@ -478,12 +457,7 @@
 					if ( image.equalsSelection( this.currentImage ) )
 						return false;
 				} else
-<<<<<<< HEAD
-					this.editor.fire( 'change' );
-
-=======
 					editor.fire( 'change' );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			}
 
 			// Drop future snapshots.
@@ -632,11 +606,7 @@
 		 * Updates the last snapshot of the undo stack with the current editor content.
 		 *
 		 * @param {CKEDITOR.plugins.undo.Image} [newImage] The image which will replace the current one.
-<<<<<<< HEAD
-		 * If not set defaults to image taken from editor.
-=======
 		 * If it is not set, it defaults to the image taken from editor.
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		 */
 		update: function( newImage ) {
 			// Do not change snapshots stack is locked.
@@ -670,16 +640,6 @@
 		 * **Note:** For every `lock` call you must call {@link #unlock} once to unlock the undo manager.
 		 *
 		 * @since 4.0
-<<<<<<< HEAD
-		 * @param {Boolean} [dontUpdate] When set to `true` the last snapashot will not be updated
-		 * with the current contents and selection. By default, if undo manager was up to date when lock started,
-		 * the last snapshot will be updated to the current state when unlocking. This means that all changes
-		 * done during lock will be merged into the previous snapshot or the next one. Use this option, to gain
-		 * more control over this behavior. For example, it is possible to group changes done during lock into
-		 * separate snapshot.
-		 */
-		lock: function( dontUpdate ) {
-=======
 		 * @param {Boolean} [dontUpdate] When set to `true`, the last snapshot will not be updated
 		 * with current contents and selection. By default, if undo manager was up to date when the lock started,
 		 * the last snapshot will be updated to the current state when unlocking. This means that all changes
@@ -693,26 +653,10 @@
 		 * because when it is passed, the snapshots will not need to be compared.
 		 */
 		lock: function( dontUpdate, forceUpdate ) {
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			if ( !this.locked ) {
 				if ( dontUpdate )
 					this.locked = { level: 1 };
 				else {
-<<<<<<< HEAD
-					// Make a contents image. Don't include bookmarks, because:
-					// * we don't compare them,
-					// * there's a chance that DOM has been changed since
-					// locked (e.g. fake) selection was made, so createBookmark2 could fail.
-					// http://dev.ckeditor.com/ticket/11027#comment:3
-					var imageBefore = new Image( this.editor, true );
-
-					// If current editor content matches the tip of snapshot stack,
-					// the stack tip must be updated by unlock, to include any changes made
-					// during this period.
-					var matchedTip = this.currentImage && this.currentImage.equalsContent( imageBefore );
-
-					this.locked = { update: matchedTip ? imageBefore : null, level: 1 };
-=======
 					var update = null;
 
 					if ( forceUpdate )
@@ -733,7 +677,6 @@
 					}
 
 					this.locked = { update: update, level: 1 };
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				}
 			}
 			// Increase the level of lock.
@@ -752,21 +695,12 @@
 			if ( this.locked ) {
 				// Decrease level of lock and check if equals 0, what means that undoM is completely unlocked.
 				if ( !--this.locked.level ) {
-<<<<<<< HEAD
-					var updateImage = this.locked.update,
-						newImage = updateImage && new Image( this.editor, true );
-
-					this.locked = null;
-
-					if ( updateImage && !updateImage.equalsContent( newImage ) )
-=======
 					var update = this.locked.update;
 
 					this.locked = null;
 
 					// forceUpdate was passed to lock().
 					if ( update === true )
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 						this.update();
 					// update is instance of Image.
 					else if ( update ) {
@@ -801,11 +735,7 @@
  */
 
 /**
-<<<<<<< HEAD
- * Fired before an undo image is to be taken. An undo image represents the
-=======
  * Fired before an undo image is to be created. An *undo image* represents the
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  * editor state at some point. It is saved into the undo store, so the editor is
  * able to recover the editor state on undo and redo operations.
  *
@@ -817,11 +747,7 @@
  */
 
 /**
-<<<<<<< HEAD
- * Fired after an undo image is taken. An undo image represents the
-=======
  * Fired after an undo image is created. An *undo image* represents the
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  * editor state at some point. It is saved into the undo store, so the editor is
  * able to recover the editor state on undo and redo operations.
  *
@@ -840,10 +766,6 @@
  * changes. This event may thus in some cases be fired when no changes happen
  * or may even get fired twice.
  *
-<<<<<<< HEAD
- * If it is important not to get the change event too often, you should compare the
- * previous and the current editor content inside the event listener.
-=======
  * If it is important not to get the `change` event fired too often, you should compare the
  * previous and the current editor content inside the event listener. It is
  * not recommended to do that on every `change` event.
@@ -861,7 +783,6 @@
  *				} );
  *			}
  *		} );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  *
  * @since 4.2
  * @event change

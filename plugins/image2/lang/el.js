@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'el', {
 	alt: 'Εναλλακτικό Κείμενο',
 	btnUpload: 'Αποστολή στον Διακομιστή',
 	captioned: 'Εικόνα με λεζάντα',
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Λεζάντα',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Πληροφορίες Εικόνας',
 	lockRatio: 'Κλείδωμα Αναλογίας',
 	menu: 'Ιδιότητες Εικόνας',

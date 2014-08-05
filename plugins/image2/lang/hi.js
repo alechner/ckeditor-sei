@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'hi', {
 	alt: 'वैकल्पिक टेक्स्ट',
 	btnUpload: 'इसे सर्वर को भेजें',
 	captioned: 'Captioned image', // MISSING
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Caption', // MISSING
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'तस्वीर की जानकारी',
 	lockRatio: 'लॉक अनुपात',
 	menu: 'तस्वीर प्रॉपर्टीज़',

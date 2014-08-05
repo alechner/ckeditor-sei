@@ -20,24 +20,10 @@
 	 * @singleton
 	 */
 	CKEDITOR.ajax = ( function() {
-<<<<<<< HEAD
-		var createXMLHttpRequest = function() {
-				// In IE, using the native XMLHttpRequest for local files may throw
-				// "Access is Denied" errors.
-				if ( !CKEDITOR.env.ie || location.protocol != 'file:' )
-					try {
-					return new XMLHttpRequest();
-				} catch ( e ) {}
-
-				try {
-					return new ActiveXObject( 'Msxml2.XMLHTTP' );
-				} catch ( e ) {}
-=======
 		function createXMLHttpRequest() {
 			// In IE, using the native XMLHttpRequest for local files may throw
 			// "Access is Denied" errors.
 			if ( !CKEDITOR.env.ie || location.protocol != 'file:' )
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				try {
 				return new XMLHttpRequest();
 			} catch ( e ) {}

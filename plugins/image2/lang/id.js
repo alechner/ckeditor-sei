@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'id', {
 	alt: 'Teks alternatif',
 	btnUpload: 'Kirim ke Server',
 	captioned: 'Captioned image', // MISSING
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Caption', // MISSING
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Info Gambar',
 	lockRatio: 'Lock Ratio', // MISSING
 	menu: 'Image Properties', // MISSING

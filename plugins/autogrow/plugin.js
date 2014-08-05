@@ -46,11 +46,8 @@
 			editorFocus: false
 		} );
 
-<<<<<<< HEAD
 		var eventsList = { contentDom: 1,afterZoom: 1, selectionChange: 1, insertElement: 1, mode: 1 };//trocado key por afterZoom
-=======
-		var eventsList = { contentDom: 1, key: 1, selectionChange: 1, insertElement: 1, mode: 1 };
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
+
 		for ( var eventName in eventsList ) {
 			editor.on( eventName, function( evt ) {
 				// Some time is required for insertHtml, and it gives other events better performance as well.
@@ -71,50 +68,18 @@
 					}, 100 );
 				}
 			} );
-<<<<<<< HEAD
-		}
 
-		// Coordinate with the "maximize" plugin. (#9311)
-		editor.on( 'afterCommandExec', function( evt ) {
-			if ( evt.data.name == 'maximize' && evt.editor.mode == 'wysiwyg' ) {
-				if ( evt.data.command.state == CKEDITOR.TRISTATE_ON )
-					scrollable.removeStyle( 'overflow-y' );
-				else
-					resizeEditor();
-			}
-		} );
+        }
 
-		editor.on( 'contentDom', refreshCache );
-
-		refreshCache();
-		editor.config.autoGrow_onStartup && editor.execCommand( 'autogrow' );
-
-		function refreshCache() {
-			doc = editor.document;
-			markerContainer = doc[ CKEDITOR.env.ie ? 'getBody' : 'getDocumentElement' ]();
-
-			// Quirks mode overflows body, standards overflows document element.
-			scrollable = CKEDITOR.env.quirks ? doc.getBody() : doc.getDocumentElement();
-
-			marker = CKEDITOR.dom.element.createFromHtml(
-				'<span style="margin:0;padding:0;border:0;clear:both;width:1px;height:1px;display:block;">' +
-					( CKEDITOR.env.webkit ? '&nbsp;' : '' ) +
-				'</span>',
-				doc );
-		}
-
-=======
-		}
-
-		// Coordinate with the "maximize" plugin. (#9311)
-		editor.on( 'afterCommandExec', function( evt ) {
-			if ( evt.data.name == 'maximize' && evt.editor.mode == 'wysiwyg' ) {
-				if ( evt.data.command.state == CKEDITOR.TRISTATE_ON )
-					scrollable.removeStyle( 'overflow-y' );
-				else
-					resizeEditor();
-			}
-		} );
+        // Coordinate with the "maximize" plugin. (#9311)
+        editor.on( 'afterCommandExec', function( evt ) {
+            if ( evt.data.name == 'maximize' && evt.editor.mode == 'wysiwyg' ) {
+                if ( evt.data.command.state == CKEDITOR.TRISTATE_ON )
+                    scrollable.removeStyle( 'overflow-y' );
+                else
+                    resizeEditor();
+            }
+        } );
 
 		editor.on( 'contentDom', refreshCache );
 
@@ -135,7 +100,6 @@
 				doc );
 		}
 
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		function isNotResizable() {
 			var maximizeCommand = editor.getCommand( 'maximize' );
 
@@ -165,9 +129,9 @@
 			var currentHeight = editor.window.getViewPaneSize().height,
 				newHeight = contentHeight();
 
-<<<<<<< HEAD
 		  //----------------------- codigo adicional para zoom
 			var body=editor.document.getBody();
+            var scale,reg;
 			if (CKEDITOR.env.gecko && (scale=body.$.style.MozTransform)){
 				reg=/[0-9]*\.?[0-9]+/g;
 				newHeight*=reg.exec(scale);
@@ -177,8 +141,6 @@
 			}
 			//-----------------------
 
-=======
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			// Additional space specified by user.
 			newHeight += configBottomSpace;
 			newHeight = Math.max( newHeight, configMinHeight );

@@ -72,6 +72,7 @@ var CKBUILDER_CONFIG = {
 		sourcearea: 1,
 		specialchar: 1,
 		stylescombo: 1,
+        symbol: 1,
 		tab: 1,
 		table: 1,
 		tabletools: 1,

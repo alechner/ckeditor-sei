@@ -6,12 +6,8 @@
 		"optimist": ">=0.5.2",
 		"png-js": ">=0.1.1",
 		"q": ">=0.9.6",
-<<<<<<< HEAD
-		"tmp": ">=0.0.20"
-=======
 		"tmp": ">=0.0.20",
 		"mkdirp": ">=0.5.0"
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	},
 	"author": {
 		"name": "CKSource - Frederico Knabben",

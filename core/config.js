@@ -337,14 +337,10 @@ CKEDITOR.config = {
 	 *		config.blockedKeystrokes = [
 	 *			CKEDITOR.CTRL + 66, // CTRL+B
 	 *			CKEDITOR.CTRL + 73, // CTRL+I
-<<<<<<< HEAD
 	 *			CKEDITOR.CTRL + 85, // CTRL+U
 	 *			CKEDITOR.CTRL + 89, // CTRL+Y
 	 *			CKEDITOR.CTRL + 90, // CTRL+Z
 	 *			CKEDITOR.CTRL + CKEDITOR.SHIFT + 90  // CTRL+SHIFT+Z
-=======
-	 *			CKEDITOR.CTRL + 85 // CTRL+U
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	 *		];
 	 *
 	 * @cfg {Array} [blockedKeystrokes=see example]

@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'ru', {
 	alt: 'Альтернативный текст',
 	btnUpload: 'Загрузить на сервер',
 	captioned: 'Захваченное изображение',
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Название',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Данные об изображении',
 	lockRatio: 'Сохранять пропорции',
 	menu: 'Свойства изображения',

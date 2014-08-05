@@ -15,8 +15,6 @@
 		trim = CKEDITOR.tools.trim,
 		TEST_VALUE = 'cke-test',
 		enterModeTags = [ '', 'p', 'br', 'div' ];
-<<<<<<< HEAD
-=======
 
 	/**
 	 * A flag indicating that the current element and all its ancestors
@@ -30,7 +28,6 @@
 	 * @member CKEDITOR
 	 */
 	CKEDITOR.FILTER_SKIP_TREE = FILTER_SKIP_TREE;
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 	/**
 	 * Highly configurable class which implements input data filtering mechanisms
@@ -187,11 +184,8 @@
 
 			// Enter modes should extend filter rules (ENTER_P adds 'p' rule, etc.).
 			this.allow( enterModeTags[ editor.enterMode ] + ' ' + enterModeTags[ editor.shiftEnterMode ], 'default', 1 );
-<<<<<<< HEAD
-=======
 
 			this.disallow( editor.config.disallowedContent );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		}
 		// Rules object passed in editorOrRules argument - initialize standalone filter.
 		else {
@@ -286,15 +280,8 @@
 			if ( this.disabled )
 				return false;
 
-<<<<<<< HEAD
-			var toBeRemoved = [],
-				rules = !transformOnly && this._.rules,
-				transformations = this._.transformations,
-				filterFn = getFilterFunction( this ),
-=======
 			var that = this,
 				toBeRemoved = [],
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				protectedRegexs = this.editor && this.editor.config.protectedSource,
 				processRetVal,
 				isModified = false,
@@ -428,8 +415,6 @@
 		 */
 		disable: function() {
 			this.disabled = true;
-<<<<<<< HEAD
-=======
 		},
 
 		/**
@@ -459,7 +444,6 @@
 			addAndOptimizeRules( this, newRules, null, this.disallowedContent, this._.disallowedRules );
 
 			return true;
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		},
 
 		/**
@@ -1282,8 +1266,6 @@
 		return obj;
 	}
 
-<<<<<<< HEAD
-=======
 	// Extract properties names from the object
 	// and replace those containing wildcards with regexps.
 	// Note: there's a room for performance improvement. Array of mixed types
@@ -1301,7 +1283,6 @@
 		return arr;
 	}
 
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	var validators = { styles: 1, attributes: 1, classes: 1 },
 		validatorsRequired = {
 			styles: 'requiredStyles',
@@ -2265,8 +2246,6 @@
  */
 
 /**
-<<<<<<< HEAD
-=======
  * Disallowed content rules. They have precedence over {@link #allowedContent allowed content rules}.
  * Read more in the [Disallowed Content guide](#!/guide/dev_disallowed_content).
  *
@@ -2278,7 +2257,6 @@
  */
 
 /**
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  * This event is fired when {@link CKEDITOR.filter} has stripped some
  * content from the data that was loaded (e.g. by {@link CKEDITOR.editor#method-setData}
  * method or in the source mode) or inserted (e.g. when pasting or using the

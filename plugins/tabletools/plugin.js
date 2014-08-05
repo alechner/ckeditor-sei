@@ -123,7 +123,13 @@
 			} else {
 				cell = new CKEDITOR.dom.element( cloneRow[ i ] ).clone();
 				cell.removeAttribute( 'rowSpan' );
-				cell.appendBogus();
+                if (cloneRow[i].firstChild.nodeName.toUpperCase()=='P'){
+                    var newP=new CKEDITOR.dom.element( cloneRow[i].firstChild ).clone( false, false );
+                    newP.appendBogus();
+                    cell.append(newP);
+                } else {
+                    cell.appendBogus();
+                }
 				newRow.append( cell );
 				cell = cell.$;
 			}
@@ -404,13 +410,9 @@
 
 		// Fixing "Unspecified error" thrown in IE10 by resetting
 		// selection the dirty and shameful way (#10308).
-<<<<<<< HEAD
-		if ( CKEDITOR.env.ie && CKEDITOR.env.version < 11 ) {
-=======
 		// We can not apply this hack to IE8 because
 		// it causes error (#11058).
 		if ( CKEDITOR.env.ie && CKEDITOR.env.version == 10 ) {
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			docOuter.focus();
 			docInner.focus();
 		}

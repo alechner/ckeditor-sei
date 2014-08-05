@@ -18,9 +18,5 @@ CKEDITOR.plugins.setLang( 'toolbar', 'fa', {
 		colors: 'رنگ​ها',
 		tools: 'ابزارها'
 	},
-<<<<<<< HEAD
-	toolbars: 'نوار ابزار'
-=======
 	toolbars: 'نوار ابزارهای ویرایش‌گر'
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 } );

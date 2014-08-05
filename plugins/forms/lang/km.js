@@ -58,13 +58,8 @@ CKEDITOR.plugins.setLang( 'forms', 'km', {
 		charWidth: 'ទទឹង​តួ​អក្សរ',
 		maxChars: 'អក្សរអតិបរិមា',
 		type: 'ប្រភេទ',
-<<<<<<< HEAD
-		typeText: 'ពាក្យ',
-		typePass: 'ពាក្យសំងាត់',
-=======
 		typeText: 'អត្ថបទ',
 		typePass: 'ពាក្យសម្ងាត់',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		typeEmail: 'អ៊ីមែល',
 		typeSearch: 'ស្វែង​រក',
 		typeTel: 'លេខ​ទូរសព្ទ',

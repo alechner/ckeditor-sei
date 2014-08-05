@@ -177,11 +177,7 @@ CKEDITOR.plugins.add( 'richcombo', {
 						this.refresh();
 				}
 
-<<<<<<< HEAD
-				// Update status when activeFilter, mode or readOnly changes.
-=======
 				// Update status when activeFilter, mode, selection or readOnly changes.
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				editor.on( 'activeFilterChange', updateState, this );
 				editor.on( 'mode', updateState, this );
 				editor.on( 'selectionChange', updateState, this );
@@ -223,19 +219,6 @@ CKEDITOR.plugins.add( 'richcombo', {
 				} );
 
 				var selLocked = 0;
-<<<<<<< HEAD
-				var mouseDownFn = CKEDITOR.tools.addFunction( function() {
-					// Opera: lock to prevent loosing editable text selection when clicking on button.
-					if ( CKEDITOR.env.opera ) {
-						var edt = editor.editable();
-						if ( edt.isInline() && edt.hasFocus ) {
-							editor.lockSelection();
-							selLocked = 1;
-						}
-					}
-				} );
-=======
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 				// For clean up
 				instance.keyDownFn = keyDownFn;

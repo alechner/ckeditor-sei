@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'lt', {
 	alt: 'Alternatyvus Tekstas',
 	btnUpload: 'Siųsti į serverį',
 	captioned: 'Captioned image', // MISSING
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Caption', // MISSING
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Vaizdo informacija',
 	lockRatio: 'Išlaikyti proporciją',
 	menu: 'Vaizdo savybės',

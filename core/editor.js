@@ -442,13 +442,6 @@
 			 * @property {String/Boolean}
 			 */
 			editor.title = typeof configTitle == 'string' || configTitle === false ? configTitle : [ editor.lang.editor, editor.name ].join( ', ' );
-<<<<<<< HEAD
-
-			// We're not able to support RTL in Firefox 2 at this time.
-			if ( CKEDITOR.env.gecko && CKEDITOR.env.version < 10900 && editor.lang.dir == 'rtl' )
-				editor.lang.dir = 'ltr';
-=======
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 			if ( !editor.config.contentsLangDirection ) {
 				// Fallback to either the editable element direction or editor UI direction depending on creators.
@@ -951,13 +944,7 @@
 		 * @param {Boolean} [options.noSnapshot=false] If set to `true`, it will prevent recording an undo snapshot.
 		 * Introduced in CKEditor 4.4.2.
 		 */
-<<<<<<< HEAD
-		setData: function( data, callback, internal ) {
-			if ( callback ) {
-				this.on( 'dataReady', function( evt ) {
-					evt.removeListener();
-					callback.call( evt.editor );
-=======
+
 		setData: function( data, options, internal ) {
 			var fireSnapshot = true,
 				// Backward compatibility.
@@ -980,7 +967,7 @@
 
 					if ( callback )
 						callback.call( evt.editor );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
+
 				} );
 			}
 

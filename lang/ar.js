@@ -20,11 +20,7 @@
 CKEDITOR.lang[ 'ar' ] = {
 	// ARIA description.
 	editor: 'محرر النص الغني',
-<<<<<<< HEAD
-	editorPanel: 'Rich Text Editor panel', // MISSING
-=======
 	editorPanel: 'لائحة محرر النص المنسق',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 	// Common messages and labels.
 	common: {
@@ -88,10 +84,7 @@ CKEDITOR.lang[ 'ar' ] = {
 		alignTop: 'أعلى',
 		alignMiddle: 'وسط',
 		alignBottom: 'أسفل',
-<<<<<<< HEAD
-=======
 		alignNone: 'None', // MISSING
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		invalidValue	: 'قيمة غير مفبولة.',
 		invalidHeight: 'الارتفاع يجب أن يكون عدداً.',
 		invalidWidth: 'العرض يجب أن يكون عدداً.',

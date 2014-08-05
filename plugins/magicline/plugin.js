@@ -12,11 +12,7 @@
 
 ( function() {
 	CKEDITOR.plugins.add( 'magicline', {
-<<<<<<< HEAD
-		lang: 'ar,bg,ca,cs,cy,de,el,en,en-gb,eo,es,et,eu,fa,fi,fr,fr-ca,gl,he,hr,hu,id,it,ja,km,ko,ku,lv,nb,nl,no,pl,pt,pt-br,ru,si,sk,sl,sq,sv,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
-=======
 		lang: 'ar,bg,ca,cs,cy,de,el,en,en-gb,eo,es,et,eu,fa,fi,fr,fr-ca,gl,he,hr,hu,id,it,ja,km,ko,ku,lv,nb,nl,no,pl,pt,pt-br,ru,si,sk,sl,sq,sv,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		init: initPlugin
 	} );
 
@@ -483,12 +479,8 @@
 			// If trigger is an element, neither editable nor editable's ascendant.
 			if ( trigger && that.editable.contains( trigger ) ) {
 				// Check for closest editable limit.
-<<<<<<< HEAD
-				var limit = getClosestEditableLimit( trigger, true );
-=======
 				// Don't consider trigger as a limit as it may be nested editable (includeSelf=false) (#12009).
 				var limit = getClosestEditableLimit( trigger );
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 
 				// Trigger in nested editable area.
 				if ( limit.getAttribute( 'contenteditable' ) == 'true' )
@@ -1817,17 +1809,10 @@ CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + CKEDITOR.SHIFT + 5
 CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + CKEDITOR.SHIFT + 52; // CTRL + SHIFT + 4
 
 /**
-<<<<<<< HEAD
- * Defines a list of attributes that, if assigned to some elements, prevent magicline from being
- * used within these elements.
- *
- *		// Adds "data-tabu" attribute to magicline tabu list.
-=======
  * Defines a list of attributes that, if assigned to some elements, prevent the magic line from being
  * used within these elements.
  *
  *		// Adds the "data-tabu" attribute to the magic line tabu list.
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
  *		CKEDITOR.config.magicline_tabuList = [ 'data-tabu' ];
  *
  * @cfg {Number} [magicline_tabuList=[ 'data-widget-wrapper' ]]

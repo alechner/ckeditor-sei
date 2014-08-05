@@ -105,14 +105,10 @@
 		"plugins/link/icons/anchor-rtl.png"
 	],
 	"7": [
-<<<<<<< HEAD
-		"plugins/image/icons/image.png",
-=======
 		[
 			"plugins/image/icons/image.png",
 			"plugins/image2/icons/image.png"
 		],
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		"plugins/flash/icons/flash.png",
 		"plugins/table/icons/table.png",
 		"plugins/horizontalrule/icons/horizontalrule.png",
@@ -135,12 +131,8 @@
 		"plugins/about/icons/about.png",
 		"plugins/uicolor/icons/uicolor.png",
 		"plugins/placeholder/icons/placeholder.png",
-<<<<<<< HEAD
-		"plugins/language/icons/language.png"
-=======
 		"plugins/language/icons/language.png",
 		"plugins/codesnippet/icons/codesnippet.png"
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	],
 	"11": [
 		"plugins/link/images/anchor.png",

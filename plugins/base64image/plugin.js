@@ -1,6 +1,6 @@
 /*
  * Base64Image Plugin for CKEditor (http://github.com/nmmf/base64image)
- * Created by ALL-INKL.COM - Neue Medien M�nnich - 04. Feb 2014
+ * Created by ALL-INKL.COM - Neue Medien Münnich - 04. Feb 2014
  * Licensed under the terms of GPL, LGPL and MPL licenses.
  */
 CKEDITOR.plugins.add("base64image", {
@@ -29,12 +29,6 @@ CKEDITOR.plugins.add("base64image", {
 							[ 'img{float}: alignmentToStyle', 'img[align]: alignmentToAttribute' ]
 						]
 					} ) );
-					editor.on("doubleclick", function(evt){
-						if(evt.data.element && !evt.data.element.isReadOnly() && evt.data.element.getName() === "img") {
-							evt.data.dialog = pluginName;
-							editor.getSelection().selectElement(evt.data.element);
-						}
-					});
 					if(editor.addMenuItem) {
 						editor.addMenuGroup("base64imageGroup");
 						editor.addMenuItem("base64imageItem", {
@@ -44,14 +38,6 @@ CKEDITOR.plugins.add("base64image", {
 							group: "base64imageGroup"
 						});
 					}
-					if(editor.contextMenu) {
-						editor.contextMenu.addListener(function(element, selection) {
-							if(element && element.getName() === "img") {
-								editor.getSelection().selectElement(element);
-								return { base64imageItem: CKEDITOR.TRISTATE_ON };
-							}
-							return null;
-						});
-					}
+
 				}
 });

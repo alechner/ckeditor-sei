@@ -6,11 +6,7 @@
 ( function() {
 	var template = '<a id="{id}"' +
 		' class="cke_button cke_button__{name} cke_button_{state} {cls}"' +
-<<<<<<< HEAD
-		( CKEDITOR.env.gecko && CKEDITOR.env.version >= 10900 && !CKEDITOR.env.hc ? '' : ' href="javascript:void(\'{titleJs}\')"' ) +
-=======
 		( CKEDITOR.env.gecko && !CKEDITOR.env.hc ? '' : ' href="javascript:void(\'{titleJs}\')"' ) +
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		' title="{title}"' +
 		' tabindex="-1"' +
 		' hidefocus="true"' +
@@ -51,11 +47,7 @@
 		btnTpl = CKEDITOR.addTemplate( 'button', template );
 
 	CKEDITOR.plugins.add( 'button', {
-<<<<<<< HEAD
-		lang: 'en', // %REMOVE_LINE_CORE%
-=======
 		lang: 'ca,cs,de,el,en,en-gb,eo,fa,fi,fr,gl,he,hu,it,ja,km,nb,nl,pl,pt,pt-br,ro,ru,sl,sv,tt,uk,vi,zh-cn', // %REMOVE_LINE_CORE%
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 		beforeInit: function( editor ) {
 			editor.ui.addHandler( CKEDITOR.UI_BUTTON, CKEDITOR.ui.button.handler );
 		}
@@ -166,20 +158,6 @@
 
 			var selLocked = 0;
 
-<<<<<<< HEAD
-			var mousedownFn = CKEDITOR.tools.addFunction( function() {
-				// Opera: lock to prevent loosing editable text selection when clicking on button.
-				if ( CKEDITOR.env.opera ) {
-					var edt = editor.editable();
-					if ( edt.isInline() && edt.hasFocus ) {
-						editor.lockSelection();
-						selLocked = 1;
-					}
-				}
-			} );
-
-=======
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 			instance.clickFn = clickFn = CKEDITOR.tools.addFunction( function() {
 
 				// Restore locked selection in Opera.

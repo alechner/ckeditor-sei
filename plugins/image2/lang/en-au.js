@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'en-au', {
 	alt: 'Alternative Text',
 	btnUpload: 'Send it to the Server',
 	captioned: 'Captioned image', // MISSING
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Caption', // MISSING
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Image Info',
 	lockRatio: 'Lock Ratio',
 	menu: 'Image Properties',

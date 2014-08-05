@@ -85,17 +85,6 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'de', {
 	backspace: 'Backspace', // MISSING
 	tab: 'Tab', // MISSING
 	enter: 'Enter', // MISSING
-<<<<<<< HEAD
-	shift: 'Shift', // MISSING
-	ctrl: 'Ctrl', // MISSING
-	alt: 'Alt', // MISSING
-	pause: 'Pause', // MISSING
-	capslock: 'Caps Lock', // MISSING
-	escape: 'Escape', // MISSING
-	pageUp: 'Page Up', // MISSING
-	pageDown: 'Page Down', // MISSING
-	end: 'End', // MISSING
-=======
 	shift: 'Umschalt',
 	ctrl: 'Strg',
 	alt: 'Alt',
@@ -105,29 +94,11 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'de', {
 	pageUp: 'Page Up', // MISSING
 	pageDown: 'Page Down', // MISSING
 	end: 'Ende',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	home: 'Home', // MISSING
 	leftArrow: 'Left Arrow', // MISSING
 	upArrow: 'Up Arrow', // MISSING
 	rightArrow: 'Right Arrow', // MISSING
 	downArrow: 'Down Arrow', // MISSING
-<<<<<<< HEAD
-	insert: 'Insert', // MISSING
-	'delete': 'Delete', // MISSING
-	leftWindowKey: 'Left Windows key', // MISSING
-	rightWindowKey: 'Right Windows key', // MISSING
-	selectKey: 'Select key', // MISSING
-	numpad0: 'Numpad 0', // MISSING
-	numpad1: 'Numpad 1', // MISSING
-	numpad2: 'Numpad 2', // MISSING
-	numpad3: 'Numpad 3', // MISSING
-	numpad4: 'Numpad 4', // MISSING
-	numpad5: 'Numpad 5', // MISSING
-	numpad6: 'Numpad 6', // MISSING
-	numpad7: 'Numpad 7', // MISSING
-	numpad8: 'Numpad 8', // MISSING
-	numpad9: 'Numpad 9', // MISSING
-=======
 	insert: 'Einfügen',
 	'delete': 'Entfernen',
 	leftWindowKey: 'Linke Windowstaste',
@@ -143,33 +114,11 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'de', {
 	numpad7: 'Ziffernblock 7',
 	numpad8: 'Ziffernblock 8',
 	numpad9: 'Ziffernblock 9',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	multiply: 'Multiply', // MISSING
 	add: 'Add', // MISSING
 	subtract: 'Subtract', // MISSING
 	decimalPoint: 'Decimal Point', // MISSING
 	divide: 'Divide', // MISSING
-<<<<<<< HEAD
-	f1: 'F1', // MISSING
-	f2: 'F2', // MISSING
-	f3: 'F3', // MISSING
-	f4: 'F4', // MISSING
-	f5: 'F5', // MISSING
-	f6: 'F6', // MISSING
-	f7: 'F7', // MISSING
-	f8: 'F8', // MISSING
-	f9: 'F9', // MISSING
-	f10: 'F10', // MISSING
-	f11: 'F11', // MISSING
-	f12: 'F12', // MISSING
-	numLock: 'Num Lock', // MISSING
-	scrollLock: 'Scroll Lock', // MISSING
-	semiColon: 'Semicolon', // MISSING
-	equalSign: 'Equal Sign', // MISSING
-	comma: 'Comma', // MISSING
-	dash: 'Dash', // MISSING
-	period: 'Period', // MISSING
-=======
 	f1: 'F1',
 	f2: 'F2',
 	f3: 'F3',
@@ -189,7 +138,6 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'de', {
 	comma: 'Komma',
 	dash: 'Bindestrich',
 	period: 'Punkt',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	forwardSlash: 'Forward Slash', // MISSING
 	graveAccent: 'Grave Accent', // MISSING
 	openBracket: 'Open Bracket', // MISSING

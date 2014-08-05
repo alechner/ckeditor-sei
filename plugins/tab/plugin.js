@@ -58,7 +58,14 @@
 
 							for ( var i = 0, count = cells.length; i < count; i++ ) {
 								var newCell = newRow.append( new CKEDITOR.dom.element( cells[ i ], editor.document ).clone( false, false ) );
-								newCell.appendBogus();
+                                //copia estilo da ultima linha (primeiro paragrafo de cada celula)
+                                if (cells[i].firstChild.nodeName.toUpperCase()=='P'){
+                                    var newP=new CKEDITOR.dom.element( cells[i].firstChild, editor.document ).clone( false, false );
+                                    newP.appendBogus();
+                                    newCell.append(newP);
+                                } else {
+								    newCell.appendBogus();
+                                }
 							}
 
 							resultRange.moveToElementEditStart( newRow );

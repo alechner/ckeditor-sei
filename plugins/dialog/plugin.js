@@ -1137,13 +1137,8 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			if ( this._.tabs[ id ][ 0 ].hasClass( 'cke_dialog_tab_disabled' ) )
 				return;
 
-<<<<<<< HEAD
-			// Returning true means that the event has been canceled
-			if ( this.fire( 'selectPage', { page: id, currentPage: this._.currentTabId } ) === true )
-=======
 			// If event was canceled - do nothing.
 			if ( this.fire( 'selectPage', { page: id, currentPage: this._.currentTabId } ) === false )
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 				return;
 
 			// Hide the non-selected tabs and pages.

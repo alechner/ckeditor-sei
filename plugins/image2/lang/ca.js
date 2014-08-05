@@ -6,10 +6,7 @@ CKEDITOR.plugins.setLang( 'image2', 'ca', {
 	alt: 'Text alternatiu',
 	btnUpload: 'Envia-la al servidor',
 	captioned: 'Imatge amb subtítol',
-<<<<<<< HEAD
-=======
 	captionPlaceholder: 'Títol',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	infoTab: 'Informació de la imatge',
 	lockRatio: 'Bloqueja les proporcions',
 	menu: 'Propietats de la imatge',

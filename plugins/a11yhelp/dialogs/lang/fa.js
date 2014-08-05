@@ -99,13 +99,8 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'fa', {
 	upArrow: 'پیکان بالا',
 	rightArrow: 'پیکان راست',
 	downArrow: 'پیکان پایین',
-<<<<<<< HEAD
-	insert: 'Insert',
-	'delete': 'Delete',
-=======
 	insert: 'ورود',
 	'delete': 'حذف',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	leftWindowKey: 'کلید چپ ویندوز',
 	rightWindowKey: 'کلید راست ویندوز',
 	selectKey: 'انتخاب کلید',
@@ -120,11 +115,7 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'fa', {
 	numpad8: 'کلید شماره 8',
 	numpad9: 'کلید شماره 9',
 	multiply: 'ضرب',
-<<<<<<< HEAD
-	add: 'Add',
-=======
 	add: 'افزودن',
->>>>>>> fd4f17ce11eb398e844c9056c0e25087492a122b
 	subtract: 'تفریق',
 	decimalPoint: 'نقطه‌ی اعشار',
 	divide: 'جدا کردن',
