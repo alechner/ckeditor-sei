@@ -82,7 +82,6 @@
               // be the ones that could later be altered with editor tools.
               [
                 [ ( /^list-style-type$/ ), null ],
-                [ ( /^margin$|^margin-left/ ), null],
                 [ ( /^clear$/ ) ],
                 [ ( /^border.*|margin.*|vertical-align|float$/ ), null, function( value, element ) {
                   if ( element.name == 'img' )
