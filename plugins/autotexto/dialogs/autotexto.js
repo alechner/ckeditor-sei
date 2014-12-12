@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, TRIBUNAL REGIONAL FEDERAL DA 4ª REGIAO. All rights reserved.
+ * Copyright (c) 2012-2014, TRIBUNAL REGIONAL FEDERAL DA 4Âª REGIAO. All rights reserved.
  */
 var txa;
 (function()
@@ -10,10 +10,10 @@ var txa;
 		var generalLabel = 'Inserir Autotexto';
 		return {
 			title : 'Autotexto',
-			minWidth : 700,
-			maxWidth:700,
-			minHeight : 500,
-			maxHeight:500,
+			minWidth : 550,
+			maxWidth: 550,
+			minHeight : 340,
+			maxHeight:340,
 			resizable: CKEDITOR.DIALOG_RESIZE_NONE,			
 			contents :
 			[
@@ -52,7 +52,7 @@ var txa;
 						{
 							type : 'html',
 							id : 'htmlConteudo',
-							html: '<div id="myDiv" style="padding:5px; width:700px; max-width:700px; white-space:pre-wrap; border:1px solid; height:440px; overflow-y:auto; overflow-x:hidden"></div>',
+							html: '<div id="myDiv" style="padding:5px; width:550px; white-space:pre-wrap; border:1px solid; height:250px; overflow-y:auto; overflow-x:hidden"></div>',
 							setup: function() {
 								var document = this.getDialog().getElement().getDocument();
 								var element = document.getById( 'myDiv' );
