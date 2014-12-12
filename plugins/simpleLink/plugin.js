@@ -38,7 +38,15 @@
 								type : 'text',
 								id : 'url',
 								label : 'URL',
-								validate : CKEDITOR.dialog.validate.notEmpty( 'O link deve ter uma URL.' ),
+								validate : function(){
+                                    if (! /^([a]|[^a])+$/.test( this.getValue() ))
+                                        return 'A URL não pode ser vazia.';
+                                    if (CKEDITOR.config.url_sei_re){
+                                        var sei_re=new RegExp(CKEDITOR.config.url_sei_re);
+                                        if (sei_re.test(this.getValue()))
+                                            return 'Para esta URL utilize o botão Inserir Link SEI.';
+                                    }
+                                },
 								required : true,
 								commit : function( data )
 								{

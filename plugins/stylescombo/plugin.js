@@ -45,6 +45,8 @@
 						// Weight is used to sort styles (#9029).
 						style._.weight = i + ( styleType == CKEDITOR.STYLE_OBJECT ? 1 : styleType == CKEDITOR.STYLE_BLOCK ? 2 : 3 ) * 1000;
 
+						if (styleName.substr(0,5)=='Item_' || styleName.substr(0,10)=='Paragrafo_')
+							style._.weight +=1000;
 						styles[ styleName ] = style;
 						stylesList.push( style );
 						allowedContent.push( style );
@@ -82,6 +84,9 @@
 							lastType = type;
 						}
 
+						if (styleName=='Item_Alinea_Letra') {
+							this.startGroup('Numeração');
+						}
 						this.add( styleName, style.type == CKEDITOR.STYLE_OBJECT ? styleName : style.buildPreview(), styleName );
 					}
 
@@ -98,7 +103,7 @@
                     if(elementPath.lastElement.$.nodeName.toUpperCase()!='IMG') {
                         var tagsRegex = editor._.removeFormatRegex;
                         editor._.removeFormatRegex=new RegExp( '^(?:font|span)$', 'i' );
-                        editor.execCommand('removeFormat');
+                        editor.execCommand('removeFormat','no');
                         editor._.removeFormatRegex=tagsRegex;
                     }
                     style[ 'apply' ]( editor.document );

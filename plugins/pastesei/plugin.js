@@ -56,11 +56,11 @@
         attributes:{
           // Prefer width styles over 'width' attributes.
           'width': function( value, element ) {
-            if ( element.name in dtd.$tableContent ) return false;
+            if ( element.name in CKEDITOR.dtd.$tableContent ) return false;
           },
           // Prefer border styles over table 'border' attributes.
           'border': function( value, element ) {
-            if ( element.name in dtd.$tableContent ) return false;
+            if ( element.name in CKEDITOR.dtd.$tableContent ) return false;
           },
           'td': function( element ) {
             // 'td' in 'thead' is actually <th>.

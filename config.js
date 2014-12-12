@@ -20,7 +20,7 @@ CKEDITOR.editorConfig = function( config ) {
 		'contextmenu,' +
 		'dialogadvtab,' +
 		'div,' +
-		'elementspath,' +
+		//'elementspath,' +
 		'enterkey,' +
 		'entities,' +
 		//'filebrowser,'+
@@ -47,8 +47,8 @@ CKEDITOR.editorConfig = function( config ) {
 		//'pagebreak,' +
 		'pastefromword,' +
 		'pastetext,' +
-		'preview,' +
-		'print,' +
+		//'preview,' +
+		//'print,' +
 		'removeformat,' +
 		'resize,' +
 		'save,' +
@@ -57,7 +57,7 @@ CKEDITOR.editorConfig = function( config ) {
 		'showborders,' +
 		//'smiley,' +
 		'sourcearea,' +
-		'specialchar,' +
+		//'specialchar,' +
 		'stylescombo,' +
 		'tab,' +
 		'table,' +
