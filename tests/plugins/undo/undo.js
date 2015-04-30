@@ -10,9 +10,8 @@ bender.editor = {
 	allowedForTests: 'p[id,dir]; div; em[id]'
 };
 
-bender.test(
-{
-	doUndoCommand : function( input, cmd ) {
+bender.test( {
+	doUndoCommand: function( input, cmd ) {
 		var bot = this.editorBot;
 		bot.setHtmlWithSelection( input );
 		bot.editor.resetUndo();
@@ -33,7 +32,7 @@ bender.test(
 		}, 0 );
 	},
 
-	doUndoDialog : function( input, dlgName, fn ) {
+	doUndoDialog: function( input, dlgName, fn ) {
 		var bot = this.editorBot;
 		bot.setHtmlWithSelection( input );
 		bot.editor.resetUndo();
@@ -58,6 +57,70 @@ bender.test(
 			} );
 
 		}, 0 );
+	},
+
+	'test undoManager.updateSelection': function() {
+		var editorBotConfig = {
+				name: 'updateSelectionEditor',
+				creator: 'inline',
+				config: {}
+			},
+			isIe8 = CKEDITOR.env.ie && CKEDITOR.env.version == 8;
+
+		// Test has its own editor, because we modify internals like snapshot array,
+		// current image (directly) and change its initial content.
+		bender.editorBot.create( editorBotConfig, function( bot ) {
+			// We'll create 2 fixed images, and work with these fixtures.
+
+			// Initial editor content is: "<p>__</p>"
+			// and selection start/end offset is 1.
+			bender.tools.selection.setWithHtml( bot.editor, '<p>_{}_</p>' );
+
+			var editor = bot.editor,
+				img1 = new CKEDITOR.plugins.undo.Image( editor ),
+				img2 = new CKEDITOR.plugins.undo.Image( editor ),
+				img2bookmark = img2.bookmarks[ 0 ],
+				undoManager = editor.undoManager;
+
+			undoManager.snapshots = [ img1 ];
+			undoManager.currentImage = img1;
+
+			// First - identical images, nothing should happen.
+			undoManager.updateSelection( img2 );
+			assert.areEqual( 1, undoManager.snapshots.length, 'Snapshots count should not change' );
+			assert.areEqual( 1, undoManager.snapshots[ 0 ].bookmarks[ 0 ].startOffset, 'Invalid bookmark startOffset' );
+			!isIe8 && assert.areEqual( 1, undoManager.snapshots[ 0 ].bookmarks[ 0 ].endOffset, 'Invalid bookmark endOffset' );
+
+			// Reset snapshots array.
+			undoManager.snapshots = [ img1 ];
+
+			// Now - diffrent selection, same content.
+			img2bookmark.startOffset = 2;
+			img2bookmark.endOffset = 2;
+
+			undoManager.updateSelection( img2 );
+			assert.areEqual( 1, undoManager.snapshots.length, 'Snapshots count should not change' );
+			assert.areEqual( 2, undoManager.snapshots[ 0 ].bookmarks[ 0 ].startOffset, 'Bookmark startOffset not updated' );
+			!isIe8 && assert.areEqual( 2, undoManager.snapshots[ 0 ].bookmarks[ 0 ].endOffset, 'Bookmark endOffset not updated' );
+			assert.areSame( undoManager.currentImage, img2, 'undoManager.currentImage not updated' );
+
+			// Reset snapshots array.
+			undoManager.snapshots = [ img1 ];
+
+			// Now - same selection, diffrent content.
+			img2bookmark.startOffset = 1;
+			img2bookmark.endOffset = 1;
+			img2.contents = '<p>____</p>';
+
+			undoManager.updateSelection( img2 );
+			assert.areEqual( 1, undoManager.snapshots.length, 'Snapshots should not change' );
+			assert.areEqual( 1, undoManager.snapshots[ 0 ].bookmarks[ 0 ].startOffset, 'Invalid bookmark startOffset' );
+			!isIe8 && assert.areEqual( 1, undoManager.snapshots[ 0 ].bookmarks[ 0 ].endOffset, 'Invalid bookmark endOffset' );
+
+			// Ensure that it does not breaks when snapshots array is empty.
+			undoManager.snapshots = [];
+			undoManager.updateSelection( img2 );
+		} );
 	},
 
 	// #10249
@@ -116,16 +179,16 @@ bender.test(
 	},
 
 	// #7912
-	'test undo enter key' : function() {
+	'test undo enter key': function() {
 		this.doUndoCommand( '<p>foo^bar</p>', 'enter' );
 	},
 
 	// #8299
-	'test undo hr insertion' : function() {
+	'test undo hr insertion': function() {
 		this.doUndoCommand( '<p>foo^bar</p>', 'horizontalrule' );
 	},
 
-	'test lock/unlock undo manager' : function() {
+	'test lock/unlock undo manager': function() {
 		var ed = this.editor,
 			edt = ed.editable(),
 			undo = ed.getCommand( 'undo' ),
@@ -145,7 +208,7 @@ bender.test(
 		ed.fire( 'saveSnapshot' );
 
 		// Check undo manager is locked.
-		var msg = 'check locked undo manager (after save) - ';
+		msg = 'check locked undo manager (after save) - ';
 		assert.isFalse( isActive( undo ), msg + 'undoable' );
 		assert.isFalse( isActive( redo ), msg + 'redoable' );
 
@@ -574,7 +637,7 @@ bender.test(
 	},
 
 	// #9230
-	'test automatic DOM changes handling' : function() {
+	'test automatic DOM changes handling': function() {
 		var bot = this.editorBot,
 			editor = bot.editor,
 			root = editor.editable(),
@@ -604,8 +667,7 @@ bender.test(
 		assert.areEqual( 'abc', root.getHtml(), 'Initial data is correct' );
 
 		// Manually fire selectionChange so autoParagraphing is executed.
-		editor.fire( 'selectionChange',
-			 { selection : sel, path : currentPath, element : firstElement } );
+		editor.fire( 'selectionChange', { selection: sel, path: currentPath, element: firstElement } );
 
 		assert.isMatching( /<p>abc(<br>)?<\/p>/i, root.getHtml(), 'Auto paragraphing executed correctly' );
 		assert.isFalse( isActive( undo ), 'Auto paragraphing hasn\'t created undo snapshot' );
@@ -628,7 +690,7 @@ bender.test(
 		}, 0 );
 	},
 
-	'test multiple undo/redo' : function() {
+	'test multiple undo/redo': function() {
 		var bot = this.editorBot;
 		bot.setHtmlWithSelection( '<p>fo[ob]ar</p>' );
 		bot.editor.resetUndo();
@@ -666,7 +728,7 @@ bender.test(
 	},
 
 	// #8258
-	'test undo image insertion (dialog)' : function() {
+	'test undo image insertion (dialog)': function() {
 		this.doUndoDialog( '<p>foo^bar</p>', 'image', function( dialog ) {
 			dialog.setValueOf( 'info', 'txtUrl', '../../_assets/logo.png' );
 			dialog.getButton( 'ok' ).click();
@@ -674,7 +736,7 @@ bender.test(
 	},
 
 	// #8258
-	'test undo iframe insertion (dialog)' : function() {
+	'test undo iframe insertion (dialog)': function() {
 		this.doUndoDialog( '<p>foo^bar</p>', 'iframe', function( dialog ) {
 			dialog.setValueOf( 'info', 'src', 'about:blank' );
 			dialog.getButton( 'ok' ).click();
@@ -682,14 +744,30 @@ bender.test(
 	},
 
 	// #8258
-	'test undo flash insertion (dialog)' : function() {
+	'test undo flash insertion (dialog)': function() {
 		this.doUndoDialog( '<p>foo^bar</p>', 'flash', function( dialog ) {
 			dialog.setValueOf( 'info', 'src', '../../_assets/sample.swf' );
 			dialog.getButton( 'ok' ).click();
 		} ) ;
 	},
 
-	'test undo with "control" type selection in IE' : function() {
+	// #12597
+	'test no beforeUndoImage event fire while composition': function() {
+		var bot = this.editorBot,
+			editor = bot.editor,
+			calls = 0;
+
+		bot.editor.on( 'beforeUndoImage', function() {
+			calls++;
+		} );
+
+		var evt = new CKEDITOR.dom.event( { keyCode: 229 } );
+		editor.editable().fire( 'keydown', evt );
+
+		assert.areSame( 0, calls, 'There should be no calls' );
+	},
+
+	'test undo with "control" type selection in IE': function() {
 		if ( !CKEDITOR.env.ie || ( document.documentMode || CKEDITOR.env.version ) > 8 )
 			assert.ignore();
 
@@ -738,7 +816,7 @@ bender.test(
 	},
 
 	'test CTRL+Z/Y/SHIFT+Z default actions are not blocked in source mode': function() {
-		var bot = this.editorBot
+		var bot = this.editorBot;
 
 		bot.editor.setMode( 'source', function() {
 			var prevented = 0,

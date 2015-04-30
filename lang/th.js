@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -81,6 +81,7 @@ CKEDITOR.lang[ 'th' ] = {
 		alignLeft: 'ชิดซ้าย',
 		alignRight: 'ชิดขวา',
 		alignCenter: 'กึ่งกลาง',
+		alignJustify: 'நியாயப்படுத்தவும்',
 		alignTop: 'บนสุด',
 		alignMiddle: 'กึ่งกลางแนวตั้ง',
 		alignBottom: 'ชิดด้านล่าง',

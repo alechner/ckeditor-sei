@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -81,6 +81,7 @@ CKEDITOR.lang[ 'ko' ] = {
 		alignLeft: '왼쪽',
 		alignRight: '오른쪽',
 		alignCenter: '가운데',
+		alignJustify: '両端揃え',
 		alignTop: '위',
 		alignMiddle: '중간',
 		alignBottom: '아래',

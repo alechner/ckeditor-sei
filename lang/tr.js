@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -80,10 +80,11 @@ CKEDITOR.lang[ 'tr' ] = {
 		alignLeft: 'Sol',
 		alignRight: 'Sağ',
 		alignCenter: 'Ortala',
+		alignJustify: 'İki Kenara Yaslanmış',
 		alignTop: 'Üst',
 		alignMiddle: 'Orta',
 		alignBottom: 'Alt',
-		alignNone: 'None', // MISSING
+		alignNone: 'Hiçbiri',
 		invalidValue	: 'Geçersiz değer.',
 		invalidHeight: 'Yükseklik değeri bir sayı olmalıdır.',
 		invalidWidth: 'Genişlik değeri bir sayı olmalıdır.',

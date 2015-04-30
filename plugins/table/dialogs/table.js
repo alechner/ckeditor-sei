@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -37,7 +37,7 @@
 				pass = !!( CKEDITOR.dialog.validate.integer()( value ) && value > 0 );
 
 			if ( !pass ) {
-				alert( msg );
+				alert( msg ); // jshint ignore:line
 				this.select();
 			}
 
@@ -65,7 +65,7 @@
 				var styles = dialog.getContentElement( 'advanced', 'advStyles' );
 
 				if ( styles ) {
-					styles.on( 'change', function( evt ) {
+					styles.on( 'change', function() {
 						// Synchronize width value.
 						var width = this.getStyle( 'width', '' ),
 							txtWidth = dialog.getContentElement( 'info', 'txtWidth' );
@@ -129,7 +129,6 @@
 					bms = this._.selectedElement && selection.createBookmarks();
 
 				var table = this._.selectedElement || makeElement( 'table' ),
-					me = this,
 					data = {};
 
 				this.commitContent( data, table );
@@ -237,26 +236,24 @@
 				}
 				// Properly restore the selection, (#4822) but don't break
 				// because of this, e.g. updated table caption.
-				else
+				else {
 					try {
-					selection.selectBookmarks( bms );
-				} catch ( er ) {}
+						selection.selectBookmarks( bms );
+					} catch ( er ) {
+					}
+				}
 			},
-			contents: [
-				{
+			contents: [ {
 				id: 'info',
 				label: editor.lang.table.title,
-				elements: [
-					{
+				elements: [ {
 					type: 'hbox',
 					widths: [ null, null ],
 					styles: [ 'vertical-align:top' ],
-					children: [
-						{
+					children: [ {
 						type: 'vbox',
 						padding: 0,
-						children: [
-							{
+						children: [ {
 							type: 'text',
 							id: 'txtRows',
 							'default': 3,
@@ -269,7 +266,7 @@
 							},
 							commit: commitValue
 						},
-							{
+						{
 							type: 'text',
 							id: 'txtCols',
 							'default': 2,
@@ -282,11 +279,11 @@
 							},
 							commit: commitValue
 						},
-							{
+						{
 							type: 'html',
 							html: '&nbsp;'
 						},
-							{
+						{
 							type: 'select',
 							id: 'selHeaders',
 							requiredContent: 'th',
@@ -297,7 +294,7 @@
 								[ editor.lang.table.headersRow, 'row' ],
 								[ editor.lang.table.headersColumn, 'col' ],
 								[ editor.lang.table.headersBoth, 'both' ]
-								],
+							],
 							setup: function( selectedTable ) {
 								// Fill in the headers field.
 								var dialog = this.getDialog();
@@ -321,7 +318,7 @@
 							},
 							commit: commitValue
 						},
-							{
+						{
 							type: 'text',
 							id: 'txtBorder',
 							requiredContent: 'table[border]',
@@ -329,7 +326,7 @@
 							'default': editor.filter.check( 'table[border]' ) ? 1 : 0,
 							label: editor.lang.table.border,
 							controlStyle: 'width:3em',
-							validate: CKEDITOR.dialog.validate[ 'number' ]( editor.lang.table.invalidBorder ),
+							validate: CKEDITOR.dialog.validate.number( editor.lang.table.invalidBorder ),
 							setup: function( selectedTable ) {
 								this.setValue( selectedTable.getAttribute( 'border' ) || '' );
 							},
@@ -340,7 +337,7 @@
 									selectedTable.removeAttribute( 'border' );
 							}
 						},
-							{
+						{
 							id: 'cmbAlign',
 							type: 'select',
 							requiredContent: 'table[align]',
@@ -393,15 +390,13 @@
 						}
 						]
 					},
-						{
+					{
 						type: 'vbox',
 						padding: 0,
-						children: [
-							{
+						children: [ {
 							type: 'hbox',
 							widths: [ '5em' ],
-							children: [
-								{
+							children: [ {
 								type: 'text',
 								id: 'txtWidth',
 								requiredContent: 'table{width}',
@@ -421,14 +416,12 @@
 									this.setValue( val );
 								},
 								commit: commitValue
-							}
-							]
+							} ]
 						},
-							{
+						{
 							type: 'hbox',
 							widths: [ '5em' ],
-							children: [
-								{
+							children: [ {
 								type: 'text',
 								id: 'txtHeight',
 								requiredContent: 'table{height}',
@@ -448,14 +441,13 @@
 									val && this.setValue( val );
 								},
 								commit: commitValue
-							}
-							]
+							} ]
 						},
-							{
+						{
 							type: 'html',
 							html: '&nbsp;'
 						},
-							{
+						{
 							type: 'text',
 							id: 'txtCellSpace',
 							requiredContent: 'table[cellspacing]',
@@ -473,7 +465,7 @@
 									selectedTable.removeAttribute( 'cellSpacing' );
 							}
 						},
-							{
+						{
 							type: 'text',
 							id: 'txtCellPad',
 							requiredContent: 'table[cellpadding]',
@@ -490,21 +482,18 @@
 								else
 									selectedTable.removeAttribute( 'cellPadding' );
 							}
-						}
-						]
-					}
-					]
+						} ]
+					} ]
 				},
-					{
+				{
 					type: 'html',
 					align: 'right',
 					html: ''
 				},
-					{
+				{
 					type: 'vbox',
 					padding: 0,
-					children: [
-						{
+					children: [ {
 						type: 'text',
 						id: 'txtCaption',
 						requiredContent: 'caption',
@@ -550,14 +539,11 @@
 									captionElement.getItem( i ).remove();
 							}
 						}
-					}
-					]
-				}
-				]
+					} ]
+				} ]
 			},
-				dialogadvtab && dialogadvtab.createAdvancedTab( editor, null, 'table' )
-				]
-		};
+			dialogadvtab && dialogadvtab.createAdvancedTab( editor, null, 'table' )
+		] };
 	}
 
 	CKEDITOR.dialog.add( 'table', function( editor ) {

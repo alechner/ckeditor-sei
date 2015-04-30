@@ -46,6 +46,21 @@ function iterateScopedRange( html, opt ) {
 	return { html: tools.compatHtml( sandbox.getOuterHtml() ), list: results };
 }
 
+function iterateWithRangeIterator( ranges, mergeConsequent, rangeIteratorOpts ) {
+	var rangesIterator = ranges.createIterator(),
+		range,
+		blockList = [];
+
+	while ( range = rangesIterator.getNextRange( mergeConsequent ) ) {
+		var iter = range.createIterator(), block;
+		CKEDITOR.tools.extend( iter, rangeIteratorOpts, true );
+		while ( ( block = iter.getNextParagraph() ) )
+			blockList.push( block.getName() );
+	}
+
+	return blockList;
+}
+
 function checkActiveFilter( source, opt, results, msg ) {
 	var sandbox = doc.getById( 'sandbox' );
 	var range = tools.setHtmlWithRange( sandbox, source )[ 0 ];
@@ -63,10 +78,19 @@ function checkActiveFilter( source, opt, results, msg ) {
 var tools = bender.tools;
 
 bender.test( {
-	/**
-	 * Test iterator works well with collapsed range position.
-	 */
-	test_iterator_single_paragraph: function() {
+	// Ticket: 12484.
+	'test iterator does not go beyond the sandbox': function() {
+		var source = '[<p><i>hello</i><i>moto</i></p>]',
+			sandbox = doc.getById( 'sandbox' ),
+			range = tools.setHtmlWithRange( sandbox, source, sandbox )[ 0 ],
+			p = range.root.findOne( 'p' ),
+			iter = range.createIterator(),
+			empty = iter._getNextSourceNode( p, 1, p.getLast() );
+
+		assert.isNull( empty );
+	},
+
+	'test iterator works well with collapsed range position': function() {
 		var msg = 'Iteration should return the paragraph in which the range anchored';
 
 		// range embrace entire paragraph content.
@@ -80,41 +104,85 @@ bender.test( {
 		checkRangeIteration( '<p>^paragraph</p>', null,  [ 'p' ], null, msg );
 	},
 
-	/**
-	 * Test iterating over multiple paragraphs. (#3352)
-	 */
-	test_iterator_multiple_paragraphs: function() {
+	// #3352
+	'test iterating over multiple paragraphs': function() {
 		var source = '<p>[para1</p><p>para2]</p>';
 		checkRangeIteration( source, null,  [ 'p', 'p' ], null, 'Iteration will yield  two paragraphs.' );
 	},
 
-	/*
-	 * Test a single range collapsed inside of an empty paragraph. (#8247)
-	 */
-	test_iterator_empty_paragraph: function() {
+	// #8247
+	'test a single range collapsed inside of an empty paragraph': function() {
 		var source = '<div><p>^</p></div>';
 		var output = '<div><p></p></div>';
 
 		checkRangeIteration( source, null,  [ 'p' ], output, 'Iteration will yield one single paragraph' );
-
 	},
 
-	/**
-	 * Test iterating over pseudo block.
-	 */
-	test_iterator_pseudoBlock: function() {
+	// #12178
+	'test iterating over end of line': function() {
+		if ( !CKEDITOR.env.needsBrFiller )
+			assert.ignore();
+
+		var source = '<h1>para1[<br /></h1><p>par]a2</p>';
+		checkRangeIteration( source, null,  [ 'h1', 'p' ], null, 'Iteration will yield heading and paragraph.' );
+	},
+
+	// #12178
+	'test iterating over end of line - no bogus br': function() {
+		var source = '<h1>para1[</h1><p>par]a2</p>';
+		checkRangeIteration( source, null,  [ 'h1', 'p' ], null, 'Iteration will yield heading and paragraph.' );
+	},
+
+	// #12178
+	'test iterating over start of line': function() {
+		if ( !CKEDITOR.env.needsBrFiller )
+			assert.ignore();
+
+		var source = '<h1>pa[ra1<br /></h1><p>]para2</p>';
+		checkRangeIteration( source, null,  [ 'h1', 'p' ], null, 'Iteration will yield heading and paragraph.' );
+	},
+
+	// #12178
+	'test iterating over start of line - no bogus br': function() {
+		var source = '<h1>pa[ra1</h1><p>]para2</p>';
+		checkRangeIteration( source, null,  [ 'h1', 'p' ], null, 'Iteration will yield heading and paragraph.' );
+	},
+
+	// #12178
+	'test iterating over start of line 2 - no bogus br': function() {
+		var source = '<h1>pa[ra1</h1><p><b>]para2</b></p>';
+		checkRangeIteration( source, null,  [ 'h1', 'p' ], null, 'Iteration will yield heading and paragraph.' );
+	},
+
+	// #12178
+	'test iterating over start of line 2 - no bogus br - rangeIterator': function() {
+		var source = '<h1>pa[ra1</h1><p><b>]para2</b></p>';
+
+		var sandbox = doc.getById( 'sandbox' ),
+			ranges = tools.setHtmlWithRange( sandbox, source );
+
+		assert.areSame( 'h1,p', iterateWithRangeIterator( ranges ).join( ',' ) );
+	},
+
+	// #12308 (Note: this test wasn't able to verify #12308's patch, but it makes sense anyway).
+	'test iterating at block boundary - before bogus br': function() {
+		if ( !CKEDITOR.env.needsBrFiller )
+			assert.ignore();
+
+		var source = '<h1>para1^<br /></h1><p>para2</p>';
+		checkRangeIteration( source, null,  [ 'h1' ], null, 'Iteration will yield heading.' );
+	},
+
+	'test iterating over pseudo block': function() {
 		var source = '<div><p>[paragraph</p>text]</div>';
 		var output = '<div><p>paragraph</p><p>text</p></div>';
 
 		checkRangeIteration( source, null,  [ 'p', 'p' ], output, 'Iteration should create real paragraph for pseudo block.' );
 	},
 
-	/**
-	 * Test iterating over table cells.
-	 */
-	test_iterator_table_cells: function() {
+	'test iterating over table cells': function() {
 		var source =
-				'<table>' +
+			'<table>' +
 				'<caption>caption</caption>' +
 				'<tbody>' +
 				'	<tr>' +
@@ -128,11 +196,11 @@ bender.test( {
 				'		<td>cell2]</td>' +
 				'	</tr>' +
 				'</tbody>' +
-				'</table>';
+			'</table>';
 
 		var output1 = source.replace( /\[|\]/g, '' );
 		var output2 =
-				'<table>' +
+			'<table>' +
 				'<caption>caption</caption>' +
 				'<tbody>' +
 				'	<tr>' +
@@ -146,80 +214,135 @@ bender.test( {
 				'		<td><p>cell2</p></td>' +
 				'	</tr>' +
 				'</tbody>' +
-				'</table>';
+			'</table>';
 
 		checkRangeIteration( source, null,  [ 'th', 'p', 'td' ], output1, 'Iteration should report paragraph or table cells' );
 		checkRangeIteration( source, { enforceRealBlocks: 1 },  [ 'p', 'p', 'p' ], output2, 'Iteration should establish paragraph if it\'s not available inside table cell' );
 	},
 
 	// #6728, #4450
+	// While this test may seem to be totally broken (why would someone create bookmakrs between <tr> and <td>?)
+	// it has a deeper sense. It tests what rangeIterator#getNextRange does.
 	'test iterating over table cells (with bookmarks among cells)': function() {
 		var source = '<table><tbody><tr>[<td id="cell1">cell1</td>][<td id="cell2">cell2</td>]</tr></tbody></table>',
 		output = source.replace( /\[|\]|\^/g, '' );
 
-		var sandbox = doc.getById( 'sandbox' );
-		var ranges = tools.setHtmlWithRange( sandbox, source );
+		var sandbox = doc.getById( 'sandbox' ),
+			ranges = tools.setHtmlWithRange( sandbox, source );
 
-		// Create bookmarks by intention.
+		// Create bookmarks intentionally.
 		var bms = ranges.createBookmarks();
 
-		// Check iteration sequence.
-		var rangeIterator = ranges.createIterator(), range, blockList = [];
-		// Merge multiple ranges.
-		while ( range = rangeIterator.getNextRange( true ) ) {
-			var iter = range.createIterator(), block;
-			while ( ( block = iter.getNextParagraph() ) )
-				blockList.push( block.getName() );
-		}
-
-		arrayAssert.itemsAreEqual( [ 'td', 'td' ], blockList );
+		assert.areSame( 'td,td', iterateWithRangeIterator( ranges ).join( ',' ), true );
 
 		// Just to remove bookmarks.
 		ranges.moveToBookmarks( bms );
 
-		assert.areSame( tools.compatHtml( output ) , tools.compatHtml( sandbox.getHtml() ) );
+		assert.areSame( tools.compatHtml( output ), tools.compatHtml( sandbox.getHtml() ) );
 	},
 
-	/**
-	 * Test iterating over list items.
-	 */
-	test_iterator_listItems: function() {
+	// See above an explanation of this test.
+	'test iterating over table cells (with bookmarks among cells) - do not merge subsequent ranges': function() {
+		var source = '<table><tbody><tr>[<td id="cell1">cell1</td>][<td id="cell2">cell2</td>]</tr></tbody></table>',
+		output = source.replace( /\[|\]|\^/g, '' );
+
+		var sandbox = doc.getById( 'sandbox' ),
+			ranges = tools.setHtmlWithRange( sandbox, source );
+
+		// Create bookmarks intentionally.
+		var bms = ranges.createBookmarks();
+
+		assert.areSame( 'td,td', iterateWithRangeIterator( ranges ).join( ',' ) );
+
+		// Just to remove bookmarks.
+		ranges.moveToBookmarks( bms );
+
+		assert.areSame( output, tools.compatHtml( sandbox.getHtml() ) );
+	},
+
+	// #6728, #4450
+	'test iterating over entire table': function() {
+		var source = '[<table><tbody><tr><th>cell1</th><td>cell2</td></tr></tbody></table>]',
+			output1 = source.replace( /\[|\]|\^/g, '' ),
+			output2 = '<table><tbody><tr><th><p>cell1</p></th><td><p>cell2</p></td></tr></tbody></table>';
+
+		checkRangeIteration( source, null, [ 'th', 'td' ], output1, 'Iteration should report table cells' );
+		checkRangeIteration( source, { enforceRealBlocks: 1 }, [ 'p', 'p' ], output2, 'Iteration should establish paragraphs inside table cells' );
+	},
+
+	// #6728, #4450
+	'test iterating over entire table - use rangeIterator': function() {
+		var source = '[<table><tbody><tr><th>cell1</th><td>cell2</td></tr></tbody></table>]',
+			output = source.replace( /\[|\]|\^/g, '' );
+
+		var sandbox = doc.getById( 'sandbox' ),
+			ranges = tools.setHtmlWithRange( sandbox, source );
+
+		assert.areSame( 'th,td', iterateWithRangeIterator( ranges, true ).join( ',' ) );
+
+		assert.areSame( output, tools.compatHtml( sandbox.getHtml() ) );
+	},
+
+	// #6728, #4450
+	'test iterating over entire table - use rangeIterator and enforceRealBlocks': function() {
+		var source = '[<table><tbody><tr><th>cell1</th><td>cell2</td></tr></tbody></table>]',
+			output = '<table><tbody><tr><th><p>cell1</p></th><td><p>cell2</p></td></tr></tbody></table>';
+
+		var sandbox = doc.getById( 'sandbox' ),
+			ranges = tools.setHtmlWithRange( sandbox, source );
+
+		assert.areSame( 'p,p', iterateWithRangeIterator( ranges, true, { enforceRealBlocks: true } ).join( ',' ) );
+
+		assert.areSame( output, tools.compatHtml( sandbox.getHtml() ) );
+	},
+
+	'test iterating over list items': function() {
 		var source =
-		'<ul>'+
-			'<li>[item1</li>'+
-			'<li><p>item2</p></li>'+
-			'<li>'+
-				'<ul>'+
-					'<li>item3</li>'+
-				'</ul>'+
-				'<ul>'+
-					'<li><p>item5</p></li>'+
-				'</ul>'+
-			'</li>'+
-			'<li>item5]</li>'+
-		'</ul>';
+			'<ul>' +
+				'<li>[item1</li>' +
+				'<li><p>item2</p></li>' +
+				'<li>' +
+					'<ul>' +
+						'<li>item3</li>' +
+					'</ul>' +
+					'<ul>' +
+						'<li><p>item5</p></li>' +
+					'</ul>' +
+				'</li>' +
+				'<li>item5]</li>' +
+			'</ul>';
 
 		var output1 = source.replace( /\[|\]/g, '' );
 		var output2 =
-				'<ul>'+
-					'<li><p>item1</p></li>'+
-					'<li><p>item2</p></li>'+
-					'<li>'+
-						'<ul>'+
-							'<li><p>item3</p></li>'+
-						'</ul>'+
-						'<ul>'+
-							'<li><p>item5</p></li>'+
-						'</ul>'+
-					'</li>'+
-					'<li><p>item5</p></li>'+
-				'</ul>';
+			'<ul>' +
+				'<li><p>item1</p></li>' +
+				'<li><p>item2</p></li>' +
+				'<li>' +
+					'<ul>' +
+						'<li><p>item3</p></li>' +
+					'</ul>' +
+					'<ul>' +
+						'<li><p>item5</p></li>' +
+					'</ul>' +
+				'</li>' +
+				'<li><p>item5</p></li>' +
+			'</ul>';
 
 		checkRangeIteration( source, null,  [ 'li', 'p', 'li' , 'p', 'li' ], output1, 'Iteration should report paragraph or list item' );
 		checkRangeIteration( source, { enforceRealBlocks: 1 },  [ 'p', 'p', 'p' , 'p', 'p' ], output2, 'Iteration should establish paragraph if not exists inside list item' );
 	},
 
-	'when iteration range is scoped in a single block': function() {
+	// #12273
+	'test iterating over description list': function() {
+		var source = '<dl><dt>[foo</dt><dd>bar]</dd><dt>bom</dt></dl>',
+			output1 = '<dl><dt>foo</dt><dd>bar</dd><dt>bom</dt></dl>',
+			output2 = '<dl><dt><p>foo</p></dt><dd><p>bar</p></dd><dt>bom</dt></dl>';
+
+		checkRangeIteration( source, null, [ 'dt', 'dd' ], output1, 'Two list items.' );
+		checkRangeIteration( source, { enforceRealBlocks: true }, [ 'p', 'p' ], output2, 'Two real blocks.' );
+	},
+
+	'test when iteration range is scoped in a single block': function() {
 		var result = iterateScopedRange( '<div>^foo</div>' );
 		arrayAssert.itemsAreEqual( [ 'p' ], result.list );
 		assert.areSame( '<div><p>foo</p></div>', result.html );

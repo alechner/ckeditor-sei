@@ -1,4 +1,5 @@
 /* bender-tags: editor,unit */
+/* bender-ckeditor-plugins: wysiwygarea,floatingspace,toolbar */
 
 ( function() {
 	'use strict';
@@ -113,7 +114,7 @@
 			i = 0;
 
 		// The funniest for-in loop I've ever seen.
-		for ( names[ i++ ] in cfg );
+		for ( names[ i++ ] in cfg ); // jshint ignore:line
 
 		function next() {
 			var name = names.shift();
@@ -145,6 +146,10 @@
 		return editable.isInline() ? editable : editor.window.getFrame();
 	}
 
+	function getVoiceLabel( editor ) {
+		return CKEDITOR.document.getById( 'cke_' + editor.name + '_arialbl' );
+	}
+
 	function assertTitle( expected, editor, msg ) {
 		assert.areSame(
 			expected,
@@ -165,27 +170,38 @@
 				assert.areSame( element.data( 'startup-title' ), element.getAttribute( 'title' ), 'Startup title of ' + editor.name + ' preserved' );
 			else
 				assert.isFalse( element.hasAttribute( 'title' ), 'Title attribute set on editable of ' + editor.name );
-		}
-		else
+		} else {
 			assert.isTrue( !!~element.getAttribute( 'title' ).indexOf( editor.title ), 'editor.title used as an attribute of editable of ' + editor.name );
+		}
+	}
+
+	function assertVoiceLabelIsBasedOnTitle( editor ) {
+		var element = getVoiceLabel( editor );
+
+		if ( !editor.title ) {
+			assert.isNull( element, 'editor: ' + editor.name );
+		} else {
+			assert.isNotNull( element, 'editor: ' + editor.name + ' - element' );
+			assert.areSame( editor.title, element.getText(), 'editor: ' + editor.name + ' - value' );
+		}
 	}
 
 	setUpEditors();
 
 	var tests = {
 		'test config.title implies editor.title': function() {
-			assertTitle( 'foo', 	'editor1' );
-			assertTitle( 'bar', 	'editor2' );
-			assertTitle( 'boom', 	'editor3' );
-			assertTitle( 'bang', 	'editor4' );
+			assertTitle( 'foo',		'editor1' );
+			assertTitle( 'bar',		'editor2' );
+			assertTitle( 'boom',	'editor3' );
+			assertTitle( 'bang',	'editor4' );
 
-			assertTitle( false, 	'disabled1' );
-			assertTitle( false, 	'disabled2' );
-			assertTitle( '', 		'disabled3' );
+			assertTitle( false,		'disabled1' );
+			assertTitle( false,		'disabled2' );
+			assertTitle( '',		'disabled3' );
 
-			assertTitle( 'bar', 	'existing1' );
-			assertTitle( 'boom', 	'existing2' );
-			assertTitle( false, 	'existing3', 	'The original title of the element remains untouched.' );
+			assertTitle( 'bar',		'existing1' );
+			assertTitle( 'boom',	'existing2' );
+			assertTitle( false,		'existing3',	'The original title of the element remains untouched.' );
 		},
 
 		'test editor.name implies editor.title': function() {
@@ -205,6 +221,12 @@
 		'test editor.title transferred to editable element': function() {
 			for ( var i in editors )
 				assertTitleSetOnEditable( editors[ i ] );
+		},
+
+		'test voice label have properly set title': function() {
+			for ( var i in editors ) {
+				assertVoiceLabelIsBasedOnTitle( editors[ i ] );
+			}
 		},
 
 		'test restore title after instance is destroyed': function() {

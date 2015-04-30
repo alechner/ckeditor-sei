@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -48,6 +48,9 @@ CKEDITOR.ENTER_DIV = 3;
  * Stores default configuration settings. Changes to this object are
  * reflected in all editor instances, if not specified otherwise for a particular
  * instance.
+ *
+ * Read more about setting CKEditor configuration in the
+ * [Developer's Guide](#!/guide/dev_configuration).
  *
  * @class
  * @singleton
@@ -103,15 +106,15 @@ CKEDITOR.config = {
 	defaultLanguage: 'en',
 
 	/**
-	 * The writing direction of the language used to create editor contents.
+	 * The writing direction of the language which is used to create editor contents.
 	 * Allowed values are:
 	 *
-	 * * `''` (empty string) - indicate content direction will be the same with either the editor
-	 *     UI direction or page element direction depending on the creators:
-	 *     * Themed UI: The same with user interface language direction;
-	 *     * Inline: The same with the editable element text direction;
-	 * * `'ltr'` - for Left-To-Right language (like English);
-	 * * `'rtl'` - for Right-To-Left languages (like Arabic).
+	 * * `''` (an empty string) &ndash; Indicates that content direction will be the same as either
+	 *      the editor UI direction or the page element direction depending on the editor type:
+	 *     * Classic editor &ndash; The same as the user interface language direction.
+	 *     * Inline editor &ndash; The same as the editable element text direction.
+	 * * `'ltr'` &ndash; Indicates a Left-To-Right text direction (like in English).
+	 * * `'rtl'` &ndash; Indicates a Right-To-Left text direction (like in Arabic).
 	 *
 	 * Example:
 	 *
@@ -232,10 +235,11 @@ CKEDITOR.config = {
 	fullPage: false,
 
 	/**
-	 * The height of the editing area (that includes the editor content). This
-	 * can be an integer, for pixel sizes, or any CSS-defined length unit.
+	 * The height of the editing area that includes the editor content. This configuration
+	 * option accepts an integer (to denote a value in pixels) or any CSS-defined length unit
+	 * except percent (`%`) values  which are not supported.
 	 *
-	 * **Note:** Percent units (%) are not supported.
+	 * **Note:** This configuration option is ignored by [inline editor](#!/guide/dev_inline).
 	 *
 	 *		config.height = 500;		// 500 pixels.
 	 *		config.height = '25em';		// CSS length.
@@ -306,12 +310,14 @@ CKEDITOR.config = {
 	tabIndex: 0,
 
 	/**
-	 * The editor UI outer width. This can be an integer, for pixel sizes, or
-	 * any CSS-defined unit.
+	 * The editor UI outer width. This configuration option accepts an integer
+	 * (to denote a value in pixels) or any CSS-defined length unit.
 	 *
 	 * Unlike the {@link CKEDITOR.config#height} setting, this
 	 * one will set the outer width of the entire editor UI, not for the
 	 * editing area only.
+	 *
+	 * **Note:** This configuration option is ignored by [inline editor](#!/guide/dev_inline).
 	 *
 	 *		config.width = 850;		// 850 pixels wide.
 	 *		config.width = '75%';	// CSS unit.

@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -81,6 +81,7 @@ CKEDITOR.lang[ 'sr' ] = {
 		alignLeft: 'Лево',
 		alignRight: 'Десно',
 		alignCenter: 'Средина',
+		alignJustify: 'Обострано равнање',
 		alignTop: 'Врх',
 		alignMiddle: 'Средина',
 		alignBottom: 'Доле',

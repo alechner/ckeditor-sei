@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -80,6 +80,7 @@ CKEDITOR.lang[ 'id' ] = {
 		alignLeft: 'Kiri',
 		alignRight: 'Kanan',
 		alignCenter: 'Tengah',
+		alignJustify: 'Rata kiri-kanan',
 		alignTop: 'Atas',
 		alignMiddle: 'Tengah',
 		alignBottom: 'Bawah',

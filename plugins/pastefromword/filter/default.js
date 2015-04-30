@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -73,8 +73,9 @@
 				}
 			}
 			// raw style text form.
-			else
+			else {
 				addingStyleText += name;
+			}
 
 			isPrepend = value;
 		}
@@ -86,7 +87,7 @@
 
 		styleText = ( isPrepend ? [ addingStyleText, styleText ] : [ styleText, addingStyleText ] ).join( ';' );
 
-		this.attributes.style = styleText.replace( /^;|;(?=;)/, '' );
+		this.attributes.style = styleText.replace( /^;+|;(?=;)/g, '' );
 	};
 
 	// Retrieve a style property value of the element.
@@ -166,7 +167,7 @@
 		unorderedPatterns = { 'disc': /[l\u00B7\u2002]/, 'circle': /[\u006F\u00D8]/, 'square': /[\u006E\u25C6]/ },
 		listMarkerPatterns = { 'ol': orderedPatterns, 'ul': unorderedPatterns },
 		romans = [ [ 1000, 'M' ], [ 900, 'CM' ], [ 500, 'D' ], [ 400, 'CD' ], [ 100, 'C' ], [ 90, 'XC' ], [ 50, 'L' ], [ 40, 'XL' ], [ 10, 'X' ], [ 9, 'IX' ], [ 5, 'V' ], [ 4, 'IV' ], [ 1, 'I' ] ],
-		alpahbets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		alpahbets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 	// Convert roman numbering back to decimal.
 	function fromRoman( str ) {
@@ -273,8 +274,9 @@
 					return true;
 				}
 				// Current list disconnected.
-				else
+				else {
 					previousListId = previousListItemMargin = listBaseIndent = null;
+				}
 
 				return false;
 			},
@@ -400,7 +402,7 @@
 				for ( var i = 0; i < children.length; i++ ) {
 					child = children[ i ];
 
-					if ( 'cke:li' == child.name ) {
+					if ( child.name == 'cke:li' ) {
 						child.name = 'li';
 						listItem = child;
 						listItemAttrs = listItem.attributes;
@@ -508,16 +510,18 @@
 									list = parent.parent;
 
 								list.add( listItem );
-							} else
+							} else {
 								list.add( listItem );
+							}
 
 							children.splice( i--, 1 );
 						}
 
 						lastListItem = listItem;
 						lastIndent = listItemIndent;
-					} else if ( list )
+					} else if ( list ) {
 						list = lastIndent = lastListItem = null;
+					}
 				}
 
 				for ( i = 0; i < openedLists.length; i++ )
@@ -527,7 +531,7 @@
 			},
 
 			// A simple filter which always rejecting.
-			falsyFilter: function( value ) {
+			falsyFilter: function() {
 				return false;
 			},
 
@@ -745,8 +749,7 @@
 								// Extract selectors and style properties.
 								.replace( /(.+?)\{(.+?)\}/g, function( rule, selectors, styleBlock ) {
 									selectors = selectors.split( ',' );
-									var length = selectors.length,
-										selector;
+									var length = selectors.length;
 									for ( var i = 0; i < length; i++ ) {
 										// Assume MS-Word mostly generate only simple
 										// selector( [Type selector][Class selector]).
@@ -813,8 +816,9 @@
 							// We suffer from attribute/style lost in this situation.
 							delete element.name;
 							element.add( new CKEDITOR.htmlParser.element( 'br' ) );
-						} else
+						} else {
 							elementMigrateFilter( config[ 'format_' + ( config.enterMode == CKEDITOR.ENTER_P ? 'p' : 'div' ) ] )( element );
+						}
 					},
 
 					'div': function( element ) {
@@ -859,34 +863,36 @@
 							styleText = attrs.style,
 							parent = element.parent;
 
-						if ( 'font' == parent.name ) // Merge nested <font> tags.
-						{
+						if ( parent.name == 'font' ) { // Merge nested <font> tags.
 							CKEDITOR.tools.extend( parent.attributes, element.attributes );
 							styleText && parent.addStyle( styleText );
 							delete element.name;
 						}
 						// Convert the merged into a span with all attributes preserved.
 						else {
-							styleText = styleText || '';
+							// Use array to avoid string concatenation and get rid of problems with trailing ";" (#12243).
+							styleText = ( styleText || '' ).split( ';' );
+
 							// IE's having those deprecated attributes, normalize them.
 							if ( attrs.color ) {
-								attrs.color != '#000000' && ( styleText += 'color:' + attrs.color + ';' );
+								if ( attrs.color != '#000000' )
+									styleText.push( 'color:' + attrs.color );
 								delete attrs.color;
 							}
 							if ( attrs.face ) {
-								styleText += 'font-family:' + attrs.face + ';';
+								styleText.push( 'font-family:' + attrs.face );
 								delete attrs.face;
 							}
 							// TODO: Mapping size in ranges of xx-small,
 							// x-small, small, medium, large, x-large, xx-large.
 							if ( attrs.size ) {
-								styleText += 'font-size:' +
-									( attrs.size > 3 ? 'large' : ( attrs.size < 3 ? 'small' : 'medium' ) ) + ';';
+								styleText.push( 'font-size:' +
+									( attrs.size > 3 ? 'large' : ( attrs.size < 3 ? 'small' : 'medium' ) ) );
 								delete attrs.size;
 							}
 
 							element.name = 'span';
-							element.addStyle( styleText );
+							element.addStyle( styleText.join( ';' ) );
 						}
 					},
 
@@ -923,10 +929,8 @@
 						}
 
 						// Update the src attribute of image element with href.
-						var children = element.children,
-							attrs = element.attributes,
-							styleText = attrs && attrs.style,
-							firstChild = children && children[ 0 ];
+						var attrs = element.attributes,
+							styleText = attrs && attrs.style;
 
 						// Assume MS-Word mostly carry font related styles on <span>,
 						// adapting them to editor's convention.
@@ -934,11 +938,11 @@
 							attrs.style = stylesFilter( [
 								// Drop 'inline-height' style which make lines overlapping.
 								[ 'line-height' ],
-								[ ( /^font-family$/ ), null, !removeFontStyles ? styleMigrateFilter( config[ 'font_style' ], 'family' ) : null ],
-								[ ( /^font-size$/ ), null, !removeFontStyles ? styleMigrateFilter( config[ 'fontSize_style' ], 'size' ) : null ],
-								[ ( /^color$/ ), null, !removeFontStyles ? styleMigrateFilter( config[ 'colorButton_foreStyle' ], 'color' ) : null ],
-								[ ( /^background-color$/ ), null, !removeFontStyles ? styleMigrateFilter( config[ 'colorButton_backStyle' ], 'color' ) : null ]
-								] )( styleText, element ) || '';
+								[ ( /^font-family$/ ), null, !removeFontStyles ? styleMigrateFilter( config.font_style, 'family' ) : null ],
+								[ ( /^font-size$/ ), null, !removeFontStyles ? styleMigrateFilter( config.fontSize_style, 'size' ) : null ],
+								[ ( /^color$/ ), null, !removeFontStyles ? styleMigrateFilter( config.colorButton_foreStyle, 'color' ) : null ],
+								[ ( /^background-color$/ ), null, !removeFontStyles ? styleMigrateFilter( config.colorButton_backStyle, 'color' ) : null ]
+							] )( styleText, element ) || '';
 						}
 
 						if ( !attrs.style )
@@ -951,12 +955,12 @@
 					},
 
 					// Migrate basic style formats to editor configured ones.
-					b: elementMigrateFilter( config[ 'coreStyles_bold' ] ),
-					i: elementMigrateFilter( config[ 'coreStyles_italic' ] ),
-					u: elementMigrateFilter( config[ 'coreStyles_underline' ] ),
-					s: elementMigrateFilter( config[ 'coreStyles_strike' ] ),
-					sup: elementMigrateFilter( config[ 'coreStyles_superscript' ] ),
-					sub: elementMigrateFilter( config[ 'coreStyles_subscript' ] ),
+					b: elementMigrateFilter( config.coreStyles_bold ),
+					i: elementMigrateFilter( config.coreStyles_italic ),
+					u: elementMigrateFilter( config.coreStyles_underline ),
+					s: elementMigrateFilter( config.coreStyles_strike ),
+					sup: elementMigrateFilter( config.coreStyles_superscript ),
+					sub: elementMigrateFilter( config.coreStyles_subscript ),
 
 					// Remove full paths from links to anchors.
 					a: function( element ) {
@@ -1155,7 +1159,7 @@
 		try {
 			data = dataProcessor.toHtml( data );
 		} catch ( e ) {
-			alert( editor.lang.pastefromword.error );
+			alert( editor.lang.pastefromword.error ); // jshint ignore:line
 		}
 
 		// Below post processing those things that are unable to delivered by filter rules.
