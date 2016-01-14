@@ -1669,14 +1669,9 @@
 
 					removeHiddenSelectionContainer( editor );
 				}
-				// jshint ignore:start
-				// TODO after #9786 use commented out lines instead of console.log.
-				else { // %REMOVE_LINE%
-					window.console && console.log( 'Wrong selection instance resets fake selection.' ); // %REMOVE_LINE%
-				} // %REMOVE_LINE%
-				// else // %REMOVE_LINE%
-				//	CKEDITOR.debug.error( 'Wrong selection instance resets fake selection.', CKEDITOR.DEBUG_CRITICAL ); // %REMOVE_LINE%
-				// jshint ignore:end
+				else {
+					CKEDITOR.warn( 'selection-fake-reset' );
+				}
 			}
 
 			this.rev = nextRev++;
@@ -2056,15 +2051,26 @@
 		 * @returns {CKEDITOR.dom.selection} This selection object, after the ranges were selected.
 		 */
 		selectBookmarks: function( bookmarks ) {
-			var ranges = [];
+			var ranges = [],
+				node;
+
 			for ( var i = 0; i < bookmarks.length; i++ ) {
 				var range = new CKEDITOR.dom.range( this.root );
 				range.moveToBookmark( bookmarks[ i ] );
 				ranges.push( range );
 			}
 
+			// It may happen that the content change during loading, before selection is set so bookmark leads to text node.
+			if ( bookmarks.isFake ) {
+				node = ranges[ 0 ].getEnclosedNode();
+				if ( !node || node.type != CKEDITOR.NODE_ELEMENT ) {
+					CKEDITOR.warn( 'selection-not-fake' );
+					bookmarks.isFake = 0;
+				}
+			}
+
 			if ( bookmarks.isFake )
-				this.fake( ranges[ 0 ].getEnclosedNode() );
+				this.fake( node );
 			else
 				this.selectRanges( ranges );
 

@@ -26,7 +26,7 @@
 					'border-top:#999 1px dotted;' +
 					'border-bottom:#999 1px dotted;' +
 					'padding:0;' +
-					'height:5px;' +
+					'height:7px;' +
 					'cursor:default;'
 				).replace( /;/g, ' !important;' ); // Increase specificity to override other styles, e.g. block outline.
 

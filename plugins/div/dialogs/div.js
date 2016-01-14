@@ -421,7 +421,7 @@
 } )();
 
 /**
- * Whether to wrap the whole table instead of indivisual cells when created `<div>` in table cell.
+ * Whether to wrap the entire table instead of individual cells when creating a `<div>` in a table cell.
  *
  *		config.div_wrapTable = true;
  *

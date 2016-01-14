@@ -26,14 +26,14 @@
 			output = output ? output.replace( /%xss%/g, 'testXss()' ) : input;
 
 		tcs[ name ] = function() {
-			var editor = this.editor2,
+			var editor = this.editors.editor2,
 				xssed = false;
 
 			window.testXss = function() {
 				xssed = true;
 			};
 
-			this.editorBot2.setData( input, function() {
+			this.editorBots.editor2.setData( input, function() {
 				// Wait, because onxxx may not be synchronous.
 				wait( function() {
 					assert.isFalse( xssed, 'XSSed!' );
@@ -60,13 +60,60 @@
 					bodyHtml +
 					'</body>' +
 					'</html>',
-				editor = this.editor3;
+				editor = this.editors.editor3;
 
-			this.editorBot3.setData( input, function() {
+			this.editorBots.editor3.setData( input, function() {
 				this.assertHtml( input, editor.getData(), 'Editor data does not match.' );
 			} );
 		};
 	}
+
+	bender.editor = {
+		name: 'test_editor',
+		config: {
+			enterMode: CKEDITOR.ENTER_BR,
+			allowedContent: true,
+			removePlugins: 'link'
+		}
+	};
+
+	bender.editors = {
+		editor2: {
+			creator: 'inline',
+			name: 'test_editor2',
+			config: {
+				allowedContent: true
+			}
+		},
+		editor3: {
+			name: 'test_editor3',
+			config: {
+				protectedSource: [ /\[\[[^\]]*?\]\]/g ],
+				fullPage: true,
+				allowedContent: true
+			}
+		},
+		editor4: {
+			creator: 'inline',
+			name: 'test_editor4',
+			config: {
+				fillEmptyBlocks: false,
+				allowedContent: true
+			}
+		},
+		editor5: {
+			creator: 'inline',
+			name: 'test_editor5',
+			config: {
+				fillEmptyBlocks: function( el ) {
+					// Do not refactor - should return undefined in other cases.
+					if ( el.name == 'h1' )
+						return false;
+				},
+				allowedContent: true
+			}
+		}
+	};
 
 	var tcs = {
 		// These tests go far beyond the strict htmlDataProcessor code testing. We
@@ -75,71 +122,10 @@
 		// sense.
 
 //		shouldIgnoreAllBut : [ 'test_toDataFormat_ticket_2886_1' ],
-
-		'async:init': function() {
-			var that = this;
-
-			bender.tools.setUpEditors( {
-				editor: {
-					name: 'test_editor',
-					config: {
-						enterMode: CKEDITOR.ENTER_BR,
-						allowedContent: true
-					}
-				},
-				editor2: {
-					creator: 'inline',
-					name: 'test_editor2',
-					config: {
-						allowedContent: true
-					}
-				},
-				editor3: {
-					name: 'test_editor3',
-					config: {
-						protectedSource: [ /\[\[[^\]]*?\]\]/g ],
-						fullPage: true,
-						allowedContent: true
-					}
-				},
-				editor4: {
-					creator: 'inline',
-					name: 'test_editor4',
-					config: {
-						fillEmptyBlocks: false,
-						allowedContent: true
-					}
-				},
-				editor5: {
-					creator: 'inline',
-					name: 'test_editor5',
-					config: {
-						fillEmptyBlocks: function( el ) {
-							// Do not refactor - should return undefined in other cases.
-							if ( el.name == 'h1' )
-								return false;
-						},
-						allowedContent: true
-					}
-				}
-			}, function( editors, bots ) {
-				var num, name;
-
-				for ( name in editors ) {
-					num = name.match( /\d+/ );
-					num = num ? num[ 0 ] : '';
-
-					that[ name ] = editors[ name ];
-					that[ 'editorBot' + num ] = bots[ name ];
-				}
-
-				that.callback();
-			} );
-		},
-
 		setUp: function() {
 			// Force result data un-formatted.
 			this.editor.dataProcessor.writer._.rules = {};
+			this.editor.dataProcessor.writer.sortAttributes = true;
 			this.editor.focus();
 		},
 
@@ -407,17 +393,47 @@
 			assert.areSame( html , dataProcessor.toDataFormat( protectedHtml ) );
 		},
 
-		/**
-		 * Test empty value attributes.
-		 */
-		test_ticket_3884: function() {
-			var editor = this.editor,
-				dataProcessor = editor.dataProcessor;
-			dataProcessor.writer = new CKEDITOR.htmlParser.basicWriter();
-			dataProcessor.writer.sortAttributes = true;
+		'test link with empty href': function() {
+			var dataProcessor = this.editor.dataProcessor;
 
 			assert.areSame( '<p><a href="" name="">emptylink</a></p>',
 				dataProcessor.toDataFormat( dataProcessor.toHtml( '<p><a href="" name="">emptylink</a></p>' ) ) );
+		},
+
+		'test empty link': function() {
+			var dataProcessor = this.editor.dataProcessor;
+
+			assert.areSame( '<p>xx</p>', dataProcessor.toDataFormat( '<p>x<a href="foo"></a>x</p>' ), 'toDF' );
+
+			assert.areSame( '<p>xx</p>', dataProcessor.toHtml( '<p>x<a href="foo"></a>x</p>' ), 'toHtml' );
+		},
+
+		'test empty anchor with name': function() {
+			var dataProcessor = this.editor.dataProcessor;
+
+			assert.areSame( '<p>x<a name="foo"></a>x</p>',
+				dataProcessor.toDataFormat( '<p>x<a data-cke-saved-name="foo" name="foo"></a>x</p>' ), 'toDF' );
+
+			assert.areSame( '<p>x<a data-cke-saved-name="foo" name="foo"></a>x</p>',
+				dataProcessor.toHtml( '<p>x<a name="foo"></a>x</p>' ), 'toHtml' );
+		},
+
+		'test empty anchor with id': function() {
+			var dataProcessor = this.editor.dataProcessor;
+
+			assert.areSame( '<p>x<a id="foo"></a>x</p>', dataProcessor.toDataFormat( '<p>x<a id="foo"></a>x</p>' ), 'toDF' );
+
+			assert.areSame( '<p>x<a id="foo"></a>x</p>', dataProcessor.toHtml( '<p>x<a id="foo"></a>x</p>' ), 'toHtml' );
+		},
+
+		'test empty anchor with name and id': function() {
+			var dataProcessor = this.editor.dataProcessor;
+
+			assert.areSame( '<p>x<a id="bar" name="foo"></a>x</p>',
+				dataProcessor.toDataFormat( '<p>x<a data-cke-saved-name="foo" id="bar" name="foo"></a>x</p>' ), 'toDF' );
+
+			assert.areSame( '<p>x<a data-cke-saved-name="foo" id="bar" name="foo"></a>x</p>',
+				bender.tools.fixHtml( dataProcessor.toHtml( '<p>x<a id="bar" name="foo"></a>x</p>' ) ), 'toHtml' );
 		},
 
 		test_innerHtmlComments_ticket_3801: function() {
@@ -514,6 +530,12 @@
 			}
 		},
 
+		// #13233
+		'test don\'t protect foo:href attributes': function() {
+			assert.areSame( '<a foo:href="http://ckeditor.com">foo</a>',
+				bender.tools.fixHtml( this.editor.dataProcessor.toHtml( '<a foo:href="http://ckeditor.com">foo</a>' ) ) );
+		},
+
 		// #4243
 		'test custom protected source': function() {
 			var source = '<p>some<protected>protected</protected>text</p>';
@@ -554,6 +576,40 @@
 					'tc ' + i
 				);
 			}
+		},
+
+		// #13292
+		'test protected source in attribute in self-closing tag': function() {
+			var processor = this.editors.editor3.dataProcessor,
+				source = '<p><img src="[[image]]"/></a></p>',
+				expectedHtml = '<p><img data-cke-saved-src="{cke_protected_1}" src="{cke_protected_1}" /></p>',
+				expectedOutput = '<p><img src="[[image]]" /></p>';
+
+			var html = processor.toHtml( source );
+
+			assert.isInnerHtmlMatching( expectedHtml, html, 'toHtml' );
+
+			assert.areSame( expectedOutput, processor.toDataFormat( html ), 'toDataFormat' );
+		},
+
+		// #11754
+		'test malformed HTML does not hang the processor': function() {
+			var processor = this.editor.dataProcessor,
+				source = '<table border=0 cellspacing=0 cellpadding=0 style=\'border-collapse:collapse;></table>',
+				expectedHtml = '@';
+
+			assert.isInnerHtmlMatching( expectedHtml, processor.toHtml( source ) );
+		},
+
+		// #11846
+		'test malformed HTML does not hang the processor 2': function() {
+			var processor = this.editor.dataProcessor,
+				source =
+					'<span id="sample" overflow="hidden" ;"="" style="font-size:8pt; font-weight:normal; ' +
+						'font-style:normal; color:#808080; background:transparent">Text</span>';
+
+			processor.toHtml( source );
+			assert.isTrue( true, 'happy to be here' );
 		},
 
 		// Some elements should not have protected source markup inside. (#11223)
@@ -712,6 +768,22 @@
 
 			assert.areSame( '<p><a data-cke-saved-href="#" data-href="x" href="#" src-foo="y">a</a></p>',
 				bender.tools.fixHtml( dataP.toHtml( '<p><a data-href="x" href="#" src-foo="y">a</a></p>' ) ) );
+		},
+
+		// #13393
+		'test process malformed script': function() {
+			var dataP = this.editor.dataProcessor;
+
+			// What we check is that unclosed <script> tag will be protected.
+			assert.areSame( '<p>x</p><!--{cke_protected}%3Cscript%3E%3Ciframe%20src%3D%22foo%22%3E%3C%2Fiframe%3E-->',
+				dataP.toHtml( '<p>x</p><script><iframe src="foo"></iframe>' ) );
+			assert.areSame( '<p>x</p><!--{cke_protected}%3Cscript%3Ealert(1)%3B%3Cp%3Efoo%3C%2Fp%3E%3Cp%3Ebar%3C%2Fp%3E-->',
+				dataP.toHtml( '<p>x</p><script>alert(1);<p>foo</p><p>bar</p>' ) );
+			// Just to be sure that we don't swallow too much.
+			assert.areSame(
+				'<p>x</p><!--{cke_protected}%3Cscript%3Ealert(1)%3B%3C%2Fscript%3E-->' +
+				'<p>foo</p><!--{cke_protected}%3Cscript%3Ealert(2)%3B%3C%2Fscript%3E--><p>bar</p>',
+				dataP.toHtml( '<p>x</p><script>alert(1);</scr' + 'ipt><p>foo</p><script>alert(2);</scr' + 'ipt><p>bar</p>' ) );
 		},
 
 		'test toHtml event': function() {
@@ -1026,6 +1098,16 @@
 			} ), 'br mode' );
 		},
 
+		'test toHtml options.protectedWhitespaces defaults falsy': function() {
+			var editor = this.editor;
+
+			editor.once( 'toHtml', function( evt ) {
+				assert.isUndefined( evt.data.protectedWhitespaces );
+			} );
+
+			editor.dataProcessor.toHtml( 'foo', {} );
+		},
+
 		'test leading br is removed by toDataFormat in ENTER_P and ENTER_DIV': function() {
 			var htmlDP = this.editor.dataProcessor,
 				opts = { enterMode: CKEDITOR.ENTER_P };
@@ -1066,7 +1148,7 @@
 		},
 
 		'test config.fillEmptyBlocks - false': function() {
-			var htmlDP = this.editor4.dataProcessor,
+			var htmlDP = this.editors.editor4.dataProcessor,
 				bogus = CKEDITOR.env.needsBrFiller ? '<br />' : '';
 
 			// Even though filler fillEmptyBlocks is set to false, we should still put bogus to HTML,
@@ -1079,7 +1161,7 @@
 		},
 
 		'test config.fillEmptyBlocks - callback': function() {
-			var htmlDP = this.editor5.dataProcessor,
+			var htmlDP = this.editors.editor5.dataProcessor,
 				bogus = CKEDITOR.env.needsBrFiller ? '<br />' : '';
 
 			assert.areSame( '<p>' + bogus + '</p>', htmlDP.toHtml( '<p></p>' ), 'toHtml 1' );

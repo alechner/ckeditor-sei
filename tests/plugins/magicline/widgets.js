@@ -201,18 +201,20 @@
 		};
 	}
 
+	function ignoreIt() {
+		assert.ignore();
+	}
+
 	bender.test( {
 		_should: {
 			// FF inserts bogus before a widget so these tests
 			// are broken and make no sense.
 			ignore: CKEDITOR.env.gecko ?
-					{
-						'test block, editable[top] - widget as first child': true,
-						'test block, edge[top] - widget as first child': true,
-						'test non-editable, edge[top] - first child': true
-					}
-				:
-					null
+				{
+					'test block, editable[top] - widget as first child': true,
+					'test block, edge[top] - widget as first child': true,
+					'test non-editable, edge[top] - first child': true
+				} : null
 		},
 
 		'test block, editable[top] - widget as first child': t( blockTpl.output( { id: 'x' } ), {
@@ -646,7 +648,7 @@
 
 		// --- COMMANDS ------------------------------------------------------------------------------------
 
-		'test commands[previous], first block in nested': c( nestedTpl.output( { id: 'z' } ), {
+		'test commands[previous], first block in nested': CKEDITOR.env.gecko ? ignoreIt : c( nestedTpl.output( { id: 'z' } ), {
 			widget: function() {
 				return w( 'z' );
 			},
@@ -662,7 +664,7 @@
 				return widget.parts.nested.getChild( 0 );
 			}
 		} ),
-		'test commands[next], block after block in nested': c( nestedTpl.output( { id: 'z' } ), {
+		'test commands[next], block after block in nested': CKEDITOR.env.gecko ? ignoreIt : c( nestedTpl.output( { id: 'z' } ), {
 			widget: function() {
 				return w( 'z' );
 			},
@@ -678,7 +680,7 @@
 				return widget.parts.nested.getChild( 1 );
 			}
 		} ),
-		'test commands[previous], block before block in nested': c( nestedTpl.output( { id: 'z' } ), {
+		'test commands[previous], block before block in nested': CKEDITOR.env.gecko ? CKEDITOR.ignoreIt : c( nestedTpl.output( { id: 'z' } ), {
 			widget: function() {
 				return w( 'z' );
 			},
@@ -694,7 +696,7 @@
 				return widget.parts.nested.getChild( 1 );
 			}
 		} ),
-		'test commands[next], last block in nested': c( nestedTpl.output( { id: 'z' } ), {
+		'test commands[next], last block in nested': CKEDITOR.env.gecko ? ignoreIt : c( nestedTpl.output( { id: 'z' } ), {
 			widget: function() {
 				return w( 'z' );
 			},

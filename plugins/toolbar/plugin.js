@@ -353,7 +353,11 @@
 							var dy = toolboxContainer.$.offsetHeight - previousHeight;
 							contents.setStyle( 'height', ( contentHeight - dy ) + 'px' );
 
-							editor.fire( 'resize' );
+							editor.fire( 'resize', {
+								outerHeight: editor.container.$.offsetHeight,
+								contentsHeight: contents.$.offsetHeight,
+								outerWidth: editor.container.$.offsetWidth
+							} );
 						},
 
 						modes: { wysiwyg: 1, source: 1 }
@@ -662,6 +666,9 @@ CKEDITOR.UI_SEPARATOR = 'separator';
  * (`iframe`-based) editor. In case of [inline](#!/guide/dev_inline) editor the toolbar
  * position is set dynamically depending on the position of the editable element on the screen.
  *
+ * Read more in the [documentation](#!/guide/dev_toolbarlocation)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/toolbarlocation.html).
+ *
  *		config.toolbarLocation = 'bottom';
  *
  * @cfg
@@ -675,6 +682,9 @@ CKEDITOR.config.toolbarLocation = 'top';
  *
  * If set to `null`, the toolbar will be generated automatically using all available buttons
  * and {@link #toolbarGroups} as a toolbar groups layout.
+ *
+ * In CKEditor 4.5+ you can generate your toolbar customization code by using the [visual
+ * toolbar configurator](http://docs.ckeditor.com/#!/guide/dev_toolbar).
  *
  *		// Defines a toolbar with only one strip containing the "Source" button, a
  *		// separator, and the "Bold" and "Italic" buttons.

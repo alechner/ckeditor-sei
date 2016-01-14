@@ -1,4 +1,4 @@
-﻿/**
+﻿﻿/**
  * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
@@ -11,7 +11,11 @@
 'use strict';
 
 ( function() {
-	var keystrokes = [ CKEDITOR.CTRL + 90 /*Z*/, CKEDITOR.CTRL + 89 /*Y*/, CKEDITOR.CTRL + CKEDITOR.SHIFT + 90 /*Z*/ ],
+	var keystrokes = [
+			CKEDITOR.CTRL + 90 /*Z*/,
+			CKEDITOR.CTRL + 89 /*Y*/,
+			CKEDITOR.CTRL + CKEDITOR.SHIFT + 90 /*Z*/
+		],
 		backspaceOrDelete = { 8: 1, 46: 1 };
 
 	CKEDITOR.plugins.add( 'undo', {

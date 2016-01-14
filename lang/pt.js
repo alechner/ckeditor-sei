@@ -1,5 +1,5 @@
-﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+﻿﻿/**
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -19,8 +19,8 @@
  */
 CKEDITOR.lang[ 'pt' ] = {
 	// ARIA description.
-	editor: 'Rich Text Editor',
-	editorPanel: 'Painel do Rich Text Editor',
+	editor: 'Editor de texto enriquecido',
+	editorPanel: 'Painel do editor de texto enriquecido',
 
 	// Common messages and labels.
 	common: {
@@ -28,11 +28,11 @@ CKEDITOR.lang[ 'pt' ] = {
 		// of reading non-English words. So be careful while translating it.
 		editorHelp: 'Pressione ALT+0 para ajuda',
 
-		browseServer: 'Explorar Servidor',
+		browseServer: 'Navegar no servidor',
 		url: 'URL',
 		protocol: 'Protocolo',
 		upload: 'Enviar',
-		uploadSubmit: 'Enviar para o Servidor',
+		uploadSubmit: 'Enviar para o servidor',
 		image: 'Imagem',
 		flash: 'Flash',
 		form: 'Formulário',

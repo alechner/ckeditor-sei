@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
@@ -68,18 +68,17 @@
 					}, 100 );
 				}
 			} );
+		}
 
-        }
-
-        // Coordinate with the "maximize" plugin. (#9311)
-        editor.on( 'afterCommandExec', function( evt ) {
-            if ( evt.data.name == 'maximize' && evt.editor.mode == 'wysiwyg' ) {
-                if ( evt.data.command.state == CKEDITOR.TRISTATE_ON )
-                    scrollable.removeStyle( 'overflow-y' );
-                else
-                    resizeEditor();
-            }
-        } );
+		// Coordinate with the "maximize" plugin. (#9311)
+		editor.on( 'afterCommandExec', function( evt ) {
+			if ( evt.data.name == 'maximize' && evt.editor.mode == 'wysiwyg' ) {
+				if ( evt.data.command.state == CKEDITOR.TRISTATE_ON )
+					scrollable.removeStyle( 'overflow-y' );
+				else
+					resizeEditor();
+			}
+		} );
 
 		editor.on( 'contentDom', refreshCache );
 
@@ -168,6 +167,9 @@
  * The minimum height that the editor can assume when adjusting to content by using the Auto Grow
  * feature. This option accepts a value in pixels, without the unit (for example: `300`).
  *
+ * Read more in the [documentation](#!/guide/dev_autogrow)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/autogrow.html).
+ *
  *		config.autoGrow_minHeight = 300;
  *
  * @since 3.4
@@ -180,6 +182,9 @@
  * feature. This option accepts a value in pixels, without the unit (for example: `600`).
  * Zero (`0`) means that the maximum height is not limited and the editor will expand infinitely.
  *
+ * Read more in the [documentation](#!/guide/dev_autogrow)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/autogrow.html).
+ *
  *		config.autoGrow_maxHeight = 400;
  *
  * @since 3.4
@@ -190,6 +195,9 @@
 /**
  * Whether automatic editor height adjustment brought by the Auto Grow feature should happen on
  * editor creation.
+ *
+ * Read more in the [documentation](#!/guide/dev_autogrow)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/autogrow.html).
  *
  *		config.autoGrow_onStartup = true;
  *
@@ -202,6 +210,9 @@
  * Extra vertical space to be added between the content and the editor bottom bar when adjusting
  * editor height to content by using the Auto Grow feature. This option accepts a value in pixels,
  * without the unit (for example: `50`).
+ *
+ * Read more in the [documentation](#!/guide/dev_autogrow)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/autogrow.html).
  *
  *		config.autoGrow_bottomSpace = 50;
  *

@@ -356,7 +356,7 @@
 									var value='';
 									if (dir=='3pt' && esq=='auto') value='right';
 									else if (dir=='auto' && esq=='auto') value='center';
-									else if (dir=='auto' && esq=='3pt') value='left';	
+									else if (dir=='auto' && esq=='3pt') value='left';
 									else if (dir=='auto' && esq=='1.18in') value='recuo';
 									this.setValue( value );
 								},
@@ -364,11 +364,11 @@
 									var styles = this.getDialog().getContentElement( 'advanced', 'advStyles' );
 									if ( this.getValue() )
 										switch (this.getValue()){
-											case 'left': 
+											case 'left':
 												styles.updateStyle('margin-left','3pt');
 												styles.updateStyle('margin-right','auto');
 												break;
-											case 'recuo': 
+											case 'recuo':
 												styles.updateStyle('margin-left','1.18in');
 												styles.updateStyle('margin-right','auto');
 												break;
@@ -379,8 +379,8 @@
 											case 'right':
 												styles.updateStyle('margin-left','auto');
 												styles.updateStyle('margin-right','3pt');
-												break;														
-										}													
+												break;
+										}
 									else {
 										selectedTable.removeAttribute( 'align' );
 									  //styles.updateStyle('margin-left');

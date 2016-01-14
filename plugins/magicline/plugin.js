@@ -4,7 +4,7 @@
  */
 
 /**
- * @fileOverview The Magic Line plugin that makes it easier to access some document areas that
+ * @fileOverview The [Magic Line](http://ckeditor.com/addon/magicline) plugin that makes it easier to access some document areas that
  * are difficult to focus.
  */
 
@@ -494,8 +494,6 @@
 					return limit;
 				else
 					return null;
-
-				return trigger;
 			} else {
 				return null;
 			}
@@ -597,9 +595,9 @@
 								( env.hc ? 'font-size: 15px;line-height:14px;border:1px solid #fff;text-align:center;' : '' ) +
 								( env.hidpi ? 'background-size: 9px 10px;' : '' ),
 						looks: [
-							'top:-8px;' + CKEDITOR.tools.cssVendorPrefix( 'border-radius', '2px', 1 ),
-							'top:-17px;' + CKEDITOR.tools.cssVendorPrefix( 'border-radius', '2px 2px 0px 0px', 1 ),
-							'top:-1px;' + CKEDITOR.tools.cssVendorPrefix( 'border-radius', '0px 0px 2px 2px', 1 )
+							'top:-8px; border-radius: 2px;',
+							'top:-17px; border-radius: 2px 2px 0px 0px;',
+							'top:-1px; border-radius: 0px 0px 2px 2px;'
 						]
 					}
 				),
@@ -712,10 +710,11 @@
 					styleSet.top = that.inInlineMode ? 0 : view.scroll.y;
 					this.look( LOOK_TOP );
 				} else if ( trigger.is( LOOK_BOTTOM ) || inBetween( styleSet.top, view.pane.bottom - 5, view.pane.bottom + 15 ) ) {
-					styleSet.top = that.inInlineMode ?
+					styleSet.top = that.inInlineMode ? (
 							view.editable.height + view.editable.padding.top + view.editable.padding.bottom
-						:
-							view.pane.bottom - 1;
+						) : (
+							view.pane.bottom - 1
+						);
 
 					this.look( LOOK_BOTTOM );
 				} else {
@@ -1127,11 +1126,14 @@
 		updateEditableSize( that );
 
 		// This flag determines whether checking bottom trigger.
-		var bottomTrigger = mouse.y > ( that.inInlineMode ?
-				view.editable.top + view.editable.height / 2
-			:
-				// This is to handle case when editable.height / 2 <<< pane.height.
-				Math.min( view.editable.height, view.pane.height ) / 2 ),
+		var bottomTrigger = mouse.y > (
+				that.inInlineMode ? (
+					view.editable.top + view.editable.height / 2
+				) : (
+					// This is to handle case when editable.height / 2 <<< pane.height.
+					Math.min( view.editable.height, view.pane.height ) / 2
+				)
+			),
 
 		// Edge node according to bottomTrigger.
 		edgeNode = editable[ bottomTrigger ? 'getLast' : 'getFirst' ]( function( node ) {
@@ -1623,18 +1625,7 @@
 	var sizePrefixes = [ 'top', 'left', 'right', 'bottom' ];
 
 	function getSize( that, element, ignoreScroll, force ) {
-		var getStyle = ( function() {
-				// Better "cache and reuse" than "call again and again".
-				var computed = env.ie ? element.$.currentStyle : that.win.$.getComputedStyle( element.$, '' );
-
-				return env.ie ?
-					function( propertyName ) {
-						return computed[ CKEDITOR.tools.cssStyleToDomStyle( propertyName ) ];
-					} : function( propertyName ) {
-						return computed.getPropertyValue( propertyName );
-					};
-			} )(),
-			docPosition = element.getDocumentPosition(),
+		var docPosition = element.getDocumentPosition(),
 			border = {},
 			margin = {},
 			padding = {},
@@ -1673,6 +1664,10 @@
 			margin: margin,
 			ignoreScroll: ignoreScroll
 		}, box, true );
+
+		function getStyle( propertyName ) {
+			return element.getComputedStyle.call( element, propertyName );
+		}
 	}
 
 	function updateSize( that, element, ignoreScroll ) {
@@ -1780,6 +1775,9 @@
  * causes the magic line to appear. This option accepts a value in pixels, without the unit (for example:
  * `15` for 15 pixels).
  *
+ * Read more in the [documentation](#!/guide/dev_magicline)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/magicline.html).
+ *
  *		// Changes the offset to 15px.
  *		CKEDITOR.config.magicline_triggerOffset = 15;
  *
@@ -1789,9 +1787,12 @@
  */
 
 /**
- * Defines the distance between the mouse pointer and the box, within
+ * Defines the distance between the mouse pointer and the box within
  * which the magic line stays revealed and no other focus space is offered to be accessed.
  * This value is relative to {@link #magicline_triggerOffset}.
+ *
+ * Read more in the [documentation](#!/guide/dev_magicline)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/magicline.html).
  *
  *		// Increases the distance to 80% of CKEDITOR.config.magicline_triggerOffset.
  *		CKEDITOR.config.magicline_holdDistance = .8;
@@ -1802,8 +1803,11 @@
  */
 
 /**
- * Defines the default keystroke that access the closest unreachable focus space **before**
- * the caret (start of the selection). If there's no any focus space, selection remains.
+ * Defines the default keystroke that accesses the closest unreachable focus space **before**
+ * the caret (start of the selection). If there is no focus space available, the selection remains unchanged.
+ *
+ * Read more in the [documentation](#!/guide/dev_magicline)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/magicline.html).
  *
  *		// Changes the default keystroke to "Ctrl + ,".
  *		CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + 188;
@@ -1814,8 +1818,11 @@
 CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + CKEDITOR.SHIFT + 51; // CTRL + SHIFT + 3
 
 /**
- * Defines the default keystroke that access the closest unreachable focus space **after**
- * the caret (start of the selection). If there's no any focus space, selection remains.
+ * Defines the default keystroke that accesses the closest unreachable focus space **after**
+ * the caret (start of the selection). If there is no focus space available, the selection remains unchanged.
+ *
+ * Read more in the [documentation](#!/guide/dev_magicline)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/magicline.html).
  *
  *		// Changes keystroke to "Ctrl + .".
  *		CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + 190;
@@ -1829,6 +1836,9 @@ CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + CKEDITOR.SHIFT + 52; /
  * Defines a list of attributes that, if assigned to some elements, prevent the magic line from being
  * used within these elements.
  *
+ * Read more in the [documentation](#!/guide/dev_magicline)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/magicline.html).
+ *
  *		// Adds the "data-tabu" attribute to the magic line tabu list.
  *		CKEDITOR.config.magicline_tabuList = [ 'data-tabu' ];
  *
@@ -1838,6 +1848,9 @@ CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + CKEDITOR.SHIFT + 52; /
 
 /**
  * Defines the color of the magic line. The color may be adjusted to enhance readability.
+ *
+ * Read more in the [documentation](#!/guide/dev_magicline)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/magicline.html).
  *
  *		// Changes magic line color to blue.
  *		CKEDITOR.config.magicline_color = '#0000FF';
@@ -1849,6 +1862,9 @@ CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + CKEDITOR.SHIFT + 52; /
 /**
  * Activates the special all-encompassing mode that considers all focus spaces between
  * {@link CKEDITOR.dtd#$block} elements as accessible by the magic line.
+ *
+ * Read more in the [documentation](#!/guide/dev_magicline)
+ * and see the [SDK sample](http://sdk.ckeditor.com/samples/magicline.html).
  *
  *		// Enables the greedy "put everywhere" mode.
  *		CKEDITOR.config.magicline_everywhere = true;

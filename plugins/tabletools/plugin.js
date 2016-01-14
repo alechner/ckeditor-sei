@@ -543,7 +543,7 @@
 		}
 	}
 
-	function verticalSplitCell( selection, isDetect ) {
+	function horizontalSplitCell( selection, isDetect ) {
 		var cells = getSelectedCells( selection );
 		if ( cells.length > 1 )
 			return false;
@@ -608,7 +608,7 @@
 		return newCell;
 	}
 
-	function horizontalSplitCell( selection, isDetect ) {
+	function verticalSplitCell( selection, isDetect ) {
 		var cells = getSelectedCells( selection );
 		if ( cells.length > 1 )
 			return false;

@@ -42,7 +42,7 @@
 				evt.removeListener();
 
 				tc.resume( function() {
-					assert.areEqual( 'abc<b>def</b>', evt.data.toLowerCase() );
+					assert.areEqual( 'abc<b>def</b>', evt.data.dataValue.toLowerCase() );
 				} );
 			} );
 
@@ -147,6 +147,21 @@
 
 			editor.openDialog( 'paste' );
 			wait();
+		},
+
+		'test paste event structure': function() {
+			var editor = this.editor,
+				dataTransfer = CKEDITOR.plugins.clipboard.initPasteDataTransfer();
+
+			editor.once( 'paste', function( evt ) {
+				evt.cancel();
+
+				assert.areSame( 'foo', evt.data.dataValue, 'dataValue' );
+				assert.areSame( 'paste', evt.data.method, 'method' );
+				assert.areSame( dataTransfer, evt.data.dataTransfer, 'dataTransfer' );
+			} );
+
+			editor.fire( 'pasteDialogCommit', { dataValue: 'foo', dataTransfer: dataTransfer } );
 		}
 	} );
 } )();
