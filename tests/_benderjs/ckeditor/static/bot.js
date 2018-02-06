@@ -1,6 +1,6 @@
 /**
- * Copyright (c) 2015, CKSource - Frederico Knabben. All rights reserved.
- * Licensed under the terms of the MIT License (see LICENSE.md).
+ * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 ( function( bender ) {
@@ -134,7 +134,7 @@
 			// Note: 1000ms isn't quite enough, i.e. in some slow browsers like MS Edge to run
 			// some heavy tests. It causes "wait() called but resume() never called"
 			// sort of errors because it takes longer to fire `dialogShow` than 1000ms,
-			// especially in build version of CKEditor (#13920).
+			// especially in build version of CKEditor (https://dev.ckeditor.com/ticket/13920).
 			tc.wait( 2000 );
 		},
 

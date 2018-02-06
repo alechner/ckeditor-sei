@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -200,7 +200,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 		}
 
 		// IE8 rename HTML5 nodes by adding `:` at the begging of the tag name when the node is cloned,
-		// so `<figure>` will be `<:figure>` after 'cloneNode'. We need to fix it (#13101).
+		// so `<figure>` will be `<:figure>` after 'cloneNode'. We need to fix it (https://dev.ckeditor.com/ticket/13101).
 		function renameNodes( node ) {
 			if ( node.type != CKEDITOR.NODE_ELEMENT && node.type != CKEDITOR.NODE_DOCUMENT_FRAGMENT )
 				return;
@@ -373,7 +373,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 		// The idea is - all empty text nodes will be virtually merged into their adjacent text nodes.
 		// If an empty text node does not have an adjacent non-empty text node we can return -1 straight away,
 		// because it and all its sibling text nodes will be merged into an empty text node and then totally ignored.
-		if ( normalized && current.nodeType == CKEDITOR.NODE_TEXT && !current.nodeValue ) {
+		if ( normalized && current.nodeType == CKEDITOR.NODE_TEXT && isEmpty( current ) ) {
 			var adjacent = getAdjacentNonEmptyTextNode( current ) || getAdjacentNonEmptyTextNode( current, true );
 
 			if ( !adjacent )
@@ -382,7 +382,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 
 		do {
 			// Bypass blank node and adjacent text nodes.
-			if ( normalized && current != this.$ && current.nodeType == CKEDITOR.NODE_TEXT && ( isNormalizing || !current.nodeValue ) )
+			if ( normalized && current != this.$ && current.nodeType == CKEDITOR.NODE_TEXT && ( isNormalizing || isEmpty( current ) ) )
 				continue;
 
 			index++;
@@ -401,7 +401,12 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 
 			// If found a non-empty text node, then return it.
 			// If not, then continue search.
-			return sibling.nodeValue ? sibling : getAdjacentNonEmptyTextNode( sibling, lookForward );
+			return isEmpty( sibling ) ? getAdjacentNonEmptyTextNode( sibling, lookForward ) : sibling;
+		}
+
+		// Checks whether a text node is empty or is FCSeq string (which will be totally removed when normalizing).
+		function isEmpty( textNode ) {
+			return !textNode.nodeValue || textNode.nodeValue == CKEDITOR.dom.selection.FILLING_CHAR_SEQUENCE;
 		}
 	},
 
@@ -799,7 +804,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 				} else if ( trimmed.length < originalLength ) {
 					child.split( originalLength - trimmed.length );
 
-					// IE BUG: child.remove() may raise JavaScript errors here. (#81)
+					// IE BUG: child.remove() may raise JavaScript errors here. (https://dev.ckeditor.com/ticket/81)
 					this.$.removeChild( this.$.firstChild );
 				}
 			}
@@ -824,7 +829,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 					child.split( trimmed.length );
 
 					// IE BUG: child.getNext().remove() may raise JavaScript errors here.
-					// (#81)
+					// (https://dev.ckeditor.com/ticket/81)
 					this.$.lastChild.parentNode.removeChild( this.$.lastChild );
 				}
 			}
@@ -835,7 +840,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 			child = this.$.lastChild;
 
 			if ( child && child.type == 1 && child.nodeName.toLowerCase() == 'br' ) {
-				// Use "eChildNode.parentNode" instead of "node" to avoid IE bug (#324).
+				// Use "eChildNode.parentNode" instead of "node" to avoid IE bug (https://dev.ckeditor.com/ticket/324).
 				child.parentNode.removeChild( child );
 			}
 		}
@@ -869,7 +874,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 		if ( this.type != CKEDITOR.NODE_ELEMENT )
 			element = this.getParent();
 
-		// Prevent Edge crash (#13609, #13919).
+		// Prevent Edge crash (https://dev.ckeditor.com/ticket/13609, https://dev.ckeditor.com/ticket/13919).
 		if ( CKEDITOR.env.edge && element && element.is( 'textarea', 'input' ) ) {
 			checkOnlyAttributes = true;
 		}

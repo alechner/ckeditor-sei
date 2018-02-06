@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.plugins.setLang( 'a11yhelp', 'ru', {
@@ -79,29 +79,26 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'ru', {
 			{
 			name: 'Справка по горячим клавишам',
 			legend: 'Нажмите ${a11yHelp}'
+		},
+			{
+			name: 'Вставить только текст',
+			legend: 'Нажмите ${pastetext}',
+			legendEdge: 'Press ${pastetext}, followed by ${paste}' // MISSING
 		}
 		]
 	}
 	],
-	backspace: 'Backspace',
 	tab: 'Tab',
-	enter: 'Enter',
-	shift: 'Shift',
-	ctrl: 'Ctrl',
-	alt: 'Alt',
 	pause: 'Pause',
 	capslock: 'Caps Lock',
 	escape: 'Esc',
 	pageUp: 'Page Up',
 	pageDown: 'Page Down',
-	end: 'End',
-	home: 'Home',
 	leftArrow: 'Стрелка влево',
 	upArrow: 'Стрелка вверх',
 	rightArrow: 'Стрелка вправо',
 	downArrow: 'Стрелка вниз',
 	insert: 'Insert',
-	'delete': 'Delete',
 	leftWindowKey: 'Левая клавиша Windows',
 	rightWindowKey: 'Правая клавиша Windows',
 	selectKey: 'Выбрать',

@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* exported CKBUILDER_CONFIG */
@@ -9,9 +9,11 @@ var CKBUILDER_CONFIG = {
 	skin: 'moono',
 	ignore: [
 		'bender.js',
+		'bender.ci.js',
 		'.bender',
 		'bender-err.log',
 		'bender-out.log',
+		'.travis.yml',
 		'dev',
 		'docs',
 		'.DS_Store',
@@ -41,6 +43,7 @@ var CKBUILDER_CONFIG = {
 		clipboard: 1,
 		colorbutton: 1,
 		colordialog: 1,
+		copyformatting: 1,
 		contextmenu: 1,
 		dialogadvtab: 1,
 		div: 1,
@@ -77,6 +80,7 @@ var CKBUILDER_CONFIG = {
 		stylescombo: 1,
 		tab: 1,
 		table: 1,
+		tableselection: 1,
 		tabletools: 1,
 		toolbar: 1,
 		undo: 1,

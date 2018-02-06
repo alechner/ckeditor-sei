@@ -1,4 +1,4 @@
-/* bender-tags: editor,unit */
+﻿﻿/* bender-tags: editor */
 
 ( function() {
 	'use strict';
@@ -11,12 +11,18 @@
 	var htmlEncode = CKEDITOR.tools.htmlEncode,
 		htmlDecode = CKEDITOR.tools.htmlDecode;
 
-	bender.test( {
-		assertNormalizedCssText: function( expected, elementId, msg ) {
-			assert.areSame( expected, CKEDITOR.tools.normalizeCssText(
-				CKEDITOR.document.getById( elementId ).getAttribute( 'style' ) ), msg );
-		},
+	bender.editor = {
+		config: {
+			language: 'en'
+		}
+	};
+	function assertNormalizeCssText( expected, input, message ) {
+		return function() {
+			assert.areSame( expected, CKEDITOR.tools.normalizeCssText( input ), message );
+		};
+	}
 
+	bender.test( {
 		test_extend: function() {
 			function fakeFn() {}
 
@@ -82,11 +88,11 @@
 			assert.areSame( '0', htmlEncode( 0 ), '0' );
 		},
 
-		'test htmlEncode - #3874': function() {
+		'test htmlEncode - https://dev.ckeditor.com/ticket/3874': function() {
 			assert.areSame( 'line1\nline2', htmlEncode( 'line1\nline2' ) );
 		},
 
-		// http://dev.ckeditor.com/ticket/13105#comment:8
+		// https://dev.ckeditor.com/ticket/13105#comment:8
 		'test htmlDecode - all covered named entities': function() {
 			assert.areSame( '< a & b > c \u00a0 d \u00ad e "', htmlDecode( '&lt; a &amp; b &gt; c &nbsp; d &shy; e &quot;' ) );
 		},
@@ -225,11 +231,11 @@
 //		},
 
 		test_callFunction: function() {
-			var func = CKEDITOR.tools.addFunction( function( argA ) {
+			var argARef  = 'http://ckeditor.com/index.html#myanchor',
+			func = CKEDITOR.tools.addFunction( function( argA ) {
 				assert.areSame( argA, argARef );
 			} );
 
-			var argARef  = 'http://ckeditor.com/index.html#myanchor';
 			CKEDITOR.tools.callFunction( func, argARef );
 		},
 
@@ -294,12 +300,7 @@
 			assert.isTrue( c instanceof A && c instanceof B && c instanceof C, 'check instanceof both A & B & C' );
 		},
 
-		testNormalizeCssText: function() {
-			this.assertNormalizedCssText(
-				'color:red;font-size:10px;width:10.5em;', 'style1', 'order, lowercase and white spaces' );
-
-			this.assertNormalizedCssText( 'color:red;font-family:arial black,helvetica,georgia;', 'style2', 'font names' );
-		},
+		testNormalizeCssText: assertNormalizeCssText( 'color:red;font-size:10px;width:10.5em;', ' width: 10.5em ; COLOR : red; font-size:10px  ; ', 'order, lowercase and white spaces' ),
 
 		testNormalizeCssText2: function() {
 			var n = CKEDITOR.tools.normalizeCssText;
@@ -332,6 +333,47 @@
 				n( 'color: red; width: 10px; margin: 0.5em; float: left', true ), 'various' );
 		},
 
+		testQuoteEntity: assertNormalizeCssText( 'font-family:"foo";', 'font-family: &quot;foo&quot;;', '' ),
+
+		// (https://dev.ckeditor.com/ticket/10750)
+		'test Normalize double quote': assertNormalizeCssText( 'font-family:"crazy font";', 'font-family: "crazy font";',
+			'quoted font name' ),
+		'test Normalize single quote': assertNormalizeCssText( 'font-family:\'crazy font\';', 'font-family: \'crazy font\';',
+			'single-quoted font name' ),
+
+		'test Normalize generic family name serif': assertNormalizeCssText( 'font-family:serif;', 'font-family: serif;',
+			'generic-family name is not escaped' ),
+		'test Normalize generic family name sans-serif': assertNormalizeCssText( 'font-family:sans-serif;', 'font-family: sans-serif;',
+			'generic-family name is not escaped' ),
+		'test Normalize generic family name cursive': assertNormalizeCssText( 'font-family:cursive;', 'font-family: cursive;',
+			'generic-family name is not escaped' ),
+		'test Normalize generic family name fantasy': assertNormalizeCssText( 'font-family:fantasy;', 'font-family: fantasy;',
+			'generic-family name is not escaped' ),
+		'test Normalize generic family name monospace': assertNormalizeCssText( 'font-family:monospace;', 'font-family: monospace;',
+			'generic-family name is not escaped' ),
+
+		'test Normalize generic and non-generic mix': assertNormalizeCssText( 'font-family:"foo",serif;', 'font-family: "foo", serif;',
+			'family-name and generic-family mix' ),
+		'test Normalize letter casing sensitivity': assertNormalizeCssText( 'font-family:"FFo baR";', 'font-family: "FFo baR";',
+			'letter casing sensivity' ),
+		// It's also possible to use font named as any generic-family member as long as it's enclosed within quotes.
+		'test Normalize generic-family token as family-name': assertNormalizeCssText( 'font-family:"serif";', 'font-family:"serif";',
+			'accept generic-family token as family-name' ),
+		'test Normalize unquoted family name with hyphen': assertNormalizeCssText( 'font-family:my-cool-font;', 'font-family:my-cool-font;',
+			'unquoted family name with hyphen' ),
+		'test Normalize font name with multiple spaces': assertNormalizeCssText( 'font-family:"Space    font";', 'font-family:"Space    font";',
+			'font name with multiple spaces' ),
+
+		'test Normalize family name with quotes': assertNormalizeCssText( 'font-family:"\'Sarcasm\'";', 'font-family:"\'Sarcasm\'";',
+			'family name with quotes' ),
+		'test Normalize family name with special characters': assertNormalizeCssText( 'font-family:"\'This is   -!$   custom Font\'";', 'font-family:"\'This is   -!$   custom Font\'";',
+			'family name with special characters' ),
+
+		// If there's a syntax error in the style - just leave it like that.
+		'test Normalize syntax error': assertNormalizeCssText( 'font-family:"crazy font",;', 'font-family:"crazy font",;',
+			'style syntax error' ),
+
+
 		testConvertRgbToHex: function() {
 			var c = CKEDITOR.tools.convertRgbToHex;
 
@@ -345,6 +387,23 @@
 			assert.areSame( '#010203', c( 'rgb(  1,2 , 3 )' ), 'case 4' );
 
 			assert.areSame( 'color:#010203; border-color:#ffff00;', c( 'color:rgb(1,2,3); border-color:rgb(255,255,0);' ), 'multiple' );
+		},
+
+		// https://dev.ckeditor.com/ticket/14252
+		testNormalizeHex: function() {
+			var c = CKEDITOR.tools.normalizeHex;
+
+			assert.areSame( '', c( '' ), 'empty' );
+
+			assert.areSame( '#000000', c( '#000000' ), 'Long hex' );
+			assert.areSame( '#000000', c( '#000' ), 'Short hex' );
+
+			assert.areSame( '#ffff00', c( '#ffff00' ), 'Long, lower-case hex' );
+			assert.areSame( '#ffff00', c( '#FFFF00' ), 'Long, upper-case hex' );
+			assert.areSame( '#ffff00', c( '#ff0' ), 'Short, lower-case hex' );
+			assert.areSame( '#ffff00', c( '#FF0' ), 'Short, upper-case hex' );
+			assert.areSame( '#ffff00', c( '#FfFf00' ), 'Long, mixed-case hex' );
+			assert.areSame( '#ffff00', c( '#Ff0' ), 'Short, mixed-case hex' );
 		},
 
 		testCssLength: function() {
@@ -647,6 +706,157 @@
 
 			// Check if next token will be the same.
 			assert.areEqual( token, CKEDITOR.tools.getCsrfToken(), 'getCsrfToken returns token from cookie' );
+		},
+
+		'test escapeCss - invalid selector': function() {
+			var selector;
+			var escapedSelector = CKEDITOR.tools.escapeCss( selector );
+
+			// Check undefined selector.
+			assert.areSame( escapedSelector, '', 'invalid selector - undefined' );
+
+			selector = null;
+			escapedSelector = CKEDITOR.tools.escapeCss( selector );
+
+			// Check null selector.
+			assert.areSame( escapedSelector, '', 'invalid selector - null' );
+
+			selector = '';
+			escapedSelector = CKEDITOR.tools.escapeCss( selector );
+
+			// Check empty selector.
+			assert.areSame( escapedSelector, '', 'invalid selector - empty' );
+		},
+
+		'test escapeCss - starts-with-number selector': function() {
+			var selector = '100';
+			var escapedSelector = CKEDITOR.tools.escapeCss( selector );
+
+			// Check starts-with-number selector.
+			assert.areSame( escapedSelector, '\\31 00', 'starts-with-number selector' );
+
+			selector = '0';
+			escapedSelector = CKEDITOR.tools.escapeCss( selector );
+
+			// Check only-one-number selector.
+			assert.areSame( escapedSelector, '\\30 ', 'only-one-number selector' );
+		},
+
+		'test escapeCss - standard selector': function() {
+			var selector = 'aaa';
+			var escapedSelector = CKEDITOR.tools.escapeCss( selector );
+
+			// Check standard selector.
+			assert.areSame( escapedSelector, 'aaa', 'standard selector' );
+		},
+
+		// #810
+		'test getMouseButton': function() {
+			var isIe8 = CKEDITOR.env.ie && CKEDITOR.env.version < 9;
+
+			function generateMouseButtonAsserts( inputs ) {
+				function generateEvent( button ) {
+					return {
+						data: {
+							$: {
+								button: button
+							}
+						}
+					};
+				}
+
+				CKEDITOR.tools.array.forEach( inputs, function( input ) {
+					assert.areSame( input[ 0 ], CKEDITOR.tools.getMouseButton( generateEvent( input[ 1 ] ) ) );
+				} );
+			}
+
+			generateMouseButtonAsserts( [
+				[ CKEDITOR.MOUSE_BUTTON_LEFT, isIe8 ? 1 : CKEDITOR.MOUSE_BUTTON_LEFT ],
+				[ CKEDITOR.MOUSE_BUTTON_MIDDLE, isIe8 ? 4 : CKEDITOR.MOUSE_BUTTON_MIDDLE ],
+				[ CKEDITOR.MOUSE_BUTTON_RIGHT, isIe8 ? 2 : CKEDITOR.MOUSE_BUTTON_RIGHT ]
+			] );
+		},
+
+		// #662
+		'test hexstring to bytes converter': function() {
+			var testCases = [
+				{
+					hex: '00',
+					bytes:	[ 0 ]
+				},
+				{
+					hex: '000000',
+					bytes: [ 0, 0, 0 ]
+				},
+				{
+					hex: '011001',
+					bytes: [ 1, 16, 1 ]
+				},
+				{
+					hex: '0123456789ABCDEF',
+					bytes: [ 1, 35, 69, 103, 137, 171, 205, 239 ]
+				},
+				{
+					hex: 'FFFFFFFF',
+					bytes: [ 255, 255, 255, 255 ]
+				},
+				{
+					hex: 'fc0fc0',
+					bytes: [ 252, 15, 192 ]
+				},
+				{
+					hex: '08A11D8ADA2B',
+					bytes: [ 8, 161, 29, 138, 218, 43 ]
+				}
+			];
+			CKEDITOR.tools.array.forEach( testCases, function( test ) {
+				arrayAssert.itemsAreEqual( test.bytes, CKEDITOR.tools.convertHexStringToBytes( test.hex ) );
+			} );
+		},
+
+		// #662
+		'test bytes to base64 converter': function() {
+			var testCases = [
+				{
+					bytes: [ 0 ],
+					base64: 'AA=='
+				},
+				{
+					bytes: [ 0, 0, 0 ],
+					base64: 'AAAA'
+				},
+				{
+					bytes: [ 1, 16, 1 ],
+					base64: 'ARAB'
+				},
+				{
+					bytes: [ 1, 35, 69, 103, 137, 171, 205, 239 ],
+					base64: 'ASNFZ4mrze8='
+				},
+				{
+					bytes: [ 255, 255, 255 ],
+					base64: '////'
+				},
+				{
+					bytes: [ 252, 15, 192 ],
+					base64: '/A/A'
+				},
+				{
+					bytes: [ 8, 161, 29, 138, 218, 43 ],
+					base64: 'CKEditor'
+				},
+				{
+					// jscs:disable
+					bytes: [ 0, 16, 131, 16, 81, 135, 32, 146, 139, 48, 211, 143, 65, 20, 147, 81, 85, 151, 97, 150, 155, 113, 215, 159, 130, 24, 163, 146, 89, 167, 162, 154, 171, 178, 219, 175, 195, 28, 179, 211, 93, 183, 227, 158, 187, 243, 223, 191 ],
+					// jscs:enable
+					base64: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+				}
+			];
+
+			CKEDITOR.tools.array.forEach( testCases, function( test ) {
+				assert.areSame( test.base64, CKEDITOR.tools.convertBytesToBase64( test.bytes ) );
+			} );
 		}
+
 	} );
 } )();

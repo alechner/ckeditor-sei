@@ -1,6 +1,6 @@
-﻿/*
-Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.md or http://ckeditor.com/license
+﻿﻿/*
+Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang( 'link', 'eu', {
 	acccessKey: 'Sarbide-tekla',
@@ -19,6 +19,8 @@ CKEDITOR.plugins.setLang( 'link', 'eu', {
 	anchorName: 'Aingura-izenaren arabera',
 	charset: 'Estekatutako baliabide karaktere-jokoa',
 	cssClasses: 'Estilo-orriko klaseak',
+	download: 'Force Download', // MISSING
+	displayText: 'Bistaratu testua',
 	emailAddress: 'E-posta helbidea',
 	emailBody: 'Mezuaren gorputza',
 	emailSubject: 'Mezuaren gaia',

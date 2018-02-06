@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.plugins.setLang( 'a11yhelp', 'uk', {
@@ -79,29 +79,26 @@ CKEDITOR.plugins.setLang( 'a11yhelp', 'uk', {
 			{
 			name: 'Допомога з доступності',
 			legend: 'Натисніть ${a11yHelp}'
+		},
+			{
+			name: ' Paste as plain text', // MISSING
+			legend: 'Press ${pastetext}', // MISSING
+			legendEdge: 'Press ${pastetext}, followed by ${paste}' // MISSING
 		}
 		]
 	}
 	],
-	backspace: 'Backspace',
 	tab: 'Tab',
-	enter: 'Enter',
-	shift: 'Shift',
-	ctrl: 'Ctrl',
-	alt: 'Alt',
 	pause: 'Pause',
 	capslock: 'Caps Lock',
 	escape: 'Esc',
 	pageUp: 'Page Up',
 	pageDown: 'Page Down',
-	end: 'End',
-	home: 'Home',
 	leftArrow: 'Ліва стрілка',
 	upArrow: 'Стрілка вгору',
 	rightArrow: 'Права стрілка',
 	downArrow: 'Стрілка вниз',
 	insert: 'Вставити',
-	'delete': 'Видалити',
 	leftWindowKey: 'Ліва клавіша Windows',
 	rightWindowKey: 'Права клавіша Windows',
 	selectKey: 'Виберіть клавішу',

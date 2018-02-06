@@ -1,6 +1,6 @@
-#!/bin/bash
-# Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
-# For licensing, see LICENSE.md or http://ckeditor.com/license
+﻿﻿#!/bin/bash
+# Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+# For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
 # Build CKEditor using the default settings (and build.js).
 
@@ -9,7 +9,7 @@ set -e
 echo "CKBuilder - Builds a release version of ckeditor-dev."
 echo ""
 
-CKBUILDER_VERSION="2.3.0"
+CKBUILDER_VERSION="2.3.1"
 CKBUILDER_URL="http://download.cksource.com/CKBuilder/$CKBUILDER_VERSION/ckbuilder.jar"
 
 PROGNAME=$(basename $0)
@@ -34,21 +34,21 @@ cd $(dirname $0)
 # Download/update ckbuilder.jar.
 mkdir -p ckbuilder/$CKBUILDER_VERSION
 cd ckbuilder/$CKBUILDER_VERSION
-#if [ -f ckbuilder.jar ]; then
-#	echo "Checking/Updating CKBuilder..."
-#	if command_exists curl ; then
-#	curl -O -R -z ckbuilder.jar $CKBUILDER_URL || echo "$MSG_UPDATE_FAILED"
-#	else
-#	wget -N $CKBUILDER_URL || echo "$MSG_UPDATE_FAILED"
-#	fi
-#else
-#	echo "Downloading CKBuilder..."
-#	if command_exists curl ; then
-#	curl -O -R $CKBUILDER_URL || error_exit "$MSG_DOWNLOAD_FAILED"
-#	else
-#	wget -N $CKBUILDER_URL || error_exit "$MSG_DOWNLOAD_FAILED"
-#	fi
-#fi
+if [ -f ckbuilder.jar ]; then
+	echo "Checking/Updating CKBuilder..."
+	if command_exists curl ; then
+	curl -O -R -z ckbuilder.jar $CKBUILDER_URL || echo "$MSG_UPDATE_FAILED"
+	else
+	wget -N $CKBUILDER_URL || echo "$MSG_UPDATE_FAILED"
+	fi
+else
+	echo "Downloading CKBuilder..."
+	if command_exists curl ; then
+	curl -O -R $CKBUILDER_URL || error_exit "$MSG_DOWNLOAD_FAILED"
+	else
+	wget -N $CKBUILDER_URL || error_exit "$MSG_DOWNLOAD_FAILED"
+	fi
+fi
 cd ../..
 
 # Run the builder.
@@ -57,18 +57,17 @@ echo "Starting CKBuilder..."
 
 JAVA_ARGS=${ARGS// -t / } # Remove -t from args.
 
-VERSION="4.5.6 DEV SEI"
+VERSION=$(grep '"version":' ./../../package.json | sed $'s/[\t\",: ]//g; s/version//g' | tr -d '[[:space:]]')
 REVISION=$(git rev-parse --verify --short HEAD)
-SEMVER_REGEX="^([0-9]+)\.([0-9]+)\.([0-9]+)(\-[0-9A-Za-z-]+)?(\+[0-9A-Za-z-]+)?$"
 
-# Get version number from tag (if available and follows semantic versioning principles).
-# Use 2>/dev/null to block "fatal: no tag exactly matches", true is needed because of "set -e".
-TAG=$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match 2>/dev/null) || true
-# "Git Bash" does not support regular expressions.
-if echo $TAG | grep -E "$SEMVER_REGEX" > /dev/null
+# If the current revision is not tagged with any CKE version, it means it's a "dirty" build. We
+# mark such builds with a " DEV" suffix. true is needed because of "set -e".
+TAG=$(git tag --points-at HEAD) || true
+
+# This fancy construction check str length of $TAG variable.
+if [ ${#TAG} -le 0 ];
 then
-	echo "Setting version to $TAG"
-	VERSION=$TAG
+	VERSION="$VERSION DEV"
 fi
 
 java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ../../ release $JAVA_ARGS --version="$VERSION" --revision="$REVISION" --overwrite

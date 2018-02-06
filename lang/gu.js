@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -20,13 +20,13 @@
 CKEDITOR.lang[ 'gu' ] = {
 	// ARIA description.
 	editor: 'રીચ ટેક્ષ્ત્ એડીટર',
-	editorPanel: 'Rich Text Editor panel', // MISSING
+	editorPanel: 'વધુ વિકલ્પ વાળુ એડિટર',
 
 	// Common messages and labels.
 	common: {
 		// Screenreader titles. Please note that screenreaders are not always capable
 		// of reading non-English words. So be careful while translating it.
-		editorHelp: 'પ્રેસ ALT 0 મદદ માટ',
+		editorHelp: 'મદદ માટ ALT 0 દબાવો',
 
 		browseServer: 'સર્વર બ્રાઉઝ કરો',
 		url: 'URL',
@@ -85,8 +85,8 @@ CKEDITOR.lang[ 'gu' ] = {
 		alignTop: 'ઉપર',
 		alignMiddle: 'વચ્ચે',
 		alignBottom: 'નીચે',
-		alignNone: 'None', // MISSING
-		invalidValue	: 'Invalid value.', // MISSING
+		alignNone: 'કઇ નહી',
+		invalidValue: 'અનુચિત મૂલ્ય',
 		invalidHeight: 'ઉંચાઈ એક આંકડો હોવો જોઈએ.',
 		invalidWidth: 'પોહળ ઈ એક આંકડો હોવો જોઈએ.',
 		invalidCssLength: '"%1" ની વેલ્યુ એક પોસીટીવ આંકડો હોવો જોઈએ અથવા CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc) વગર.',
@@ -95,6 +95,25 @@ CKEDITOR.lang[ 'gu' ] = {
 		cssLengthTooltip: 'પિક્ષ્લ્ નો આંકડો CSS unit (px, %, in, cm, mm, em, ex, pt, or pc) માં નાખો.',
 
 		// Put the voice-only part of the label in the span.
-		unavailable: '%1<span class="cke_accessibility">, નથી મળતું</span>'
+		unavailable: '%1<span class="cke_accessibility">, નથી મળતું</span>',
+
+		// Keyboard keys translations used for creating shortcuts descriptions in tooltips, context menus and ARIA labels.
+		keyboard: {
+			8: 'Backspace કી',
+			13: 'Enter કી',
+			16: 'Shift કી',
+			17: 'Ctrl કી',
+			18: 'Alt કી',
+			32: 'Space કી',
+			35: 'End કી',
+			36: 'Home કી',
+			46: 'Delete કી',
+			224: 'Command કી'
+		},
+
+		// Prepended to ARIA labels with shortcuts.
+		keyboardShortcut: 'કીબોર્ડ શૉર્ટકટ',
+
+		optionDefault: 'Default' // MISSING
 	}
 };
