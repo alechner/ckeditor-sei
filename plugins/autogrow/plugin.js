@@ -46,7 +46,8 @@
 			editorFocus: false
 		} );
 
-		var eventsList = { contentDom: 1, key: 1, selectionChange: 1, insertElement: 1, mode: 1 };
+		var eventsList = { contentDom: 1,afterZoom: 1, selectionChange: 1, insertElement: 1, mode: 1 };//trocado key por afterZoom
+
 		for ( var eventName in eventsList ) {
 			editor.on( eventName, function( evt ) {
 				// Some time is required for insertHtml, and it gives other events better performance as well.
@@ -137,6 +138,18 @@
 
 			var currentHeight = editor.window.getViewPaneSize().height,
 				newHeight = contentHeight();
+
+		  //----------------------- codigo adicional para zoom
+			var body=editor.document.getBody();
+            var scale,reg;
+			if (CKEDITOR.env.gecko && (scale=body.$.style.MozTransform)){
+				reg=/[0-9]*\.?[0-9]+/g;
+				newHeight*=reg.exec(scale);
+			} else if (CKEDITOR.env.webkit && (scale=body.$.style.WebkitTransform)){
+				reg=/[0-9]*\.?[0-9]+/g;
+				newHeight*=reg.exec(scale);
+			}
+			//-----------------------
 
 			// Additional space specified by user.
 			newHeight += configBottomSpace;

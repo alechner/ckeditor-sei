@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html;" />
 <meta name="format-detection" content="telephone=no" />
 <title>::SEI-TST / TRF4 - 0015113 - Portaria::</title>
-<script type="text/javascript" charset="iso-8859-1" src="js/sei.js?2.5.1-1.95.117-1110056549"></script>
+<!--<script type="text/javascript" charset="iso-8859-1" src="js/sei.js?2.5.1-1.95.117-1110056549"></script>-->
 <script type="text/javascript" charset="iso-8859-1" src="/infra_js/InfraUtil.js?2.5.1-1.95.117-1110056549"></script>
 <script type="text/javascript" charset="iso-8859-1" src="/infra_js/InfraCookie.js?2.5.1-1.95.117-1110056549"></script>
 <script type="text/javascript" charset="iso-8859-1" src="/infra_js/InfraUpload.js?2.5.1-1.95.117-1110056549"></script>
@@ -99,7 +99,7 @@ CKEDITOR.config.sharedSpaces= {'top':'divComandos'};
 CKEDITOR.config.readOnly=true;
 CKEDITOR.config.scayt_autoStartup=true;
 CKEDITOR.config.wsc_customLoaderScript = 'https://corretor.trf4.jus.br/spellcheck/lf/22/js/wsc_fck2plugin.js';
-CKEDITOR.config.scayt_srcUrl = 'https://corretor.trf4.jus.br/spellcheck/lf/scayt3/ckscayt/ckscaytt.js?03092013';
+CKEDITOR.config.scayt_srcUrl = 'https://corretor.trf4.jus.br/spellcheck/lf/scayt3/ckscayt/ckscayt.js?03092013';
 CKEDITOR.config.scayt_uiTabs='0,0,0';
 CKEDITOR.on('dialogDefinition',function(ev)
 {if(ev.data.name=='image'){
@@ -248,20 +248,7 @@ var _protocoloFormatado='';
 CKEDITOR.config.contentsCss="p.Tabela_Texto_8 {font-size:8pt;font-family:Times New Roman;text-align:left;word-wrap:normal;margin:0 3pt 0 3pt;} p.Tabela_Texto_Alinhado_Direita {font-size:11pt;font-family:Times New Roman;text-align:right;word-wrap:normal;margin:0 3pt 0 3pt;} p.Tabela_Texto_Alinhado_Esquerda {font-size:11pt;font-family:Times New Roman;text-align:left;word-wrap:normal;margin:0 3pt 0 3pt;} p.Tabela_Texto_Centralizado {font-size:11pt;font-family:Times New Roman;text-align:center;word-wrap:normal;margin:0 3pt 0 3pt;} p.Tachado {font-size:11pt;font-family:Times New Roman;text-indent:1.18in;text-align:justify;word-wrap:normal;text-decoration:line-through;} p.Teste {font-size:16em;} p.Texto_Alinhado_Direita {font-size:12pt;font-family:Times New Roman;text-align:right;word-wrap:normal;margin:6pt;} p.Texto_Alinhado_Esquerda {font-size:12pt;font-family:Times New Roman;text-align:left;word-wrap:normal;margin:6pt;} p.Texto_Alinhado_Esquerda_Espaçamento_Simples {font-size:12pt;font-family:Times New Roman;text-align:left;word-wrap:normal;margin:0;} p.Texto_Centralizado {font-size:12pt;font-family:Times New Roman;text-align:center;word-wrap:normal;margin:6pt;} p.Texto_Centralizado_Maiusculas {font-weight:bold;font-size:13pt;font-family:Times New Roman;text-align:center;text-transform:uppercase;word-wrap:normal;} p.Texto_Citação {font-size:10pt;font-family:Times New Roman;word-wrap:normal;margin:4pt 0 4pt 1.18in;text-align:justify;} p.Texto_Citação_12 {font-size:12pt;font-family:Times New Roman;word-wrap:normal;margin:4pt 0 4pt 1.18in;text-align:justify;} p.Texto_Ementa {font-size:10pt;font-family:Times New Roman;text-align:justify;word-wrap:normal;margin:4pt 0 4pt 3.14in;} p.Texto_Justificado {font-size:12pt;font-family:Times New Roman;text-align:justify;word-wrap:normal;text-indent:0;margin:6pt;} p.Texto_Justificado_Recuo_Primeira_Linha {font-size:12pt;font-family:Times New Roman;text-indent:1.18in;text-align:justify;word-wrap:normal;margin:6pt;} p.Texto_Justificado_Recuo_Primeira_Linha_13 {font-size:13pt;line-height:20pt;font-family:Times New Roman;text-indent:1.18in;text-align:justify;word-wrap:normal;margin:6pt;} p.Texto_Mono_Espaçado {font-size:8pt;font-family:Courier New;text-align:left;word-wrap:normal;} p.Texto_SIRH {font-size:11pt;font-family:Courier New;text-align:left;white-space:pre;word-wrap:normal;margin:2pt;} ";
 var toolbar=[["Source"],["Save"],["Find","Replace","-","RemoveFormat","Bold","Italic","Underline","Strike","Maiuscula","Minuscula","TextColor","BGColor"],["Cut","Copy","PasteFromWord","PasteText","-","Undo","Redo","ShowBlocks","Symbol","Scayt"],["NumberedList","BulletedList","-","Outdent","Indent","base64image"],["Table","SpecialChar","SimpleLink","linksei","Extenso","Zoom"],["autotexto","Styles"]];
 var timeoutExibirBotao = null;
-CKEDITOR.dialog.validate.SEI=function(){
-    return function() {
-        if(window._retry==1)	{
-            setTimeout(function(){ window._retry=undefined;},0);
-            return false;
-        } else  {
-            window._retry=1;
-        }
-        var value = this && this.getValue ? this.getValue() : arguments[ 0 ];
-        window._procedimento=value;
-        objAjax.executar();
-        return window._idProtocolo==''? false : true;
-    };
-};
+
 function plugin_save(evt){
 
     CKEDITOR.plugins.registered['save']={
@@ -523,14 +510,9 @@ var validarTags = function () {
 
 function  inicializar(){
 
+
     if (INFRA_IOS) {
         document.getElementById('divEditores').style.overflow='scroll';
-    }
-
-    if ('arvore_visualizar' == 'arvore_visualizar'){
-        if (window.opener.parent.document.getElementById('ifrArvore')!=null){
-            window.opener.parent.document.getElementById('ifrArvore').src = 'controlador.php?acao=procedimento_visualizar&acao_origem=editor_montar&id_procedimento=1210000031963&id_documento=42039220124049356&montar_visualizacao=1&infra_sistema=100000093&infra_unidade_atual=110000001&infra_hash=5b496ba4d305ee0d3d7866d642267fb340ccb6b3dd06ff517785013d97518b3c';
-        }
     }
 
     infraAdicionarEvento(window,'resize',redimensionar);
@@ -538,7 +520,24 @@ function  inicializar(){
     if (CKEDITOR.config.zoom==null) CKEDITOR.config.zoom=100;
     CKEDITOR.on('instanceReady', function( evt ) {
         redimensionar();
-
+        if(CKEDITOR.dialog.validate.SEI===undefined) {
+          CKEDITOR.dialog.validate.SEI = function () {
+            return function () {
+              if (window._retry==1) {
+                setTimeout(function () {
+                  window._retry = undefined;
+                }, 0);
+                return false;
+              } else {
+                window._retry = 1;
+              }
+              var value = this && this.getValue ? this.getValue() : arguments[0];
+              window._procedimento = value;
+              objAjax.executar();
+              return window._idProtocolo=='' ? false : true;
+            };
+          };
+        }
         if (INFRA_IE<9 && INFRA_IE>0){evt.editor.document.$.body.ondrop=function(){var evt={name:'drop'};habilitaSalvar(evt);}}
         else evt.editor.document.on('drop', function (evt) { habilitaSalvar(evt); });
 
@@ -577,6 +576,7 @@ function  inicializar(){
 
     //CKEDITOR.config.scayt_autoStartup = true;
     CKEDITOR.config.disableNativeSpellChecker = true;
+
 
     if (''=='1'){
         alert('');
